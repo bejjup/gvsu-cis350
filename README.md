@@ -6,7 +6,7 @@ Project description (~1 paragraph)
 
 * Kai (Role 1, Role 2)
 * Marcus (Role 3, Role 4)
-* Choton (Role 5, Role 6)
+* Chotan (Role 5, Role 6)
 
 ## Prerequisites
 
