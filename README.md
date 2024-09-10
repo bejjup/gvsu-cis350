@@ -1,4 +1,4 @@
-# Team Name Clueless Team
+# Clueless Team
 
 Project description (~1 paragraph)
 
