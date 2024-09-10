@@ -1,6 +1,6 @@
 Team name: Clueless Team
 
-Team members: Marcus, Choton, Kai
+Team members: Marcus, Chotan, Kai
 
 # Introduction
 The project idea that we have come up with is an application that will allow teachers to share their lesson plans. (Going to add more still here)
