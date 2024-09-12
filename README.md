@@ -4,9 +4,9 @@ The project idea that we have come up with is an application that will allow tea
 
 ## Team Members and Roles
 
-* Kai (Team Leader, Focus on Backend)
-* Marcus (Front end Design/Coder, Focus on Front end look)
-* Chotan (Front end Coder, Focus on Frontend)
+* Kai (Team leader, Focus on backend)
+* Marcus (Front end design/coder, Focus on front end)
+* Chotan (Front end coder/design, Focus on front end)
 
 ## Prerequisites
 
