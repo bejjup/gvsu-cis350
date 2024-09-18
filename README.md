@@ -1,4 +1,4 @@
-# Team Name
+# Loot Lakers
 
 Project description (~1 paragraph)
 
