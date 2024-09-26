@@ -6,6 +6,7 @@ Our project is going to be a money budgeting app where users can put in their mo
 
 * [Paige Brasfield](https://github.com/paigebrasfield/CIS350-HW2--Brasfield-/blob/main/README.md)
 * Member 2 (Role 3, Role 4)
+* [Jalonn Daniels](https://github.com/jayretoo/CIS350-HW2-Daniels./blob/main/README.md#meme)
 * Member 3 (Role 5, Role 6)
 
 ## Prerequisites
