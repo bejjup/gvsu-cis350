@@ -7,6 +7,7 @@ We have decided to make a game of Fortnite monopoly as the orignal was lack lust
 * [Vincent N](https://github.com/Vincent-Nittolo/CIS350-HW2-Nittolo/tree/main) (Role 1, Role 2)
 * [Caeleb Meyers](https://github.com/C-Stryke/CIS350-HW2-Meyers) (Designer)
 * [Josh Wedyke](https://github.com/wedykej/CIS350-HW2-Wedyke) (Role 5, Role 6)
+* [Isaiah Alfaro](https://github.com/axvro/CIS350-HW2-Alfaro) (Role 7, Role 8)
 
 ## Prerequisites
 
