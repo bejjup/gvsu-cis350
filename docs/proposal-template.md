@@ -18,12 +18,12 @@ Every week, our team will have two meetings up until the final project deadline;
 
 # Estimated Timeline
 
-Major milestones to reach: \n
-  .Building the map
-  .Roll-the-dice feature
-  .CPU’s
-  .CPU varying difficulties
-  .Final project
+Major milestones to reach:<br>
+  .Building the map<br>
+  .Roll-the-dice feature<br>
+  .CPU’s<br>
+  .CPU varying difficulties<br>
+  .Final project<br>
   I think that building an interactive map will be a slight challenge since our whole group is mainly Python coders, but it shouldn’t take any longer than a week once we focus on it. Our dice feature shouldn’t take long at all as it is a fairly simple concept, probably just a day. Our CPU feature could definitely be the most challenging part of this entire project as we have to make the CPUs first, then make varying levels of difficulty. This will take a bit longer than any of our other features and will be a huge milestone crossed off once it’s done. I expect this feature to take anywhere from 2 weeks to a month depending on how solely focused we are on it. Our final project is the last milestone and it includes touching up on all aspects of the project and making sure it is a well designed game in full. This will take close to the final project deadline to complete as there are a lot of little details that should be perfected by then.
 
 # Anticipated Problems
