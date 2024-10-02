@@ -1,24 +1,24 @@
-# CIS350 Meeting Instructions
-
-Hold a team meeting at least once a week in some format.  Copy the following template below into a new document, naming it GVSU-CIS350-TEAMNAME-YYYY-MM-DD (replacing TEAMNAME with your team's name and the appropriate date fields).  Commit it to this folder, ensuring it is up by each Sunday by 11:59pm.  There should be a unique document for each meeting held.
-
-## Meeting minutes template
-
 Team name: Pythonic Pioneers
 
 Members present:Joshua Wiles, 
-Date: 10/2
+
+Date: 10/2/2024
 
 Time: 9:30AM
 
 Discussion points: 
 
-*
-*
-*
+* Non-functional vs Functional requirements
+  - Non-functional: There won't be a ton of nun-funcional elements to this game since only one player will be playing at a time
+  - Functional: Most of the game will be accessable to the user
+* Reward system that scales
+* Minimum set amount of tiles
+* Figuring out a game end-state
+* Portability will be easy except for console players
+* We will have to be the "customer" for the V-Model
 
 Goals for next week (include responsibilities)
 
-*
-*
-*
+* Researching how to get a display working for our base (Brody)
+* Gathering requirements and figuring them out ourselves
+* Figuring out 2 functional and 2 non-functional requirements for the project
