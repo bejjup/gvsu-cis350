@@ -18,7 +18,7 @@ Every week, our team will have two meetings up until the final project deadline;
 
 # Estimated Timeline
 
-Major milestones to reach: 
+Major milestones to reach: \n
   .Building the map
   .Roll-the-dice feature
   .CPU’s
