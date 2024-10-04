@@ -10,18 +10,24 @@ Members present: Paige, Gabe, Jaylon
 
 Date: 10/4/24
 
-Time: 10 - 10:25am
+Time: 10 - 10:20am
 
 Discussion points: 
 
-* general overview of our project
-* general features
+- Decide roles
+- Responsibilities
+- Make sure we are on track with software model V
+- Make sure we are using the norms of our model
+- Make requirements page
+  - Docs in github
+- Take about features might want to add *optional
+  - Might do in the future
+
 
 
 Goals for next week (include responsibilities)
 
-* finalize technology
-* what roles everyone will have
-* using jira
-* become more familiar with jira and github
-* finalize project idea and features
+* finalize roles
+* split responsibilities
+* make jira more detailed
+* start planning and testing using model V
