@@ -43,6 +43,10 @@ class Players:
 		self.img = "Placeholder"
 		self.set_name(num)
 		self.set_img(num)
+		self.loc_x = 0
+		self.loc_y = 0
+		self.color = 0,0,0
+		self.set_color(num)
 
 	#returns the name of the player
 	def get_name(self):
@@ -59,6 +63,19 @@ class Players:
 		if num == 4:
 			self.name = "Raven"
 
+	def set_color(self, num):
+		if num == 1:
+			self.color = 89, 211, 227
+		if num == 2:
+			self.color = 219, 31, 62
+		if num == 3:
+			self.color = 82, 82, 82
+		if num == 4:
+			self.color = 137, 42, 156
+
+	def get_color(self):
+		return self.color
+
 	#returns the image directory
 	def get_img(self):
 		return self.img
@@ -74,6 +91,17 @@ class Players:
 		if num == 4:
 			self.img = "C:\\Users\\vinny\\Downloads\\Raven.jpg"
 
+	def set_loc_x(self, num):
+		self.loc_x = num
+
+	def get_loc_x(self):
+		return self.loc_x
+
+	def set_loc_y(self, num):
+		self.loc_y = num
+
+	def get_loc_y(self):
+		return self.loc_y
 
 
 
@@ -188,6 +216,7 @@ def print_board(DOUBLES, DICE, num1, num2):
 		img_1 = pygame.image.load(p_1.get_img())
 		img_1 = pygame.transform.scale(img_1, (50, 50))
 		scrn.blit(img_1, (50, 720))
+		pygame.draw.circle(scrn, (p_1.get_color()),[p_1.get_loc_x(), p_1.get_loc_y()], 10, 0)
 	p1_out()
 
 	# displays player 2's information
@@ -199,6 +228,7 @@ def print_board(DOUBLES, DICE, num1, num2):
 		img_2 = pygame.image.load(p_2.get_img())
 		img_2 = pygame.transform.scale(img_2, (50, 50))
 		scrn.blit(img_2, (25, 160))
+		pygame.draw.circle(scrn, (p_2.get_color()), [p_2.get_loc_x(), p_2.get_loc_y()], 10, 0)
 	p2_out()
 
 	# displays player 3's information
@@ -210,6 +240,7 @@ def print_board(DOUBLES, DICE, num1, num2):
 		img_3 = pygame.image.load(p_3.get_img())
 		img_3 = pygame.transform.scale(img_3, (50, 50))
 		scrn.blit(img_3, (100, 40))
+		pygame.draw.circle(scrn, (p_3.get_color()), [p_3.get_loc_x(), p_3.get_loc_y()], 10, 0)
 	p3_out()
 
 	# displays player 4's information
@@ -221,6 +252,7 @@ def print_board(DOUBLES, DICE, num1, num2):
 		img_4 = pygame.image.load(p_4.get_img())
 		img_4 = pygame.transform.scale(img_4, (50, 50))
 		scrn.blit(img_4, (775, 160))
+		pygame.draw.circle(scrn, (p_4.get_color()), [p_4.get_loc_x(), p_4.get_loc_y()], 10, 0)
 	p4_out()
 
 	#whether or not the player has rolled yet
@@ -347,6 +379,8 @@ while (status):
 			#declares that P1 can no longer be used and increases whose turn it is to choose by 1
 			P1 = False
 			p_1 = Players(player)
+			p_1.set_loc_x(200)
+			p_1.set_loc_y(730)
 			player += 1
 
 		#if P2 icon is clicked while it is still available
@@ -354,6 +388,8 @@ while (status):
 			#declares that P2 can no longer be used and increases whose turn it is to choose by 1
 			P2 = False
 			p_2 = Players(player)
+			p_2.set_loc_x(60)
+			p_2.set_loc_y(220)
 			player += 1
 
 		#if P3 icon is clicked while it is still available
@@ -361,6 +397,8 @@ while (status):
 			#declares that P3 can no longer be used and increases whose turn it is to choose by 1
 			P3 = False
 			p_3 = Players(player)
+			p_3.set_loc_x(170)
+			p_3.set_loc_y(60)
 			player += 1
 
 		#if P4 icon is clicked while it is still available
@@ -368,6 +406,8 @@ while (status):
 			#declares that P4 can no longer be used and increases whose turn it is to choose by 1
 			P4 = False
 			p_4 = Players(player)
+			p_4.set_loc_x(720)
+			p_4.set_loc_y(180)
 			player += 1
 
 		#if the continue button is clicked, enters the game screen
