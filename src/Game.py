@@ -12,8 +12,9 @@ Y = 800
 scrn = pygame.display.set_mode((X, Y))
 font = pygame.font.Font('freesansbold.ttf', 40)
 DICE = True
-num = random.randint(1,6)
-def print_board(DICE, num):
+num1 = random.randint(1,6)
+num2 = random.randint(1,6)
+def print_board(DICE, num1, num2):
 	scrn.fill((27, 144, 221))
 	pygame.draw.rect(scrn, (0,0,0), pygame.Rect(145, 145, 510, 510))
 	pygame.draw.rect(scrn, (0,0,0), pygame.Rect(875, 50, 300, 700))
@@ -25,19 +26,23 @@ def print_board(DICE, num):
 	imp = pygame.transform.scale(imp, (500, 500))
 	scrn.blit(imp, (150, 150))
 	mx, my = pygame.mouse.get_pos()
-	dice = pygame.image.load("C:\\Users\\vinny\\Downloads\\dice.png").convert()
-	dice = pygame.transform.scale(dice, (50, 50))
+	dice1 = pygame.image.load("C:\\Users\\vinny\\Downloads\\dice.png").convert()
+	dice1 = pygame.transform.scale(dice1, (50, 50))
+	dice2 = pygame.image.load("C:\\Users\\vinny\\Downloads\\dice.png").convert()
+	dice2 = pygame.transform.scale(dice2, (50, 50))
 	if DICE:
 		if (875 < mx < 1175) and (50 < my < 750):
-			scrn.blit(dice, (mx - 25, my - 25))
+			scrn.blit(dice1, (mx - 25, my - 25))
+			scrn.blit(dice2, (mx + 25, my + 25))
 		else:
-			scrn.blit(dice, (1060, 675))
+			scrn.blit(dice1, (1060, 675))
+			scrn.blit(dice2, (1110, 675))
 		text = font.render('Dice:', True, (245, 245, 245), (0, 0, 0))
 		textRect = text.get_rect()
 		textRect.center = (960, 700)
 		scrn.blit(text, textRect)
 	else:
-		text = font.render(f'You Rolled a {num}!', True, (245, 245, 245), (0, 0, 0))
+		text = font.render(f'You Rolled {num1 + num2}!', True, (245, 245, 245), (0, 0, 0))
 		textRect = text.get_rect()
 		textRect.center = (1025, 700)
 		scrn.blit(text, textRect)
@@ -72,7 +77,7 @@ while (status):
 # iterate over the list of Event objects
 # that was returned by pygame.event.get() method.
 	for i in pygame.event.get():
-		print_board(DICE, num)
+		print_board(DICE, num1, num2)
 		if pygame.mouse.get_pressed()[0]:
 			DICE = False
 		pygame.display.update()
