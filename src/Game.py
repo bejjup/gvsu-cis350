@@ -1,6 +1,6 @@
 # importing required library
 import pygame
-from pygame import mixer
+from pygame import mixer, MOUSEBUTTONDOWN
 import random
 # activate the pygame library .
 pygame.init()
@@ -12,10 +12,9 @@ Y = 800
 scrn = pygame.display.set_mode((X, Y))
 font = pygame.font.Font('freesansbold.ttf', 40)
 DICE = True
-
-def print_board():
+num = random.randint(1,6)
+def print_board(DICE, num):
 	scrn.fill((27, 144, 221))
-
 	pygame.draw.rect(scrn, (0,0,0), pygame.Rect(145, 145, 510, 510))
 	pygame.draw.rect(scrn, (0,0,0), pygame.Rect(875, 50, 300, 700))
 	pygame.draw.rect(scrn, (0,0,0), pygame.Rect(145, 675, 510, 100))
@@ -37,18 +36,15 @@ def print_board():
 		textRect = text.get_rect()
 		textRect.center = (960, 700)
 		scrn.blit(text, textRect)
-	if pygame.MOUSEBUTTONDOWN:
-		roll(int(random.randint(1, 6)))
-
-def roll(num: int):
-	DICE = False
-	text = font.render(f'{num}', True, (245, 245, 245), (0, 0, 0))
-	textRect = text.get_rect()
-	textRect.center = (960, 700)
-	scrn.blit(text, textRect)
+	else:
+		text = font.render(f'You Rolled a {num}!', True, (245, 245, 245), (0, 0, 0))
+		textRect = text.get_rect()
+		textRect.center = (1025, 700)
+		scrn.blit(text, textRect)
 
 
-	pygame.display.update()
+
+
 
 pygame.display.set_caption('Fortnite Monopoly')
 
@@ -76,7 +72,10 @@ while (status):
 # iterate over the list of Event objects
 # that was returned by pygame.event.get() method.
 	for i in pygame.event.get():
-		print_board()
+		print_board(DICE, num)
+		if pygame.mouse.get_pressed()[0]:
+			DICE = False
+		pygame.display.update()
 		if i.type == pygame.QUIT:
 			status = False
 
