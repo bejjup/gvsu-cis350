@@ -34,6 +34,11 @@ def print_board(DICE, num1, num2):
 	pygame.draw.rect(scrn, (0,0,0), pygame.Rect(675, 145, 100, 510))
 	pygame.draw.rect(scrn, (0,0,0), pygame.Rect(145, 25, 510, 100))
 
+	text = font.render('Reset Roll:', True, (245, 245, 245), (0, 0, 0))
+	textRect = text.get_rect()
+	textRect.center = (100, 100)
+	scrn.blit(text, textRect)
+
 	#sets imp to the image of the board, and declares its size and location
 	imp = pygame.image.load("C:\\Users\\vinny\\Downloads\\Mappy .jpg").convert()
 	imp = pygame.transform.scale(imp, (500, 500))
@@ -104,13 +109,21 @@ while (status):
 	#iterate over the list of Event objects that was returned by pygame.event.get() method.
 	for i in pygame.event.get():
 
+		#gets the x and y values of mouse
+		mx, my = pygame.mouse.get_pos()
+
 		#prints the board
 		print_board(DICE, num1, num2)
 
-		#checks if the player has pressed, which means rolled dice
-		if pygame.mouse.get_pressed()[0]:
+		#checks if the player has pressed within the dice box, which means rolled dice
+		if (875 < mx < 1175) and (50 < my < 750) and pygame.mouse.get_pressed()[0]:
 			DICE = False
 
+		# checks if the player has pressed within the reset box
+		if (0 < mx < 200) and (0 < my < 200) and pygame.mouse.get_pressed()[0]:
+			DICE = True
+			num1 = random.randint(1,6)
+			num2 = random.randint(1,6)
 		#updates the screen
 		pygame.display.update()
 
