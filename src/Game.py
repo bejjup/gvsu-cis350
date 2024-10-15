@@ -275,13 +275,6 @@ def print_board(DOUBLES, DICE, num1, num2):
 			textRect.center = (960, 700)
 			scrn.blit(text, textRect)
 
-		#displays the Next Turn button if the player can roll
-		text = font.render('Next Turn:', True, (245, 245, 245))
-		textRect = text.get_rect()
-		textRect.center = (1025, 25)
-		scrn.blit(text, textRect)
-
-
 	#if the previous dice were doubles
 	elif DOUBLES:
 		# moves the dice to follow the mouse if the mouse is within the roll box
