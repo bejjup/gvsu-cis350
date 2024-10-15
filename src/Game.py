@@ -16,6 +16,7 @@ font = pygame.font.Font('freesansbold.ttf', 40)
 font2 = pygame.font.Font('freesansbold.ttf', 20)
 
 #values that determine the current stage of the game
+
 DICE = True
 DOUBLES = False
 GAME = False
@@ -103,6 +104,46 @@ class Players:
 
 	def get_loc_y(self):
 		return self.loc_y
+
+	def p1_out(self):
+		text = font2.render(f'{self.name}', True, (245, 245, 245))
+		textRect = text.get_rect()
+		textRect.center = (195, 787)
+		scrn.blit(text, textRect)
+		img_1 = pygame.image.load(self.get_img())
+		img_1 = pygame.transform.scale(img_1, (100, 100))
+		scrn.blit(img_1, (145, 675))
+		pygame.draw.circle(scrn, (self.get_color()),[self.get_loc_x(), self.get_loc_y()], 10, 0)
+
+	def p2_out(self):
+		text = font2.render(f'{self.name}', True, (245, 245, 245))
+		textRect = text.get_rect()
+		textRect.center = (75, 130)
+		scrn.blit(text, textRect)
+		img_2 = pygame.image.load(self.get_img())
+		img_2 = pygame.transform.scale(img_2, (100, 100))
+		scrn.blit(img_2, (25, 145))
+		pygame.draw.circle(scrn, (self.get_color()), [self.get_loc_x(), self.get_loc_y()], 10, 0)
+
+	def p3_out(self):
+		text = font2.render(f'{self.name}', True, (245, 245, 245))
+		textRect = text.get_rect()
+		textRect.center = (195, 13)
+		scrn.blit(text, textRect)
+		img_3 = pygame.image.load(self.get_img())
+		img_3 = pygame.transform.scale(img_3, (100, 100))
+		scrn.blit(img_3, (145, 25))
+		pygame.draw.circle(scrn, (self.get_color()), [self.get_loc_x(), self.get_loc_y()], 10, 0)
+
+	def p4_out(self):
+		text = font2.render(f'{self.name}', True, (245, 245, 245))
+		textRect = text.get_rect()
+		textRect.center = (725, 130)
+		scrn.blit(text, textRect)
+		img_4 = pygame.image.load(self.get_img())
+		img_4 = pygame.transform.scale(img_4, (100, 100))
+		scrn.blit(img_4, (675, 145))
+		pygame.draw.circle(scrn, (self.get_color()), [self.get_loc_x(), self.get_loc_y()], 10, 0)
 
 
 
@@ -209,52 +250,19 @@ def print_board(DOUBLES, DICE, num1, num2):
 	dice2 = pygame.transform.scale(dice2, (50, 50))
 
 	#displays player 1's information
-	def p1_out():
-		text = font2.render(f'{p_1.name}', True, (245, 245, 245))
-		textRect = text.get_rect()
-		textRect.center = (195, 787)
-		scrn.blit(text, textRect)
-		img_1 = pygame.image.load(p_1.get_img())
-		img_1 = pygame.transform.scale(img_1, (100, 100))
-		scrn.blit(img_1, (145, 675))
-		pygame.draw.circle(scrn, (p_1.get_color()),[p_1.get_loc_x(), p_1.get_loc_y()], 10, 0)
-	p1_out()
+	p_1.p1_out()
 
 	# displays player 2's information
-	def p2_out():
-		text = font2.render(f'{p_2.name}', True, (245, 245, 245))
-		textRect = text.get_rect()
-		textRect.center = (75, 130)
-		scrn.blit(text, textRect)
-		img_2 = pygame.image.load(p_2.get_img())
-		img_2 = pygame.transform.scale(img_2, (100, 100))
-		scrn.blit(img_2, (25, 145))
-		pygame.draw.circle(scrn, (p_2.get_color()), [p_2.get_loc_x(), p_2.get_loc_y()], 10, 0)
-	p2_out()
+
+	p_2.p2_out()
 
 	# displays player 3's information
-	def p3_out():
-		text = font2.render(f'{p_3.name}', True, (245, 245, 245))
-		textRect = text.get_rect()
-		textRect.center = (195, 13)
-		scrn.blit(text, textRect)
-		img_3 = pygame.image.load(p_3.get_img())
-		img_3 = pygame.transform.scale(img_3, (100, 100))
-		scrn.blit(img_3, (145, 25))
-		pygame.draw.circle(scrn, (p_3.get_color()), [p_3.get_loc_x(), p_3.get_loc_y()], 10, 0)
-	p3_out()
+
+	p_3.p3_out()
 
 	# displays player 4's information
-	def p4_out():
-		text = font2.render(f'{p_4.name}', True, (245, 245, 245))
-		textRect = text.get_rect()
-		textRect.center = (725, 130)
-		scrn.blit(text, textRect)
-		img_4 = pygame.image.load(p_4.get_img())
-		img_4 = pygame.transform.scale(img_4, (100, 100))
-		scrn.blit(img_4, (675, 145))
-		pygame.draw.circle(scrn, (p_4.get_color()), [p_4.get_loc_x(), p_4.get_loc_y()], 10, 0)
-	p4_out()
+
+	p_4.p4_out()
 
 	#whether or not the player has rolled yet
 	if DICE:
@@ -343,93 +351,91 @@ while (status):
 		#stores the x and y values of the mouse
 		mx, my = pygame.mouse.get_pos()
 
-		#TEST TO RETURN THE MOUSE VALUES WHEN CLICKED
+		if SELEC:
+			print_selec()
+		if GAME:
+			print_board(DOUBLES, DICE, num1, num2)
+
 		if pygame.mouse.get_pressed()[0]:
+		#TEST TO RETURN THE MOUSE VALUES WHEN CLICKED
+			if (450 < mx < 750) and (450 < my < 570) and START:
+				# TEST FOR WHEN THE START BUTTON HAS BEEN PRESSED
+				print("You clicked start")
+				START = False
+				SELEC = True
+
+			# display the select screen
+
+
+			# if P1 icon is clicked while it is still available
+			if (100 < mx < 400) and (100 < my < 400) and SELEC and P1:
+				# declares that P1 can no longer be used and increases whose turn it is to choose by 1
+				P1 = False
+				p_1 = Players(player)
+				p_1.set_loc_x(605)
+				p_1.set_loc_y(605)
+				player += 1
+
+			# if P2 icon is clicked while it is still available
+			if (800 < mx < 1100) and (100 < my < 400) and SELEC and P2:
+				# declares that P2 can no longer be used and increases whose turn it is to choose by 1
+				P2 = False
+				p_2 = Players(player)
+				p_2.set_loc_x(625)
+				p_2.set_loc_y(605)
+				player += 1
+
+			# if P3 icon is clicked while it is still available
+			if (800 < mx < 1100) and (450 < my < 750) and SELEC and P3:
+				# declares that P3 can no longer be used and increases whose turn it is to choose by 1
+				P3 = False
+				p_3 = Players(player)
+				p_3.set_loc_x(605)
+				p_3.set_loc_y(625)
+				player += 1
+
+			# if P4 icon is clicked while it is still available
+			if (100 < mx < 400) and (450 < my < 750) and SELEC and P4:
+				# declares that P4 can no longer be used and increases whose turn it is to choose by 1
+				P4 = False
+				p_4 = Players(player)
+				p_4.set_loc_x(625)
+				p_4.set_loc_y(625)
+				player += 1
+
+			# if the continue button is clicked, enters the game screen
+			if (510 < mx < 690) and (480 < my < 510) and SELEC and player == 5:
+				# TEST FOR WHEN THE CONTINUE BUTTON HAS BEEN CLICKED
+				print("You clicked start Again")
+				SELEC = False
+				GAME = True
+
+			# checks if the player has pressed within the dice box, which will 'roll dice'
+			if (875 < mx < 1175) and (50 < my < 750) and GAME:
+				# declares that the player just rolled
+				DICE = False
+				DOUBLES = False
+
+			# checks if the player has pressed within the dice box while they have doubles
+			if (875 < mx < 1175) and (50 < my < 750) and GAME and num1 == num2:
+				# declares that the player has doubles
+				DOUBLES = True
+				DICE = False
+
+			# checks if the player has pressed within the reset box
+			if (920 < mx < 1130) and (5 < my < 45) and GAME:
+				# resets the rolling values to allow the next turn
+				DICE = True
+				DOUBLES = False
+				num1 = random.randint(1, 6)
+				num2 = random.randint(1, 6)
+
 			print(f'{mx} {my}')
+
 
 		#displays start screen if START is true
 		if START:
 			print_start()
-
-		#if the start button is pressed, enters the select screen
-		if (450 < mx < 750) and (450 < my < 570) and pygame.mouse.get_pressed()[0] and START:
-			#TEST FOR WHEN THE START BUTTON HAS BEEN PRESSED
-			print("You clicked start")
-			START = False
-			SELEC = True
-
-		#display the select screen
-		if SELEC:
-			print_selec()
-
-		#if P1 icon is clicked while it is still available
-		if (100 < mx < 400) and (100 < my < 400) and pygame.mouse.get_pressed()[0] and SELEC and P1:
-			#declares that P1 can no longer be used and increases whose turn it is to choose by 1
-			P1 = False
-			p_1 = Players(player)
-			p_1.set_loc_x(605)
-			p_1.set_loc_y(605)
-			player += 1
-
-		#if P2 icon is clicked while it is still available
-		if (800 < mx < 1100) and (100 < my < 400) and pygame.mouse.get_pressed()[0] and SELEC and P2:
-			#declares that P2 can no longer be used and increases whose turn it is to choose by 1
-			P2 = False
-			p_2 = Players(player)
-			p_2.set_loc_x(625)
-			p_2.set_loc_y(605)
-			player += 1
-
-		#if P3 icon is clicked while it is still available
-		if (800 < mx < 1100) and (450 < my < 750) and pygame.mouse.get_pressed()[0] and SELEC and P3:
-			#declares that P3 can no longer be used and increases whose turn it is to choose by 1
-			P3 = False
-			p_3 = Players(player)
-			p_3.set_loc_x(605)
-			p_3.set_loc_y(625)
-			player += 1
-
-		#if P4 icon is clicked while it is still available
-		if (100 < mx < 400) and (450 < my < 750) and pygame.mouse.get_pressed()[0] and SELEC and P4:
-			#declares that P4 can no longer be used and increases whose turn it is to choose by 1
-			P4 = False
-			p_4 = Players(player)
-			p_4.set_loc_x(625)
-			p_4.set_loc_y(625)
-			player += 1
-
-		#if the continue button is clicked, enters the game screen
-		if (510 < mx < 690) and (480 < my < 510) and pygame.mouse.get_pressed()[0] and SELEC and player == 5:
-			#TEST FOR WHEN THE CONTINUE BUTTON HAS BEEN CLICKED
-			print("You clicked start Again")
-			SELEC = False
-			GAME = True
-
-		#displays the game screen
-		if GAME:
-			print_board(DOUBLES, DICE, num1, num2)
-
-
-		#checks if the player has pressed within the dice box, which will 'roll dice'
-		if (875 < mx < 1175) and (50 < my < 750) and pygame.mouse.get_pressed()[0] and GAME:
-			#declares that the player just rolled
-			DICE = False
-			DOUBLES = False
-
-		#checks if the player has pressed within the dice box while they have doubles
-		if (875 < mx < 1175) and (50 < my < 750) and pygame.mouse.get_pressed()[0] and GAME and num1 == num2:
-			#declares that the player has doubles
-			DOUBLES = True
-			DICE = False
-
-		#checks if the player has pressed within the reset box
-		if (920 < mx < 1130) and (5 < my < 45) and pygame.mouse.get_pressed()[0] and GAME:
-			#resets the rolling values to allow the next turn
-			DICE = True
-			DOUBLES = False
-			num1 = random.randint(1,6)
-			num2 = random.randint(1,6)
-
 
 
 		#updates the screen
