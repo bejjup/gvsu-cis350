@@ -13,6 +13,7 @@ scrn = pygame.display.set_mode((X, Y))
 
 #sets the default font values
 font = pygame.font.Font('freesansbold.ttf', 40)
+font2 = pygame.font.Font('freesansbold.ttf', 20)
 
 #values that determine the current stage of the game
 DICE = True
@@ -209,49 +210,49 @@ def print_board(DOUBLES, DICE, num1, num2):
 
 	#displays player 1's information
 	def p1_out():
-		text = font.render(f'{p_1.name}', True, (245, 245, 245), (0, 0, 0))
+		text = font2.render(f'{p_1.name}', True, (245, 245, 245))
 		textRect = text.get_rect()
-		textRect.center = (130, 700)
+		textRect.center = (195, 787)
 		scrn.blit(text, textRect)
 		img_1 = pygame.image.load(p_1.get_img())
-		img_1 = pygame.transform.scale(img_1, (50, 50))
-		scrn.blit(img_1, (50, 720))
+		img_1 = pygame.transform.scale(img_1, (100, 100))
+		scrn.blit(img_1, (145, 675))
 		pygame.draw.circle(scrn, (p_1.get_color()),[p_1.get_loc_x(), p_1.get_loc_y()], 10, 0)
 	p1_out()
 
 	# displays player 2's information
 	def p2_out():
-		text = font.render(f'{p_2.name}', True, (245, 245, 245), (0, 0, 0))
+		text = font2.render(f'{p_2.name}', True, (245, 245, 245))
 		textRect = text.get_rect()
-		textRect.center = (70, 140)
+		textRect.center = (75, 130)
 		scrn.blit(text, textRect)
 		img_2 = pygame.image.load(p_2.get_img())
-		img_2 = pygame.transform.scale(img_2, (50, 50))
-		scrn.blit(img_2, (25, 160))
+		img_2 = pygame.transform.scale(img_2, (100, 100))
+		scrn.blit(img_2, (25, 145))
 		pygame.draw.circle(scrn, (p_2.get_color()), [p_2.get_loc_x(), p_2.get_loc_y()], 10, 0)
 	p2_out()
 
 	# displays player 3's information
 	def p3_out():
-		text = font.render(f'{p_3.name}', True, (245, 245, 245), (0, 0, 0))
+		text = font2.render(f'{p_3.name}', True, (245, 245, 245))
 		textRect = text.get_rect()
-		textRect.center = (140, 20)
+		textRect.center = (195, 13)
 		scrn.blit(text, textRect)
 		img_3 = pygame.image.load(p_3.get_img())
-		img_3 = pygame.transform.scale(img_3, (50, 50))
-		scrn.blit(img_3, (100, 40))
+		img_3 = pygame.transform.scale(img_3, (100, 100))
+		scrn.blit(img_3, (145, 25))
 		pygame.draw.circle(scrn, (p_3.get_color()), [p_3.get_loc_x(), p_3.get_loc_y()], 10, 0)
 	p3_out()
 
 	# displays player 4's information
 	def p4_out():
-		text = font.render(f'{p_4.name}', True, (245, 245, 245), (0, 0, 0))
+		text = font2.render(f'{p_4.name}', True, (245, 245, 245))
 		textRect = text.get_rect()
-		textRect.center = (770, 140)
+		textRect.center = (725, 130)
 		scrn.blit(text, textRect)
 		img_4 = pygame.image.load(p_4.get_img())
-		img_4 = pygame.transform.scale(img_4, (50, 50))
-		scrn.blit(img_4, (775, 160))
+		img_4 = pygame.transform.scale(img_4, (100, 100))
+		scrn.blit(img_4, (675, 145))
 		pygame.draw.circle(scrn, (p_4.get_color()), [p_4.get_loc_x(), p_4.get_loc_y()], 10, 0)
 	p4_out()
 
@@ -275,7 +276,7 @@ def print_board(DOUBLES, DICE, num1, num2):
 			scrn.blit(text, textRect)
 
 		#displays the Next Turn button if the player can roll
-		text = font.render('Next Turn:', True, (245, 245, 245), (0, 0, 0))
+		text = font.render('Next Turn:', True, (245, 245, 245))
 		textRect = text.get_rect()
 		textRect.center = (1025, 25)
 		scrn.blit(text, textRect)
@@ -294,19 +295,19 @@ def print_board(DOUBLES, DICE, num1, num2):
 			scrn.blit(dice2, (1110, 675))
 
 		#Displays the sum of the numbers rolled as well as that they were doubles
-		text = font.render(f'Doubles {num1 + num2}!', True, (245, 245, 245), (0, 0, 0))
+		text = font.render(f'Doubles {num1 + num2}!', True, (245, 245, 245))
 		textRect = text.get_rect()
 		textRect.center = (1000, 630)
 		scrn.blit(text, textRect)
 
 		# sets the text size and location, and prints the Dice label
-		text = font.render('Dice:', True, (245, 245, 245), (0, 0, 0))
+		text = font.render('Dice:', True, (245, 245, 245))
 		textRect = text.get_rect()
 		textRect.center = (960, 700)
 		scrn.blit(text, textRect)
 
 		# displays the Roll Again button if the player can roll after had rolling doubles
-		text = font.render('Roll Again:', True, (245, 245, 245), (0, 0, 0))
+		text = font.render('Roll Again:', True, (245, 245, 245))
 		textRect = text.get_rect()
 		textRect.center = (1025, 25)
 		scrn.blit(text, textRect)
@@ -314,22 +315,16 @@ def print_board(DOUBLES, DICE, num1, num2):
 
 	else:
 		# Displays the sum of the numbers rolled
-		text = font.render(f'You Rolled {num1 + num2}!', True, (245, 245, 245), (0, 0, 0))
+		text = font.render(f'You Rolled {num1 + num2}!', True, (245, 245, 245))
 		textRect = text.get_rect()
 		textRect.center = (1025, 700)
 		scrn.blit(text, textRect)
 
 		# displays the Next Turn button if the player can roll
-		text = font.render('Next Turn:', True, (245, 245, 245), (0, 0, 0))
+		text = font.render('Next Turn:', True, (245, 245, 245))
 		textRect = text.get_rect()
 		textRect.center = (1025, 25)
 		scrn.blit(text, textRect)
-
-	#TEST TO SEE WHAT THE NUMBERS WILL BE BEFORE ROLLING
-	text = font.render(f'{num1} {num2}', True, (245, 245, 245), (0, 0, 0))
-	textRect = text.get_rect()
-	textRect.center = (1025, 750)
-	scrn.blit(text, textRect)
 
 
 #sets the window name
@@ -379,8 +374,8 @@ while (status):
 			#declares that P1 can no longer be used and increases whose turn it is to choose by 1
 			P1 = False
 			p_1 = Players(player)
-			p_1.set_loc_x(200)
-			p_1.set_loc_y(730)
+			p_1.set_loc_x(605)
+			p_1.set_loc_y(605)
 			player += 1
 
 		#if P2 icon is clicked while it is still available
@@ -388,8 +383,8 @@ while (status):
 			#declares that P2 can no longer be used and increases whose turn it is to choose by 1
 			P2 = False
 			p_2 = Players(player)
-			p_2.set_loc_x(60)
-			p_2.set_loc_y(220)
+			p_2.set_loc_x(625)
+			p_2.set_loc_y(605)
 			player += 1
 
 		#if P3 icon is clicked while it is still available
@@ -397,8 +392,8 @@ while (status):
 			#declares that P3 can no longer be used and increases whose turn it is to choose by 1
 			P3 = False
 			p_3 = Players(player)
-			p_3.set_loc_x(170)
-			p_3.set_loc_y(60)
+			p_3.set_loc_x(605)
+			p_3.set_loc_y(625)
 			player += 1
 
 		#if P4 icon is clicked while it is still available
@@ -406,8 +401,8 @@ while (status):
 			#declares that P4 can no longer be used and increases whose turn it is to choose by 1
 			P4 = False
 			p_4 = Players(player)
-			p_4.set_loc_x(720)
-			p_4.set_loc_y(180)
+			p_4.set_loc_x(625)
+			p_4.set_loc_y(625)
 			player += 1
 
 		#if the continue button is clicked, enters the game screen
