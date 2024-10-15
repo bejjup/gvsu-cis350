@@ -116,47 +116,27 @@ class Players:
 	def get_num(self):
 		return self.num
 
-	def p1_out(self):
+	def render_output(self, text_center, img_pos):
 		text = font2.render(f'{self.name} {self.num}', True, (245, 245, 245))
 		textRect = text.get_rect()
-		textRect.center = (195, 787)
+		textRect.center = text_center
 		scrn.blit(text, textRect)
-		img_1 = pygame.image.load(self.get_img())
-		img_1 = pygame.transform.scale(img_1, (100, 100))
-		scrn.blit(img_1, (145, 675))
-		pygame.draw.circle(scrn, (self.get_color()),[self.get_loc_x(), self.get_loc_y()], 10, 0)
+		img = pygame.image.load(self.get_img())
+		img = pygame.transform.scale(img, (100, 100))
+		scrn.blit(img, img_pos)
+		pygame.draw.circle(scrn, self.get_color(), [self.get_loc_x(), self.get_loc_y()], 10, 0)
+
+	def p1_out(self):
+		self.render_output((195, 787), (145, 675))
 
 	def p2_out(self):
-		text = font2.render(f'{self.name} {self.num}', True, (245, 245, 245))
-		textRect = text.get_rect()
-		textRect.center = (75, 130)
-		scrn.blit(text, textRect)
-		img_2 = pygame.image.load(self.get_img())
-		img_2 = pygame.transform.scale(img_2, (100, 100))
-		scrn.blit(img_2, (25, 145))
-		pygame.draw.circle(scrn, (self.get_color()), [self.get_loc_x(), self.get_loc_y()], 10, 0)
+		self.render_output((75, 130), (25, 145))
 
 	def p3_out(self):
-		text = font2.render(f'{self.name} {self.num}', True, (245, 245, 245))
-		textRect = text.get_rect()
-		textRect.center = (195, 13)
-		scrn.blit(text, textRect)
-		img_3 = pygame.image.load(self.get_img())
-		img_3 = pygame.transform.scale(img_3, (100, 100))
-		scrn.blit(img_3, (145, 25))
-		pygame.draw.circle(scrn, (self.get_color()), [self.get_loc_x(), self.get_loc_y()], 10, 0)
+		self.render_output((195, 13), (145, 25))
 
 	def p4_out(self):
-		text = font2.render(f'{self.name} {self.num}', True, (245, 245, 245))
-		textRect = text.get_rect()
-		textRect.center = (725, 130)
-		scrn.blit(text, textRect)
-		img_4 = pygame.image.load(self.get_img())
-		img_4 = pygame.transform.scale(img_4, (100, 100))
-		scrn.blit(img_4, (675, 145))
-		pygame.draw.circle(scrn, (self.get_color()), [self.get_loc_x(), self.get_loc_y()], 10, 0)
-
-
+		self.render_output((725, 130), (675, 145))
 
 #prints the images that make the starting screen
 def print_start():
@@ -261,47 +241,22 @@ def print_board(DOUBLES, DICE, num1, num2):
 	dice2 = pygame.transform.scale(dice2, (50, 50))
 
 	#displays player 1's information
-	for i in range(4):
-		if p_1.get_num() == 1:
-			p_1.p1_out()
-		if p_1.get_num() == 2:
-			p_1.p2_out()
-		if p_1.get_num() == 3:
-			p_1.p3_out()
-		if p_1.get_num() == 4:
-			p_1.p4_out()
+	def process(p):
+		for i in range(4):
+			num = p.get_num()
+			if num == 1:
+				p.p1_out()
+			elif num == 2:
+				p.p2_out()
+			elif num == 3:
+				p.p3_out()
+			elif num == 4:
+				p.p4_out()
 
-	for i in range(4):
-		if p_2.get_num() == 1:
-			p_2.p1_out()
-		if p_2.get_num() == 2:
-			p_2.p2_out()
-		if p_2.get_num() == 3:
-			p_2.p3_out()
-		if p_2.get_num() == 4:
-			p_2.p4_out()
-
-	for i in range(4):
-		if p_3.get_num() == 1:
-			p_3.p1_out()
-		if p_3.get_num() == 2:
-			p_3.p2_out()
-		if p_3.get_num() == 3:
-			p_3.p3_out()
-		if p_3.get_num() == 4:
-			p_3.p4_out()
-
-	for i in range(4):
-		if p_4.get_num() == 1:
-			p_4.p1_out()
-		if p_4.get_num() == 2:
-			p_4.p2_out()
-		if p_4.get_num() == 3:
-			p_4.p3_out()
-		if p_4.get_num() == 4:
-			p_4.p4_out()
-
-	# displays player 2's information
+	process(p_1)
+	process(p_2)
+	process(p_3)
+	process(p_4)
 
 	#whether or not the player has rolled yet
 	if DICE:
@@ -352,7 +307,6 @@ def print_board(DOUBLES, DICE, num1, num2):
 		textRect.center = (1025, 25)
 		scrn.blit(text, textRect)
 
-
 	else:
 		# Displays the sum of the numbers rolled
 		text = font.render(f'You Rolled {num1 + num2}!', True, (245, 245, 245))
@@ -365,7 +319,6 @@ def print_board(DOUBLES, DICE, num1, num2):
 		textRect = text.get_rect()
 		textRect.center = (1025, 25)
 		scrn.blit(text, textRect)
-
 
 #sets the window name
 pygame.display.set_caption('Fortnite Monopoly')
@@ -402,14 +355,6 @@ while (status):
 				print("You clicked start")
 				START = False
 				SELEC = True
-
-			# display the select screen
-
-
-
-
-
-
 
 			# if P1 icon is clicked while it is still available
 			if (100 < mx < 400) and (100 < my < 400) and SELEC and P1:
@@ -451,13 +396,7 @@ while (status):
 				p_4.set_loc_y(625)
 				player += 1
 
-
-
-
-
-
-
-			# if the continue button is clicked, enters the game screen
+	# if the continue button is clicked, enters the game screen
 			if (510 < mx < 690) and (480 < my < 510) and SELEC and player == 5:
 				# TEST FOR WHEN THE CONTINUE BUTTON HAS BEEN CLICKED
 				print("You clicked start Again")
@@ -486,11 +425,9 @@ while (status):
 
 			print(f'{mx} {my}')
 
-
 		#displays start screen if START is true
 		if START:
 			print_start()
-
 
 		#updates the screen
 		pygame.display.update()
