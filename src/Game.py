@@ -36,7 +36,7 @@ num2 = random.randint(1,6)
 class Players:
 
 	#creates a Player and gives it values
-	def __init__(self, num):
+	def __init__(self, num, p):
 		self.num = num
 		self.wood = 300
 		self.brick = 200
@@ -49,6 +49,11 @@ class Players:
 		self.loc_y = 0
 		self.color = 0,0,0
 		self.set_color(num)
+		self.num = p
+		self.icon_x = 0
+		self.icon_y = 0
+		self.name_text_x = 0
+		self.name_text_y = 0
 
 	#returns the name of the player
 	def get_name(self):
@@ -61,9 +66,10 @@ class Players:
 		if num == 2:
 			self.name = "Jonesy"
 		if num == 3:
-			self.name = "John Wick"
-		if num == 4:
 			self.name = "Raven"
+		if num == 4:
+			self.name = "John Wick"
+
 
 	def set_color(self, num):
 		if num == 1:
@@ -71,9 +77,10 @@ class Players:
 		if num == 2:
 			self.color = 219, 31, 62
 		if num == 3:
-			self.color = 82, 82, 82
-		if num == 4:
 			self.color = 137, 42, 156
+		if num == 4:
+			self.color = 82, 82, 82
+
 
 	def get_color(self):
 		return self.color
@@ -89,9 +96,10 @@ class Players:
 		if num == 2:
 			self.img = "C:\\Users\\vinny\\Downloads\\jonesy.jpg"
 		if num == 3:
-			self.img = "C:\\Users\\vinny\\Downloads\\John_wick.jpg"
-		if num == 4:
 			self.img = "C:\\Users\\vinny\\Downloads\\Raven.jpg"
+		if num == 4:
+			self.img = "C:\\Users\\vinny\\Downloads\\John_wick.jpg"
+
 
 	def set_loc_x(self, num):
 		self.loc_x = num
@@ -105,8 +113,11 @@ class Players:
 	def get_loc_y(self):
 		return self.loc_y
 
+	def get_num(self):
+		return self.num
+
 	def p1_out(self):
-		text = font2.render(f'{self.name}', True, (245, 245, 245))
+		text = font2.render(f'{self.name} {self.num}', True, (245, 245, 245))
 		textRect = text.get_rect()
 		textRect.center = (195, 787)
 		scrn.blit(text, textRect)
@@ -116,7 +127,7 @@ class Players:
 		pygame.draw.circle(scrn, (self.get_color()),[self.get_loc_x(), self.get_loc_y()], 10, 0)
 
 	def p2_out(self):
-		text = font2.render(f'{self.name}', True, (245, 245, 245))
+		text = font2.render(f'{self.name} {self.num}', True, (245, 245, 245))
 		textRect = text.get_rect()
 		textRect.center = (75, 130)
 		scrn.blit(text, textRect)
@@ -126,7 +137,7 @@ class Players:
 		pygame.draw.circle(scrn, (self.get_color()), [self.get_loc_x(), self.get_loc_y()], 10, 0)
 
 	def p3_out(self):
-		text = font2.render(f'{self.name}', True, (245, 245, 245))
+		text = font2.render(f'{self.name} {self.num}', True, (245, 245, 245))
 		textRect = text.get_rect()
 		textRect.center = (195, 13)
 		scrn.blit(text, textRect)
@@ -136,7 +147,7 @@ class Players:
 		pygame.draw.circle(scrn, (self.get_color()), [self.get_loc_x(), self.get_loc_y()], 10, 0)
 
 	def p4_out(self):
-		text = font2.render(f'{self.name}', True, (245, 245, 245))
+		text = font2.render(f'{self.name} {self.num}', True, (245, 245, 245))
 		textRect = text.get_rect()
 		textRect.center = (725, 130)
 		scrn.blit(text, textRect)
@@ -205,14 +216,14 @@ def print_selec():
 			scrn.blit(jonesy, (800, 100))
 
 		if P3:
-			j_wick = pygame.image.load("C:\\Users\\vinny\\Downloads\\John_wick.jpg")
-			j_wick = pygame.transform.scale(j_wick, (300, 300))
-			scrn.blit(j_wick, (800, 450))
-
-		if P4:
 			raven = pygame.image.load("C:\\Users\\vinny\\Downloads\\Raven.jpg")
 			raven = pygame.transform.scale(raven, (300, 300))
 			scrn.blit(raven, (100, 450))
+
+		if P4:
+			j_wick = pygame.image.load("C:\\Users\\vinny\\Downloads\\John_wick.jpg")
+			j_wick = pygame.transform.scale(j_wick, (300, 300))
+			scrn.blit(j_wick, (800, 450))
 	display_selec_icons()
 
 #declares the function print_board, that will print all images for board
@@ -250,19 +261,47 @@ def print_board(DOUBLES, DICE, num1, num2):
 	dice2 = pygame.transform.scale(dice2, (50, 50))
 
 	#displays player 1's information
-	p_1.p1_out()
+	for i in range(4):
+		if p_1.get_num() == 1:
+			p_1.p1_out()
+		if p_1.get_num() == 2:
+			p_1.p2_out()
+		if p_1.get_num() == 3:
+			p_1.p3_out()
+		if p_1.get_num() == 4:
+			p_1.p4_out()
+
+	for i in range(4):
+		if p_2.get_num() == 1:
+			p_2.p1_out()
+		if p_2.get_num() == 2:
+			p_2.p2_out()
+		if p_2.get_num() == 3:
+			p_2.p3_out()
+		if p_2.get_num() == 4:
+			p_2.p4_out()
+
+	for i in range(4):
+		if p_3.get_num() == 1:
+			p_3.p1_out()
+		if p_3.get_num() == 2:
+			p_3.p2_out()
+		if p_3.get_num() == 3:
+			p_3.p3_out()
+		if p_3.get_num() == 4:
+			p_3.p4_out()
+
+	for i in range(4):
+		if p_4.get_num() == 1:
+			p_4.p1_out()
+		if p_4.get_num() == 2:
+			p_4.p2_out()
+		if p_4.get_num() == 3:
+			p_4.p3_out()
+		if p_4.get_num() == 4:
+			p_4.p4_out()
 
 	# displays player 2's information
-
-	p_2.p2_out()
-
-	# displays player 3's information
-
-	p_3.p3_out()
-
-	# displays player 4's information
-
-	p_4.p4_out()
 
 	#whether or not the player has rolled yet
 	if DICE:
@@ -367,11 +406,17 @@ while (status):
 			# display the select screen
 
 
+
+
+
+
+
 			# if P1 icon is clicked while it is still available
 			if (100 < mx < 400) and (100 < my < 400) and SELEC and P1:
 				# declares that P1 can no longer be used and increases whose turn it is to choose by 1
 				P1 = False
-				p_1 = Players(player)
+				print(player)
+				p_1 = Players(1, player)
 				p_1.set_loc_x(605)
 				p_1.set_loc_y(605)
 				player += 1
@@ -380,28 +425,37 @@ while (status):
 			if (800 < mx < 1100) and (100 < my < 400) and SELEC and P2:
 				# declares that P2 can no longer be used and increases whose turn it is to choose by 1
 				P2 = False
-				p_2 = Players(player)
+				print(player)
+				p_2 = Players(2, player)
 				p_2.set_loc_x(625)
 				p_2.set_loc_y(605)
 				player += 1
 
 			# if P3 icon is clicked while it is still available
-			if (800 < mx < 1100) and (450 < my < 750) and SELEC and P3:
+			if (100 < mx < 400) and (450 < my < 750) and SELEC and P3:
 				# declares that P3 can no longer be used and increases whose turn it is to choose by 1
 				P3 = False
-				p_3 = Players(player)
+				print(player)
+				p_3 = Players(3, player)
 				p_3.set_loc_x(605)
 				p_3.set_loc_y(625)
 				player += 1
 
 			# if P4 icon is clicked while it is still available
-			if (100 < mx < 400) and (450 < my < 750) and SELEC and P4:
+			if (800 < mx < 1100) and (450 < my < 750) and SELEC and P4:
 				# declares that P4 can no longer be used and increases whose turn it is to choose by 1
 				P4 = False
-				p_4 = Players(player)
+				print(player)
+				p_4 = Players(4, player)
 				p_4.set_loc_x(625)
 				p_4.set_loc_y(625)
 				player += 1
+
+
+
+
+
+
 
 			# if the continue button is clicked, enters the game screen
 			if (510 < mx < 690) and (480 < my < 510) and SELEC and player == 5:
