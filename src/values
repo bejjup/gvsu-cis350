@@ -455,7 +455,7 @@ while (status):
                             vals.plays[vals.player-1].loc_y += (52)
                     x2 = vals.plays[vals.player-1].loc_x
                     y2 = vals.plays[vals.player-1].loc_y
-                    if x1 > x2 and y1 < y2:
+                    if x1 > x2 and y1 < y2 or 575< y2 < 650 and 575 < x2 < 650:
                         vals.plays[vals.player - 1].wood += 200
 
 
