@@ -358,7 +358,7 @@ while (status):
                     vals.ROLLING = False
                     print("test")
 
-                if (920 < mx < 1130) and (5 < my < 45) and vals.ROLLING:
+                if (920 < mx < 1130) and (5 < my < 45) and not vals.DICE and not vals.DOUBLES:
                     vals.DICE = True
                     vals.DOUBLES = False
                     vals.num1 = random.randint(1, 6)
@@ -366,17 +366,15 @@ while (status):
                     vals.player +=1
                     if vals.player == 5:
                         vals.player = 1
-                    print(f'{vals.player} {vals.ROLLING}')
 
-                if (920 < mx < 1130) and (5 < my < 45) and not vals.ROLLING:
+                if (920 < mx < 1130) and (5 < my < 45):
                     # resets the rolling values to allow the next turn
                     vals.DICE = True
                     vals.DOUBLES = False
                     vals.num1 = random.randint(1, 6)
                     vals.num2 = random.randint(1, 6)
-                    print(f'{vals.player} {vals.ROLLING}')
-
-        #updates the screen
+            print(f'player:{vals.player} DICE:{vals.DICE} DOUBLES:{vals.DOUBLES}')
+            
         if vals.START:
             print_start()
         if vals.SELEC:
