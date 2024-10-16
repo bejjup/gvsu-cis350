@@ -1,0 +1,24 @@
+Team name: Pythonic Pioneers
+
+Members present: Joshua Wiles, Brody Richards, Aiden Mack, Logan Scheurer
+
+Date: 10/2/2024
+
+Time: 9:30AM
+
+Discussion points: 
+
+* Non-functional vs Functional requirements
+  - Non-functional: There won't be a ton of nun-funcional elements to this game since only one player will be playing at a time
+  - Functional: Most of the game will be accessable to the user
+* Reward system that scales
+* Minimum set amount of tiles
+* Figuring out a game end-state
+* Portability will be easy except for console players
+* We will have to be the "customer" for the V-Model
+
+Goals for next week (include responsibilities)
+
+* Researching how to get a display working for our base (Brody)
+* Gathering requirements and figuring them out ourselves
+* Figuring out 2 functional and 2 non-functional requirements for the project which we will meet up and do tomorrow (10/3) after class
