@@ -17,82 +17,141 @@ vals = Values()
 vals._font1 = pygame.font.Font('freesansbold.ttf', 40)
 vals._font2 = pygame.font.Font('freesansbold.ttf', 20)
 vals._font3 = pygame.font.Font('freesansbold.ttf', 30)
+
+
 class Players:
 
-    #creates a Player and gives it values
+    # creates a Player and gives it values
     def __init__(self, num, p):
-        self.num = num
-        self.wood = 300
-        self.brick = 200
-        self.metal = 100
-        self.name = "Placeholder"
-        self.color = 0, 0, 0
-        self.img = "Placeholder"
+        self._num = num
+        self._wood = 300
+        self._brick = 200
+        self._metal = 100
+        self._loc_x = 0
+        self._loc_y = 0
+        self._num = p
+        self._icon_x = 0
+        self._icon_y = 0
+        self._name_text_x = 0
+        self._name_text_y = 0
+        self._named = "Placeholder"
+        self._color = 0, 0, 0
+        self._img = "Placeholder"
         self.set_playa(num)
-        self.loc_x = 0
-        self.loc_y = 0
-        self.num = p
-        self.icon_x = 0
-        self.icon_y = 0
-        self.name_text_x = 0
-        self.name_text_y = 0
 
-    #returns the name of the player
-    def get_name(self):
-        return self.name
+    # returns the name of the player
+    @property
+    def wood(self):
+        return self._wood
 
-    #sets the name of the player depending on what icon they chose
+    @wood.setter
+    def wood(self, value):
+        self._wood = value
+
+    @property
+    def brick(self):
+        return self._brick
+
+    @brick.setter
+    def brick(self, value):
+        self._brick = value
+
+    @property
+    def metal(self):
+        return self._metal
+
+    @metal.setter
+    def metal(self, value):
+        self._metal = value
+
+    @property
+    def named(self):
+        return self._named
+
+    @property
+    def loc_x(self):
+        return self._loc_x
+
+    @loc_x.setter
+    def loc_x(self, value):
+        self._loc_x = value
+
+    @property
+    def loc_y(self):
+        return self._loc_y
+
+    @loc_y.setter
+    def loc_y(self, value):
+        self._loc_y = value
+
+    @property
+    def num(self):
+        return self._num
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        self._name = value
+
+    @property
+    def color(self):
+        return self._color
+
+    @color.setter
+    def color(self, value):
+        self._color = value
+
+    @property
+    def img(self):
+        return self._img
+
+    @img.setter
+    def img(self, value):
+        self._img = value
+
+    # sets the name of the player depending on what icon they chose
     def set_playa(self, num):
         if num == 1:
-            self.name = "Nog Ops"
-            self.color = 89, 211, 227
-            self.img = "C:\\Users\\vinny\\Downloads\\nog_ops.jpg"
+            self._name = "Nog Ops"
+            self._color = 89, 211, 227
+            self._img = "C:\\Users\\vinny\\Downloads\\nog_ops.jpg"
         if num == 2:
-            self.name = "Jonesy"
-            self.color = 219, 31, 62
-            self.img = "C:\\Users\\vinny\\Downloads\\jonesy.jpg"
+            self._name = "Jonesy"
+            self._color = 219, 31, 62
+            self._img = "C:\\Users\\vinny\\Downloads\\jonesy.jpg"
 
         if num == 3:
-            self.name = "Raven"
-            self.color = 137, 42, 156
-            self.img = "C:\\Users\\vinny\\Downloads\\Raven.jpg"
+            self._name = "Raven"
+            self._color = 137, 42, 156
+            self._img = "C:\\Users\\vinny\\Downloads\\Raven.jpg"
 
         if num == 4:
-            self.name = "John Wick"
-            self.color = 82, 82, 82
-            self.img = "C:\\Users\\vinny\\Downloads\\John_wick.jpg"
-
-    def get_color(self):
-        return self.color
-    def get_img(self):
-        return self.img
-    def set_loc_x(self, num):
-        self.loc_x = num
-    def get_loc_x(self):
-        return self.loc_x
-    def set_loc_y(self, num):
-        self.loc_y = num
-    def get_loc_y(self):
-        return self.loc_y
-    def get_num(self):
-        return self.num
+            self._name = "John Wick"
+            self._color = 82, 82, 82
+            self._img = "C:\\Users\\vinny\\Downloads\\John_wick.jpg"
 
     def render_output(self, text_center, img_pos):
-        text = vals.font2.render(f'{self.name} {self.num}', True, (245, 245, 245))
+        text = vals.font2.render(f'{self.named} {self.num}', True, (245, 245, 245))
         textRect = text.get_rect()
         textRect.center = text_center
         scrn.blit(text, textRect)
-        img = pygame.image.load(self.get_img())
+        img = pygame.image.load(self.img)
         img = pygame.transform.scale(img, (100, 100))
         scrn.blit(img, img_pos)
-        pygame.draw.circle(scrn, self.get_color(), [self.get_loc_x(), self.get_loc_y()], 10, 0)
+        pygame.draw.circle(scrn, self.color, [self.loc_x, self.loc_y], 10, 0)
 
     def p1_out(self):
         self.render_output((195, 787), (145, 675))
+
     def p2_out(self):
         self.render_output((75, 130), (25, 145))
+
     def p3_out(self):
         self.render_output((195, 13), (145, 25))
+
     def p4_out(self):
         self.render_output((725, 130), (675, 145))
 
@@ -229,7 +288,7 @@ def print_board():
     #displays player 1's information
     def process(p):
         for i in range(4):
-            num = p.get_num()
+            num = p.num
             if num == 1:
                 p.p1_out()
             elif num == 2:
@@ -295,8 +354,8 @@ while (status):
                     vals.P1 = False
                     print(vals.player)
                     p_1 = Players(1, vals.player)
-                    p_1.set_loc_x(605)
-                    p_1.set_loc_y(605)
+                    p_1.loc_x = 605
+                    p_1.loc_y = 605
                     vals.player += 1
                     vals.plays.append(p_1)
 
@@ -306,8 +365,8 @@ while (status):
                     vals.P2 = False
                     print(vals.player)
                     p_2 = Players(2, vals.player)
-                    p_2.set_loc_x(625)
-                    p_2.set_loc_y(605)
+                    p_2.loc_x = 625
+                    p_2.loc_y = 605
                     vals.player += 1
                     vals.plays.append(p_2)
 
@@ -317,8 +376,8 @@ while (status):
                     vals.P3 = False
                     print(vals.player)
                     p_3 = Players(3, vals.player)
-                    p_3.set_loc_x(605)
-                    p_3.set_loc_y(625)
+                    p_3.loc_x = 605
+                    p_3.loc_y = 625
                     vals.player += 1
                     vals.plays.append(p_3)
 
@@ -328,8 +387,8 @@ while (status):
                     vals.P4 = False
                     print(vals.player)
                     p_4 = Players(4, vals.player)
-                    p_4.set_loc_x(625)
-                    p_4.set_loc_y(625)
+                    p_4.loc_x = 625
+                    p_4.loc_y = 625
                     vals.player += 1
                     vals.plays.append(p_4)
 
@@ -354,6 +413,8 @@ while (status):
                     mixer.music.load("C:\\Users\\vinny\\Downloads\\dice-142528.mp3")
                     pygame.mixer.music.queue("C:\\Users\\vinny\\Downloads\\01. Battle Royal (Guitar Theme).mp3")
                     mixer.music.play()
+                    #vals.plays[vals.player-1].
+
 
                 #Roll again
                 if (875 < mx < 1175) and (50 < my < 750) and vals.num1 == vals.num2:
@@ -361,7 +422,6 @@ while (status):
                     vals.DOUBLES = True
                     vals.DICE = False
                     vals.ROLLING = False
-                    print("You rolled again")
 
 
                 elif (875 < mx < 1175) and (50 < my < 750) and vals.DOUBLES:
