@@ -1,5 +1,5 @@
 import random
-import pygame
+
 class Values:
     def __init__(self):
 
@@ -8,7 +8,6 @@ class Values:
         self._GAME = False
         self._START = True
         self._SELEC = False
-        self._ROLLING = False
         self._P1 = True
         self._P2 = True
         self._P3 = True
@@ -18,6 +17,8 @@ class Values:
         self._num2 = random.randint(1,6)
         self._font1 = ""
         self._font2 = ""
+        self._font3 = ""
+        self._plays = []
 
     @property
     def DICE(self):
@@ -58,14 +59,6 @@ class Values:
     @SELEC.setter
     def SELEC(self, value):
         self._SELEC = value
-
-    @property
-    def ROLLING(self):
-        return self._ROLLING
-
-    @ROLLING.setter
-    def ROLLING(self, value):
-        self._ROLLING = value
 
     @property
     def P1(self):
@@ -138,3 +131,19 @@ class Values:
     @font2.setter
     def font2(self, value):
         self._font2 = value
+
+    @property
+    def font3(self):
+        return self._font3
+
+    @font3.setter
+    def font3(self, value):
+        self._font3 = value
+
+    @property
+    def plays(self):
+        return self._plays
+
+    @plays.setter
+    def plays(self, value):
+        self._plays = value
