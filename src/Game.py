@@ -16,6 +16,7 @@ scrn = pygame.display.set_mode((X, Y))
 vals = Values()
 vals._font1 = pygame.font.Font('freesansbold.ttf', 40)
 vals._font2 = pygame.font.Font('freesansbold.ttf', 20)
+vals._font3 = pygame.font.Font('freesansbold.ttf', 30)
 class Players:
 
     #creates a Player and gives it values
@@ -243,6 +244,11 @@ def print_board():
     process(p_3)
     process(p_4)
 
+    text = vals.font3.render(f'{vals.plays[vals.player-1].name}\'s turn', True, (245, 245, 245), vals.plays[vals.player-1].color)
+    textRect = text.get_rect()
+    textRect.center = (775, 25)
+    scrn.blit(text, textRect)
+
 #sets the window name
 pygame.display.set_caption('Fortnite Monopoly')
 
@@ -293,6 +299,7 @@ while (status):
                     p_1.set_loc_x(605)
                     p_1.set_loc_y(605)
                     vals.player += 1
+                    vals.plays.append(p_1)
 
                 # if P2 icon is clicked while it is still available
                 if (800 < mx < 1100) and (100 < my < 400) and vals.P2:
@@ -303,6 +310,7 @@ while (status):
                     p_2.set_loc_x(625)
                     p_2.set_loc_y(605)
                     vals.player += 1
+                    vals.plays.append(p_2)
 
                 # if P3 icon is clicked while it is still available
                 if (100 < mx < 400) and (450 < my < 750) and vals.P3:
@@ -313,6 +321,7 @@ while (status):
                     p_3.set_loc_x(605)
                     p_3.set_loc_y(625)
                     vals.player += 1
+                    vals.plays.append(p_3)
 
                 # if P4 icon is clicked while it is still available
                 if (800 < mx < 1100) and (450 < my < 750) and vals.P4:
@@ -323,6 +332,7 @@ while (status):
                     p_4.set_loc_x(625)
                     p_4.set_loc_y(625)
                     vals.player += 1
+                    vals.plays.append(p_4)
 
         # if the continue button is clicked, enters the game screen
                 if (510 < mx < 690) and (480 < my < 510) and vals.player == 5:
@@ -373,8 +383,8 @@ while (status):
                     vals.DOUBLES = False
                     vals.num1 = random.randint(1, 6)
                     vals.num2 = random.randint(1, 6)
-            print(f'player:{vals.player} DICE:{vals.DICE} DOUBLES:{vals.DOUBLES}')
-            
+            print(f'{mx} {my}')
+
         if vals.START:
             print_start()
         if vals.SELEC:
