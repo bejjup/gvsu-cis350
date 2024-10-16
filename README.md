@@ -6,16 +6,11 @@ Our concept is creating a fully functional minesweeper roguelike game. This will
 	
 ## Team Members and Roles
 
-<<<<<<< HEAD
-* Brody Richards (Frontend Dev, Git Manager)
-* [Logan Scheurer](https://github.com/scheurel/CIS350-HW2-Scheurer) (Backend Dev)
-* Member 3 (Role 5, Role 6)
-=======
+
 * [Brody Richards](https://github.com/BRich823/CIS350-HW2-Richards) (Frontend Dev, Git Manager)
 * [Logan Scheurer](https://github.com/scheurel/CIS350-HW2-Scheurer) (Backend Dev)
 * [Aiden Mack](https://github.com/aidenamack/CIS350-HW2-Mack) (Backend Dev)
 * [Joshua Wiles](https://github.com/JwilesGV/CIS350-HW2-WILES) (Project Manager)
->>>>>>> refs/remotes/origin/main
 
 ## Prerequisites
 
