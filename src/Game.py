@@ -42,13 +42,11 @@ class Players:
 		self.brick = 200
 		self.metal = 100
 		self.name = "Placeholder"
+		self.color = 0, 0, 0
 		self.img = "Placeholder"
-		self.set_name(num)
-		self.set_img(num)
+		self.set_playa(num)
 		self.loc_x = 0
 		self.loc_y = 0
-		self.color = 0,0,0
-		self.set_color(num)
 		self.num = p
 		self.icon_x = 0
 		self.icon_y = 0
@@ -60,26 +58,25 @@ class Players:
 		return self.name
 
 	#sets the name of the player depending on what icon they chose
-	def set_name(self, num):
+	def set_playa(self, num):
 		if num == 1:
 			self.name = "Nog Ops"
+			self.color = 89, 211, 227
+			self.img = "C:\\Users\\vinny\\Downloads\\nog_ops.jpg"
 		if num == 2:
 			self.name = "Jonesy"
+			self.color = 219, 31, 62
+			self.img = "C:\\Users\\vinny\\Downloads\\jonesy.jpg"
+
 		if num == 3:
 			self.name = "Raven"
+			self.color = 137, 42, 156
+			self.img = "C:\\Users\\vinny\\Downloads\\Raven.jpg"
+
 		if num == 4:
 			self.name = "John Wick"
-
-
-	def set_color(self, num):
-		if num == 1:
-			self.color = 89, 211, 227
-		if num == 2:
-			self.color = 219, 31, 62
-		if num == 3:
-			self.color = 137, 42, 156
-		if num == 4:
 			self.color = 82, 82, 82
+			self.img = "C:\\Users\\vinny\\Downloads\\John_wick.jpg"
 
 
 	def get_color(self):
@@ -88,17 +85,6 @@ class Players:
 	#returns the image directory
 	def get_img(self):
 		return self.img
-
-	#sets the image of the player depending on what icon they chose
-	def set_img(self, num):
-		if num == 1:
-			self.img = "C:\\Users\\vinny\\Downloads\\nog_ops.jpg"
-		if num == 2:
-			self.img = "C:\\Users\\vinny\\Downloads\\jonesy.jpg"
-		if num == 3:
-			self.img = "C:\\Users\\vinny\\Downloads\\Raven.jpg"
-		if num == 4:
-			self.img = "C:\\Users\\vinny\\Downloads\\John_wick.jpg"
 
 
 	def set_loc_x(self, num):
