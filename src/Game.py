@@ -12,10 +12,7 @@ Y = 800
 #creates the screen, and sets the width to X and the height to Y
 scrn = pygame.display.set_mode((X, Y))
 
-
 #values that determine the current stage of the game
-
-
 vals = Values()
 vals._font1 = pygame.font.Font('freesansbold.ttf', 40)
 vals._font2 = pygame.font.Font('freesansbold.ttf', 20)
@@ -64,25 +61,18 @@ class Players:
             self.color = 82, 82, 82
             self.img = "C:\\Users\\vinny\\Downloads\\John_wick.jpg"
 
-
     def get_color(self):
         return self.color
-
     def get_img(self):
         return self.img
-
     def set_loc_x(self, num):
         self.loc_x = num
-
     def get_loc_x(self):
         return self.loc_x
-
     def set_loc_y(self, num):
         self.loc_y = num
-
     def get_loc_y(self):
         return self.loc_y
-
     def get_num(self):
         return self.num
 
@@ -98,13 +88,10 @@ class Players:
 
     def p1_out(self):
         self.render_output((195, 787), (145, 675))
-
     def p2_out(self):
         self.render_output((75, 130), (25, 145))
-
     def p3_out(self):
         self.render_output((195, 13), (145, 25))
-
     def p4_out(self):
         self.render_output((725, 130), (675, 145))
 
@@ -238,17 +225,6 @@ def print_board():
         scrn.blit(imp, (150, 150))
     map()
 
-    #gets values of mouse movements
-    mx, my = pygame.mouse.get_pos()
-
-    #sets dice1 to the image of the dice, and declares its size and location
-    dice1 = pygame.image.load("C:\\Users\\vinny\\Downloads\\dice.png")
-    dice1 = pygame.transform.scale(dice1, (50, 50))
-
-    #sets dice2 to the image of the dice, and declares its size and location
-    dice2 = pygame.image.load("C:\\Users\\vinny\\Downloads\\dice.png")
-    dice2 = pygame.transform.scale(dice2, (50, 50))
-
     #displays player 1's information
     def process(p):
         for i in range(4):
@@ -266,68 +242,6 @@ def print_board():
     process(p_2)
     process(p_3)
     process(p_4)
-
-    #whether or not the player has rolled yet
-    if vals.DICE:
-
-        #moves the dice to follow the mouse if the mouse is within the roll box
-        if (875 < mx < 1175) and (50 < my < 750):
-            scrn.blit(dice1, (mx - 25, my - 25))
-            scrn.blit(dice2, (mx + 25, my + 25))
-
-        #moves dice to default spot if the mouse is not within the roll box
-        else:
-            scrn.blit(dice1, (1060, 675))
-            scrn.blit(dice2, (1110, 675))
-
-            #sets the text size and location, and prints the Dice label
-            text = vals.font1.render('Dice:', True, (245, 245, 245), (0, 0, 0))
-            textRect = text.get_rect()
-            textRect.center = (960, 700)
-            scrn.blit(text, textRect)
-
-    #if the previous dice were doubles
-    elif vals.DOUBLES:
-        # moves the dice to follow the mouse if the mouse is within the roll box
-        if (875 < mx < 1175) and (50 < my < 750):
-            scrn.blit(dice1, (mx - 25, my - 25))
-            scrn.blit(dice2, (mx + 25, my + 25))
-
-        else:
-            # moves dice to default spot if the mouse is not within the roll box
-            scrn.blit(dice1, (1060, 675))
-            scrn.blit(dice2, (1110, 675))
-
-        #Displays the sum of the numbers rolled as well as that they were doubles
-        text = vals.font1.render(f'Doubles {vals.num1 + vals.num2}!', True, (245, 245, 245))
-        textRect = text.get_rect()
-        textRect.center = (1000, 630)
-        scrn.blit(text, textRect)
-
-        # sets the text size and location, and prints the Dice label
-        text = vals.font1.render('Dice:', True, (245, 245, 245))
-        textRect = text.get_rect()
-        textRect.center = (960, 700)
-        scrn.blit(text, textRect)
-
-        # displays the Roll Again button if the player can roll after had rolling doubles
-        text = vals.font1.render('Roll Again:', True, (245, 245, 245))
-        textRect = text.get_rect()
-        textRect.center = (1025, 25)
-        scrn.blit(text, textRect)
-
-    else:
-        # Displays the sum of the numbers rolled
-        text = vals.font1.render(f'You Rolled {vals.num1 + vals.num2}!', True, (245, 245, 245))
-        textRect = text.get_rect()
-        textRect.center = (1025, 700)
-        scrn.blit(text, textRect)
-
-        # displays the Next Turn button if the player can roll
-        text = vals.font1.render('Next Turn:', True, (245, 245, 245))
-        textRect = text.get_rect()
-        textRect.center = (1025, 25)
-        scrn.blit(text, textRect)
 
 #sets the window name
 pygame.display.set_caption('Fortnite Monopoly')
@@ -351,7 +265,12 @@ while (status):
     for i in pygame.event.get():
         #stores the x and y values of the mouse
         mx, my = pygame.mouse.get_pos()
+        dice1 = pygame.image.load("C:\\Users\\vinny\\Downloads\\dice.png")
+        dice1 = pygame.transform.scale(dice1, (50, 50))
 
+        # sets dice2 to the image of the dice, and declares its size and location
+        dice2 = pygame.image.load("C:\\Users\\vinny\\Downloads\\dice.png")
+        dice2 = pygame.transform.scale(dice2, (50, 50))
         #displays start screen if START is true
 
         if pygame.mouse.get_pressed()[0]:
@@ -415,6 +334,7 @@ while (status):
 
 
             if vals.GAME:
+
                 #Next Turn
                 if (875 < mx < 1175) and (50 < my < 750) and vals.DICE:
                     # declares that the player just rolled
@@ -456,7 +376,6 @@ while (status):
                     vals.num2 = random.randint(1, 6)
                     print(f'{vals.player} {vals.ROLLING}')
 
-
         #updates the screen
         if vals.START:
             print_start()
@@ -464,6 +383,66 @@ while (status):
             print_selec()
         if vals.GAME:
             print_board()
+            if vals.DICE:
+                # moves the dice to follow the mouse if the mouse is within the roll box
+                if (875 < mx < 1175) and (50 < my < 750):
+                    scrn.blit(dice1, (mx - 25, my - 25))
+                    scrn.blit(dice2, (mx + 25, my + 25))
+
+                # moves dice to default spot if the mouse is not within the roll box
+                else:
+                    scrn.blit(dice1, (1060, 675))
+                    scrn.blit(dice2, (1110, 675))
+
+                    # sets the text size and location, and prints the Dice label
+                    text = vals.font1.render('Dice:', True, (245, 245, 245), (0, 0, 0))
+                    textRect = text.get_rect()
+                    textRect.center = (960, 700)
+                    scrn.blit(text, textRect)
+
+            # if the previous dice were doubles
+            elif vals.DOUBLES:
+                # moves the dice to follow the mouse if the mouse is within the roll box
+                if (875 < mx < 1175) and (50 < my < 750):
+                    scrn.blit(dice1, (mx - 25, my - 25))
+                    scrn.blit(dice2, (mx + 25, my + 25))
+
+                else:
+                    # moves dice to default spot if the mouse is not within the roll box
+                    scrn.blit(dice1, (1060, 675))
+                    scrn.blit(dice2, (1110, 675))
+
+                # Displays the sum of the numbers rolled as well as that they were doubles
+                text = vals.font1.render(f'Doubles {vals.num1 + vals.num2}!', True, (245, 245, 245))
+                textRect = text.get_rect()
+                textRect.center = (1000, 630)
+                scrn.blit(text, textRect)
+
+                # sets the text size and location, and prints the Dice label
+                text = vals.font1.render('Dice:', True, (245, 245, 245))
+                textRect = text.get_rect()
+                textRect.center = (960, 700)
+                scrn.blit(text, textRect)
+
+                # displays the Roll Again button if the player can roll after had rolling doubles
+                text = vals.font1.render('Roll Again:', True, (245, 245, 245))
+                textRect = text.get_rect()
+                textRect.center = (1025, 25)
+                scrn.blit(text, textRect)
+
+            else:
+                # Displays the sum of the numbers rolled
+                text = vals.font1.render(f'You Rolled {vals.num1 + vals.num2}!', True, (245, 245, 245))
+                textRect = text.get_rect()
+                textRect.center = (1025, 700)
+                scrn.blit(text, textRect)
+
+                # displays the Next Turn button if the player can roll
+                text = vals.font1.render('Next Turn:', True, (245, 245, 245))
+                textRect = text.get_rect()
+                textRect.center = (1025, 25)
+                scrn.blit(text, textRect)
+
         pygame.display.update()
 
         #if window is closed, the program ends
