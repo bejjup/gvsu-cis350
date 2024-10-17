@@ -17,31 +17,117 @@ vals = Values()
 vals._font1 = pygame.font.Font('freesansbold.ttf', 40)
 vals._font2 = pygame.font.Font('freesansbold.ttf', 20)
 vals._font3 = pygame.font.Font('freesansbold.ttf', 30)
+
+
 class Players:
 
-    #creates a Player and gives it values
     def __init__(self, num, p):
-        self.num = num
-        self.wood = 300
-        self.brick = 200
-        self.metal = 100
-        self.name = "Placeholder"
-        self.color = 0, 0, 0
-        self.img = "Placeholder"
+        self._num = num
+        self._wood = 300
+        self._brick = 200
+        self._metal = 100
+        self._loc_x = 0
+        self._loc_y = 0
+        self._num = p
+        self._icon_x = 0
+        self._icon_y = 0
+        self._name_text_x = 0
+        self._name_text_y = 0
+        self._name = "Placeholder"
+        self._color = 0, 0, 0
+        self._img = "Placeholder"
         self.set_playa(num)
-        self.loc_x = 0
-        self.loc_y = 0
-        self.num = p
-        self.icon_x = 0
-        self.icon_y = 0
-        self.name_text_x = 0
-        self.name_text_y = 0
 
-    #returns the name of the player
-    def get_name(self):
-        return self.name
+    # returns the name of the player
+    @property
+    def wood(self):
+        return self._wood
 
-    #sets the name of the player depending on what icon they chose
+    @wood.setter
+    def wood(self, value):
+        self._wood = value
+
+    @property
+    def brick(self):
+        return self._brick
+
+    @brick.setter
+    def brick(self, value):
+        self._brick = value
+
+    @property
+    def metal(self):
+        return self._metal
+
+    @metal.setter
+    def metal(self, value):
+        self._metal = value
+
+    @property
+    def name(self):
+        return self._name
+
+    @property
+    def loc_x(self):
+        return self._loc_x
+
+    @loc_x.setter
+    def loc_x(self, value):
+        self._loc_x = value
+
+    @property
+    def loc_y(self):
+        return self._loc_y
+
+    @loc_y.setter
+    def loc_y(self, value):
+        self._loc_y = value
+
+    @property
+    def num(self):
+        return self._num
+
+    @property
+    def name_text_x(self):
+        return self._name_text_x
+
+    @name_text_x.setter
+    def name_text_x(self, value):
+        self._name_text_x = value
+
+    @property
+    def name_text_y(self):
+        return self._name_text_y
+
+    @name_text_y.setter
+    def name_text_y(self, value):
+        self._name_text_y = value
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        self._name = value
+
+    @property
+    def color(self):
+        return self._color
+
+    @color.setter
+    def color(self, value):
+        self._color = value
+
+    @property
+    def img(self):
+        return self._img
+
+    @img.setter
+    def img(self, value):
+        self._img = value
+
+    # sets the name of the player depending on what icon they chose
     def set_playa(self, num):
         if num == 1:
             self.name = "Nog Ops"
@@ -62,39 +148,35 @@ class Players:
             self.color = 82, 82, 82
             self.img = "C:\\Users\\vinny\\Downloads\\John_wick.jpg"
 
-    def get_color(self):
-        return self.color
-    def get_img(self):
-        return self.img
-    def set_loc_x(self, num):
-        self.loc_x = num
-    def get_loc_x(self):
-        return self.loc_x
-    def set_loc_y(self, num):
-        self.loc_y = num
-    def get_loc_y(self):
-        return self.loc_y
-    def get_num(self):
-        return self.num
-
-    def render_output(self, text_center, img_pos):
+    def render_output(self, text_center, img_pos, mats_x_y, bool):
         text = vals.font2.render(f'{self.name} {self.num}', True, (245, 245, 245))
         textRect = text.get_rect()
         textRect.center = text_center
         scrn.blit(text, textRect)
-        img = pygame.image.load(self.get_img())
+        img = pygame.image.load(self.img)
         img = pygame.transform.scale(img, (100, 100))
         scrn.blit(img, img_pos)
-        pygame.draw.circle(scrn, self.get_color(), [self.get_loc_x(), self.get_loc_y()], 10, 0)
+        text = vals.font1.render(f'{self.wood} {self.brick} {self._metal}!', True, (245, 245, 245))
+        textRect = text.get_rect()
+        textRect.center = (mats_x_y)
+        if bool:
+            text = pygame.transform.rotate(text, 90)
+        scrn.blit(text, textRect)
 
     def p1_out(self):
-        self.render_output((195, 787), (145, 675))
+        self.render_output((195, 787), (145, 675), (425, 725), False)
+
     def p2_out(self):
-        self.render_output((75, 130), (25, 145))
+        self.render_output((75, 130), (25, 145), (175, 375), True)
+
     def p3_out(self):
-        self.render_output((195, 13), (145, 25))
+        self.render_output((195, 13), (145, 25), (425, 75), False)
+
     def p4_out(self):
-        self.render_output((725, 130), (675, 145))
+        self.render_output((725, 130), (675, 145), (825, 375), True)
+
+    def render_circle(self):
+        pygame.draw.circle(scrn, self.color, [self.loc_x, self.loc_y], 10, 0)
 
 class Spaces:
 
@@ -229,7 +311,7 @@ def print_board():
     #displays player 1's information
     def process(p):
         for i in range(4):
-            num = p.get_num()
+            num = p.num
             if num == 1:
                 p.p1_out()
             elif num == 2:
@@ -248,17 +330,20 @@ def print_board():
     textRect = text.get_rect()
     textRect.center = (775, 25)
     scrn.blit(text, textRect)
+    vals.plays[0].render_circle()
+    vals.plays[1].render_circle()
+    vals.plays[2].render_circle()
+    vals.plays[3].render_circle()
 
 #sets the window name
 pygame.display.set_caption('Fortnite Monopoly')
 
 #starts the mixer, loads the Fortnite theme song, sets the volume, and plays the theme
-def music():
-    mixer.init()
-    mixer.music.load("C:\\Users\\vinny\\Downloads\\01. Battle Royal (Guitar Theme).mp3")
-    mixer.music.set_volume(0.7)
-    mixer.music.play()
-music()
+
+mixer.init()
+mixer.music.load("C:\\Users\\vinny\\Downloads\\01. Battle Royal (Guitar Theme).mp3")
+mixer.music.set_volume(0.7)
+mixer.music.play()
 
 #paint screen one time
 pygame.display.flip()
@@ -296,8 +381,8 @@ while (status):
                     vals.P1 = False
                     print(vals.player)
                     p_1 = Players(1, vals.player)
-                    p_1.set_loc_x(605)
-                    p_1.set_loc_y(605)
+                    p_1.loc_x = 605
+                    p_1.loc_y = 605
                     vals.player += 1
                     vals.plays.append(p_1)
 
@@ -307,8 +392,8 @@ while (status):
                     vals.P2 = False
                     print(vals.player)
                     p_2 = Players(2, vals.player)
-                    p_2.set_loc_x(625)
-                    p_2.set_loc_y(605)
+                    p_2.loc_x = 625
+                    p_2.loc_y = 605
                     vals.player += 1
                     vals.plays.append(p_2)
 
@@ -318,8 +403,8 @@ while (status):
                     vals.P3 = False
                     print(vals.player)
                     p_3 = Players(3, vals.player)
-                    p_3.set_loc_x(605)
-                    p_3.set_loc_y(625)
+                    p_3.loc_x = 605
+                    p_3.loc_y = 625
                     vals.player += 1
                     vals.plays.append(p_3)
 
@@ -329,8 +414,8 @@ while (status):
                     vals.P4 = False
                     print(vals.player)
                     p_4 = Players(4, vals.player)
-                    p_4.set_loc_x(625)
-                    p_4.set_loc_y(625)
+                    p_4.loc_x = 625
+                    p_4.loc_y = 625
                     vals.player += 1
                     vals.plays.append(p_4)
 
@@ -351,23 +436,43 @@ while (status):
                     vals.DICE = False
                     vals.DOUBLES = False
                     vals.ROLLING = True
-                    print("You rolled")
+                    mixer.music.load("C:\\Users\\vinny\\Downloads\\dice-142528.mp3")
+                    pygame.mixer.music.queue("C:\\Users\\vinny\\Downloads\\01. Battle Royal (Guitar Theme).mp3")
+                    mixer.music.play()
+                    x1 = vals.plays[vals.player-1].loc_x
+                    y1 = vals.plays[vals.player-1].loc_y
+                    for k in range(vals.num1 + vals.num2):
+                        if ((vals.plays[vals.player-1].loc_x) - (52)) > 150 and vals.plays[vals.player-1].loc_y > 600:
+                            vals.plays[vals.player-1].loc_x -= (52)
 
-                #Roll again
+                        elif ((vals.plays[vals.player-1].loc_y) - (52)) > 150 and vals.plays[vals.player-1].loc_x < 200:
+                            vals.plays[vals.player-1].loc_y -= (52)
+
+                        elif ((vals.plays[vals.player-1].loc_x) + (52)) < 650 and vals.plays[vals.player-1].loc_y < 200:
+                            vals.plays[vals.player-1].loc_x += (52)
+
+                        elif ((vals.plays[vals.player-1].loc_y) + (52)) < 650 and vals.plays[vals.player-1].loc_x > 600:
+                            vals.plays[vals.player-1].loc_y += (52)
+                    x2 = vals.plays[vals.player-1].loc_x
+                    y2 = vals.plays[vals.player-1].loc_y
+                    if x1 > x2 and y1 < y2 or 575< y2 < 650 and 575 < x2 < 650:
+                        vals.plays[vals.player - 1].wood += 200
+
+
+                #Checks if the player rolls doubles
                 if (875 < mx < 1175) and (50 < my < 750) and vals.num1 == vals.num2:
                     # declares that the player has doubles
                     vals.DOUBLES = True
                     vals.DICE = False
                     vals.ROLLING = False
-                    print("You rolled again")
 
+                #player rolls again after double
                 elif (875 < mx < 1175) and (50 < my < 750) and vals.DOUBLES:
-                    # declares that the player has doubles
                     vals.DOUBLES = False
                     vals.DICE = True
                     vals.ROLLING = False
-                    print("test")
 
+                #Player presses next turn
                 if (920 < mx < 1130) and (5 < my < 45) and not vals.DICE and not vals.DOUBLES:
                     vals.DICE = True
                     vals.DOUBLES = False
@@ -377,6 +482,7 @@ while (status):
                     if vals.player == 5:
                         vals.player = 1
 
+                #Player presses roll again
                 if (920 < mx < 1130) and (5 < my < 45):
                     # resets the rolling values to allow the next turn
                     vals.DICE = True
@@ -384,6 +490,7 @@ while (status):
                     vals.num1 = random.randint(1, 6)
                     vals.num2 = random.randint(1, 6)
             print(f'{mx} {my}')
+            #print(f'DICE: {vals.DICE} DOUBLES: {vals.DOUBLES}')
 
         if vals.START:
             print_start()
