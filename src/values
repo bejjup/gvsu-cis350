@@ -20,6 +20,7 @@ class Values:
         self._font3 = ""
         self._plays = []
         self._mus_time = 0
+        self._clicking = False
 
     @property
     def DICE(self):
@@ -148,3 +149,11 @@ class Values:
     @plays.setter
     def plays(self, value):
         self._plays = value
+
+    @property
+    def clicking(self):
+        return self._clicking
+
+    @clicking.setter
+    def clicking(self, value):
+        self._clicking = value
