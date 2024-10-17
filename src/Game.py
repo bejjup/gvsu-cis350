@@ -1,6 +1,6 @@
 #import the necessary libraries
 import pygame
-from pygame import mixer
+from pygame import mixer, MOUSEBUTTONUP, MOUSEBUTTONDOWN
 import random
 from values import Values
 
@@ -364,8 +364,8 @@ while (status):
         dice2 = pygame.transform.scale(dice2, (50, 50))
         #displays start screen if START is true
 
-        if pygame.mouse.get_pressed()[0]:
-
+        if i.type == MOUSEBUTTONDOWN and i.button == 1:
+            vals.clicking = True
             if vals.START:
                 if (450 < mx < 750) and (450 < my < 570):
                     # TEST FOR WHEN THE START BUTTON HAS BEEN PRESSED
@@ -491,7 +491,9 @@ while (status):
                     vals.num2 = random.randint(1, 6)
             print(f'{mx} {my}')
             #print(f'DICE: {vals.DICE} DOUBLES: {vals.DOUBLES}')
-
+        elif i.type == MOUSEBUTTONUP and i.button == 1:
+            vals.clicking = False
+            
         if vals.START:
             print_start()
         if vals.SELEC:
