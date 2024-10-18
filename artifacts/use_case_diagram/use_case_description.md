@@ -1,6 +1,4 @@
-<img width="408" alt="Screenshot 2024-10-18 at 2 16 09 PM" src="https://github.com/user-attachments/assets/b77f2691-3b1e-46f9-991e-fa37a546763a">
-
-### Use Case: Create Account
+### Use Case: Login
 
 #### 1. **Use Case Name:** 
 Login
