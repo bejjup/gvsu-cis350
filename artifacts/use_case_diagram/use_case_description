@@ -1,1 +1,13 @@
+Use Case: Roll Dice
 
+Actors: Fortnite Monopoly User
+
+Description: Once it's the Player's turn, they are prompted to roll the dice.
+The game randomly generates two numbers, 1 through 6, that are added together.
+The Player moves the randomly generated number of spaces.
+If the two dice roll the same number, they Player gets to roll again.
+On completion, the Player's turn ends and cannot move until their next turn.
+
+Cross Ref.: Must be the beginning of the player's turn, or must have previously rolled doubles.
+
+Use-Cases: Previous Player must have selected next turn, completing their turn.
