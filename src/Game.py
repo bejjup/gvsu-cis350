@@ -22,7 +22,7 @@ vals._font3 = pygame.font.Font('freesansbold.ttf', 30)
 class Players:
 
     def __init__(self, num, p):
-        self._num = num
+        self._order = num
         self._wood = 300
         self._brick = 200
         self._metal = 100
@@ -37,8 +37,13 @@ class Players:
         self._color = 0, 0, 0
         self._img = "Placeholder"
         self.set_playa(num)
+        self._space = 0
 
     # returns the name of the player
+    @property
+    def order(self):
+        return self._order
+
     @property
     def wood(self):
         return self._wood
@@ -62,10 +67,6 @@ class Players:
     @metal.setter
     def metal(self, value):
         self._metal = value
-
-    @property
-    def name(self):
-        return self._name
 
     @property
     def loc_x(self):
@@ -127,6 +128,18 @@ class Players:
     def img(self, value):
         self._img = value
 
+    @property
+    def space(self):
+        return self._space
+
+    @space.setter
+    def space(self, value):
+        if value > 31:
+            self._space = value - 32
+            self.wood += 200
+        else:
+            self._space = value
+
     # sets the name of the player depending on what icon they chose
     def set_playa(self, num):
         if num == 1:
@@ -147,6 +160,20 @@ class Players:
             self.name = "John Wick"
             self.color = 82, 82, 82
             self.img = "C:\\Users\\vinny\\Downloads\\John_wick.jpg"
+
+    def set_start_val(self):
+        if self._num == 1:
+            self.loc_x = 605
+            self.loc_y = 605
+        if self._num == 2:
+            self.loc_x = 605
+            self.loc_y = 625
+        if self._num == 3:
+            self.loc_x = 625
+            self.loc_y = 605
+        if self._num == 4:
+            self.loc_x = 625
+            self.loc_y = 625
 
     def render_output(self, text_center, img_pos, mats_x_y, bool):
         text = vals.font2.render(f'{self.name} {self.num}', True, (245, 245, 245))
@@ -180,39 +207,181 @@ class Players:
 
 class Spaces:
 
-    def __init__(self, name, x, y):
-        self.name = name
-        self.loc_1_x = x
-        self.loc_2_x = self.loc_1_x + 20
-        self.loc_3_x = self.loc_1_x
-        self.loc_4_x = self.loc_1_x + 20
-        self.loc_1_y = y
-        self.loc_2_y = self.loc_1_y + 20
-        self.loc_3_y = self.loc_1_y
-        self.loc_4_y = self.loc_1_y + 20
+    def __init__(self, name, x, y, num):
+        self._name = name
+        self._loc_1_x = x
+        self._loc_2_x = self._loc_1_x
+        self._loc_3_x = self._loc_1_x + 20
+        self._loc_4_x = self._loc_1_x + 20
+        self._loc_1_y = y
+        self._loc_2_y = self._loc_1_y + 20
+        self._loc_3_y = self._loc_1_y
+        self._loc_4_y = self._loc_1_y + 20
+        self._pos = num
 
-    def get_loc1_x(self):
-        return self.loc_1_x
-    def get_loc2_x(self):
-        return self.loc_2_x
-    def get_loc3_x(self):
-        return self.loc_3_x
-    def get_loc4_x(self):
-        return self.loc_4_x
-    def get_loc1_y(self):
-        return self.loc_1_y
-    def get_loc2_y(self):
-        return self.loc_2_y
-    def get_loc3_y(self):
-        return self.loc_3_y
-    def get_loc4_y(self):
-        return self.loc_4_y
+    @property
+    def name(self):
+        return self._name
+    @name.setter
+    def name(self, value):
+        self._name = value
+    @property
+    def loc1_x(self):
+        return self._loc_1_x
+    @loc1_x.setter
+    def loc1_x(self, value):
+        self._loc_1_x = value
+    @property
+    def loc2_x(self):
+        return self._loc_2_x
+    @loc2_x.setter
+    def loc2_x(self, value):
+        self._loc_2_x = value
+    @property
+    def loc3_x(self):
+        return self._loc_3_x
+    @loc3_x.setter
+    def loc3_x(self, value):
+        self._loc_3_x = value
+    @property
+    def loc4_x(self):
+        return self._loc_4_x
+    @loc4_x.setter
+    def loc4_x(self, value):
+        self._loc_4_x = value
+    @property
+    def loc1_y(self):
+        return self._loc_1_y
+    @loc1_y.setter
+    def loc1_y(self, value):
+        self._loc_1_y = value
+    @property
+    def loc2_y(self):
+        return self._loc_2_y
+    @loc2_y.setter
+    def loc2_y(self, value):
+        self._loc_2_y = value
+    @property
+    def loc3_y(self):
+        return self._loc_3_y
+    @loc3_y.setter
+    def loc3_y(self, value):
+        self._loc_3_y = value
+    @property
+    def loc4_y(self):
+        return self._loc_4_y
+    @loc4_y.setter
+    def loc4_y(self, value):
+        self._loc_4_y = value
+    @property
+    def pos(self):
+        return self._pos
+    @pos.setter
+    def pos(self, value):
+        self._pos = value
 
-board = [Spaces]
-go = Spaces('Go', 605, 605)
-next_space = Spaces('Next Space', 535, 605)
-board.append(go)
-board.append(next_space)
+def create():
+    p = 0
+    while p < 32:
+        go = Spaces('Go', 605, 605, p)
+        board.append(go)
+        p += 1
+        mexico = Spaces('Mexico', 543, 605, p)
+        board.append(mexico)
+        p += 1
+        l1 = Spaces('Launchpad', 493, 605, p)
+        board.append(l1)
+        p += 1
+        gas = Spaces('Gas Station', 442, 605, p)
+        board.append(gas)
+        p += 1
+        gcart = Spaces('Golf Cart', 390, 605, p)
+        board.append(gcart)
+        p += 1
+        hh = Spaces('Happy Hamlet', 339, 605, p)
+        board.append(hh)
+        p += 1
+        chest1 = Spaces('Chest', 288, 605, p)
+        board.append(chest1)
+        p += 1
+        pp = Spaces('Polar Peak', 237, 605, p)
+        board.append(pp)
+        p += 1
+        jail = Spaces('Jail', 170, 605, p)
+        board.append(jail)
+        p += 1
+        ff = Spaces('Frosty Flights', 165, 541, p)
+        board.append(ff)
+        p += 1
+        l2 = Spaces('Launchpad', 165, 490, p)
+        board.append(l2)
+        p += 1
+        vv = Spaces('Viking Village', 165, 439, p)
+        board.append(vv)
+        p += 1
+        plane = Spaces('Plane', 165, 389, p)
+        board.append(plane)
+        p += 1
+        tt = Spaces('Tilted Towers', 165, 337, p)
+        board.append(tt)
+        p += 1
+        chest2 = Spaces('Chest', 165, 287, p)
+        board.append(chest2)
+        p += 1
+        plst_pk = Spaces('Pleasant Park', 165, 235, p)
+        board.append(plst_pk)
+        p += 1
+        free_pkng = Spaces('Free Parking', 165, 170, p)
+        board.append(free_pkng)
+        p += 1
+        hauntedh = Spaces('Haunted Hills', 237, 165, p)
+        board.append(hauntedh)
+        p += 1
+        l3 = Spaces('Launchpad', 288, 165, p)
+        board.append(l3)
+        p += 1
+        jj = Spaces('Junk Junction', 339, 165, p)
+        board.append(jj)
+        p += 1
+        shopping_cart = Spaces('Shopping Cart', 390, 165, p)
+        board.append(shopping_cart)
+        p += 1
+        ll = Spaces('Lazy Lagoon', 442, 165, p)
+        board.append(ll)
+        p += 1
+        chest3 = Spaces('Chest', 493, 165, p)
+        board.append(chest3)
+        p += 1
+        u_r = Spaces('Geysers', 543, 165, p)
+        board.append(u_r)
+        p += 1
+        go_to = Spaces('Go To Jail', 605, 165, p)
+        board.append(go_to)
+        p += 1
+        ss = Spaces('Sunny Steps', 610, 235, p)
+        board.append(ss)
+        p += 1
+        l4 = Spaces('Launchpad', 610, 287, p)
+        board.append(l4)
+        p += 1
+        pressure_plant = Spaces('Pressure Plant', 610, 337, p)
+        board.append(pressure_plant)
+        p += 1
+        cannon = Spaces('Cannon', 610, 389, p)
+        board.append(cannon)
+        p += 1
+        r_t = Spaces('Race Track', 610, 439, p)
+        board.append(r_t)
+        p += 1
+        chest4 = Spaces('Chest', 610, 490, p)
+        board.append(chest4)
+        p += 1
+        p_palms = Spaces('Paradise Palms', 610, 541, p)
+        board.append(p_palms)
+        p += 1
+
+board = []
+create()
 
 #declares Player Class, that contains info of each of the 4 players
 
@@ -379,10 +548,8 @@ while (status):
                 if (100 < mx < 400) and (100 < my < 400) and vals.P1:
                     # declares that P1 can no longer be used and increases whose turn it is to choose by 1
                     vals.P1 = False
-                    print(vals.player)
                     p_1 = Players(1, vals.player)
-                    p_1.loc_x = 605
-                    p_1.loc_y = 605
+                    p_1.set_start_val()
                     vals.player += 1
                     vals.plays.append(p_1)
 
@@ -390,10 +557,8 @@ while (status):
                 if (800 < mx < 1100) and (100 < my < 400) and vals.P2:
                     # declares that P2 can no longer be used and increases whose turn it is to choose by 1
                     vals.P2 = False
-                    print(vals.player)
                     p_2 = Players(2, vals.player)
-                    p_2.loc_x = 625
-                    p_2.loc_y = 605
+                    p_2.set_start_val()
                     vals.player += 1
                     vals.plays.append(p_2)
 
@@ -401,10 +566,8 @@ while (status):
                 if (100 < mx < 400) and (450 < my < 750) and vals.P3:
                     # declares that P3 can no longer be used and increases whose turn it is to choose by 1
                     vals.P3 = False
-                    print(vals.player)
                     p_3 = Players(3, vals.player)
-                    p_3.loc_x = 605
-                    p_3.loc_y = 625
+                    p_3.set_start_val()
                     vals.player += 1
                     vals.plays.append(p_3)
 
@@ -412,10 +575,8 @@ while (status):
                 if (800 < mx < 1100) and (450 < my < 750) and vals.P4:
                     # declares that P4 can no longer be used and increases whose turn it is to choose by 1
                     vals.P4 = False
-                    print(vals.player)
                     p_4 = Players(4, vals.player)
-                    p_4.loc_x = 625
-                    p_4.loc_y = 625
+                    p_4.set_start_val()
                     vals.player += 1
                     vals.plays.append(p_4)
 
@@ -439,25 +600,21 @@ while (status):
                     mixer.music.load("C:\\Users\\vinny\\Downloads\\dice-142528.mp3")
                     pygame.mixer.music.queue("C:\\Users\\vinny\\Downloads\\01. Battle Royal (Guitar Theme).mp3")
                     mixer.music.play()
-                    x1 = vals.plays[vals.player-1].loc_x
-                    y1 = vals.plays[vals.player-1].loc_y
-                    for k in range(vals.num1 + vals.num2):
-                        if ((vals.plays[vals.player-1].loc_x) - (52)) > 150 and vals.plays[vals.player-1].loc_y > 600:
-                            vals.plays[vals.player-1].loc_x -= (52)
 
-                        elif ((vals.plays[vals.player-1].loc_y) - (52)) > 150 and vals.plays[vals.player-1].loc_x < 200:
-                            vals.plays[vals.player-1].loc_y -= (52)
-
-                        elif ((vals.plays[vals.player-1].loc_x) + (52)) < 650 and vals.plays[vals.player-1].loc_y < 200:
-                            vals.plays[vals.player-1].loc_x += (52)
-
-                        elif ((vals.plays[vals.player-1].loc_y) + (52)) < 650 and vals.plays[vals.player-1].loc_x > 600:
-                            vals.plays[vals.player-1].loc_y += (52)
-                    x2 = vals.plays[vals.player-1].loc_x
-                    y2 = vals.plays[vals.player-1].loc_y
-                    if x1 > x2 and y1 < y2 or 575< y2 < 650 and 575 < x2 < 650:
-                        vals.plays[vals.player - 1].wood += 200
-
+                    vals.plays[vals.player - 1].space += vals.num1 + vals.num2
+                    print(f'{vals.plays[vals.player - 1].name} on space: {board[vals.plays[vals.player - 1].space].name}')
+                    if vals.plays[vals.player - 1].num == 1:
+                        vals.plays[vals.player - 1].loc_x = board[vals.plays[vals.player - 1].space].loc1_x
+                        vals.plays[vals.player - 1].loc_y = board[vals.plays[vals.player - 1].space].loc1_y
+                    if vals.plays[vals.player - 1].num == 2:
+                        vals.plays[vals.player - 1].loc_x = board[vals.plays[vals.player - 1].space].loc2_x
+                        vals.plays[vals.player - 1].loc_y = board[vals.plays[vals.player - 1].space].loc2_y
+                    if vals.plays[vals.player - 1].num == 3:
+                        vals.plays[vals.player - 1].loc_x = board[vals.plays[vals.player - 1].space].loc3_x
+                        vals.plays[vals.player - 1].loc_y = board[vals.plays[vals.player - 1].space].loc3_y
+                    if vals.plays[vals.player - 1].num == 4:
+                        vals.plays[vals.player - 1].loc_x = board[vals.plays[vals.player - 1].space].loc4_x
+                        vals.plays[vals.player - 1].loc_y = board[vals.plays[vals.player - 1].space].loc4_y
 
                 #Checks if the player rolls doubles
                 if (875 < mx < 1175) and (50 < my < 750) and vals.num1 == vals.num2:
@@ -490,10 +647,9 @@ while (status):
                     vals.num1 = random.randint(1, 6)
                     vals.num2 = random.randint(1, 6)
             print(f'{mx} {my}')
-            #print(f'DICE: {vals.DICE} DOUBLES: {vals.DOUBLES}')
         elif i.type == MOUSEBUTTONUP and i.button == 1:
             vals.clicking = False
-            
+
         if vals.START:
             print_start()
         if vals.SELEC:
