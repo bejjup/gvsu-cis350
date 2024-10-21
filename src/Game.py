@@ -218,6 +218,7 @@ class Spaces:
         self._loc_3_y = self._loc_1_y
         self._loc_4_y = self._loc_1_y + 20
         self._pos = num
+        self._price = 5*num
 
     @property
     def name(self):
@@ -279,6 +280,9 @@ class Spaces:
     @pos.setter
     def pos(self, value):
         self._pos = value
+    @property
+    def price(self):
+        return self._price
 
 def create():
     p = 0
@@ -454,6 +458,38 @@ def print_selec():
             scrn.blit(j_wick, (800, 450))
     display_selec_icons()
 
+def print_info():
+    scrn.fill((27, 144, 221))
+    title = pygame.image.load("C:\\Users\\vinny\\Downloads\\Title_text.png")
+    title = pygame.transform.scale(title, (400, 100))
+    scrn.blit(title, (750, 5))
+    pygame.draw.rect(scrn, (0, 0, 0), pygame.Rect(97, 97, 86, 121))
+    pygame.draw.rect(scrn, (0, 0, 0), pygame.Rect(97, 247, 86, 121))
+    imp = pygame.image.load("C:\\Users\\vinny\\Downloads\\Mappy .jpg").convert()
+    imp = pygame.transform.scale(imp, (800, 800))
+    subsurface = imp.subsurface((525, 685, 80, 115))
+    scrn.blit(subsurface, (100, 100))
+    subsurface2 = imp.subsurface((198, 685, 80, 115))
+    scrn.blit(subsurface2, (100, 250))
+    text = vals.font2.render(f'When you land on a launchpad tile, 1-6 will be added to your next dice roll!', True, (245, 245, 245))
+    textRect = text.get_rect()
+    textRect.center = (575, 157)
+    scrn.blit(text, textRect)
+    text = vals.font2.render(f'When you land on a chest tile,  you will be rewareded materials!', True, (245, 245, 245))
+    textRect = text.get_rect()
+    textRect.center = (525, 307)
+    scrn.blit(text, textRect)
+    text = vals.font1.render(f'Rules: ', True, (245, 245, 245))
+    textRect = text.get_rect()
+    textRect.center = (163, 50)
+    scrn.blit(text, textRect)
+    text = vals.font1.render(f'Return to Game', True, (245, 245, 245))
+    textRect = text.get_rect()
+    textRect.center = (200, 735)
+    scrn.blit(text, textRect)
+
+
+
 #declares the function print_board, that will print all images for board
 def print_board():
 
@@ -470,6 +506,10 @@ def print_board():
         pygame.draw.rect(scrn, (0,0,0), pygame.Rect(145, 25, 510, 100))
     recs()
 
+    text = vals.font2.render(f'Info', True, (245, 245, 245))
+    textRect = text.get_rect()
+    textRect.center = (30, 30)
+    scrn.blit(text, textRect)
     #sets imp to the image of the board, and declares its size and location
     def map():
         imp = pygame.image.load("C:\\Users\\vinny\\Downloads\\Mappy .jpg").convert()
@@ -588,9 +628,16 @@ while (status):
                     vals.GAME = True
                     vals.player = 1
 
+            if vals.INFO:
+                if (50 < mx < 352) and (715 < my < 750):
+                    vals.INFO = False
+                    vals.GAME = True
 
             if vals.GAME:
 
+                if (10 < mx < 50) and (20 < my < 35):
+                    vals.GAME = False
+                    vals.INFO = True
                 #Next Turn
                 if (875 < mx < 1175) and (50 < my < 750) and vals.DICE:
                     # declares that the player just rolled
@@ -600,21 +647,26 @@ while (status):
                     mixer.music.load("C:\\Users\\vinny\\Downloads\\dice-142528.mp3")
                     pygame.mixer.music.queue("C:\\Users\\vinny\\Downloads\\01. Battle Royal (Guitar Theme).mp3")
                     mixer.music.play()
-
+                    current_player = vals.plays[vals.player - 1]
                     vals.plays[vals.player - 1].space += vals.num1 + vals.num2
-                    print(f'{vals.plays[vals.player - 1].name} on space: {board[vals.plays[vals.player - 1].space].name}')
-                    if vals.plays[vals.player - 1].num == 1:
-                        vals.plays[vals.player - 1].loc_x = board[vals.plays[vals.player - 1].space].loc1_x
-                        vals.plays[vals.player - 1].loc_y = board[vals.plays[vals.player - 1].space].loc1_y
-                    if vals.plays[vals.player - 1].num == 2:
-                        vals.plays[vals.player - 1].loc_x = board[vals.plays[vals.player - 1].space].loc2_x
-                        vals.plays[vals.player - 1].loc_y = board[vals.plays[vals.player - 1].space].loc2_y
-                    if vals.plays[vals.player - 1].num == 3:
-                        vals.plays[vals.player - 1].loc_x = board[vals.plays[vals.player - 1].space].loc3_x
-                        vals.plays[vals.player - 1].loc_y = board[vals.plays[vals.player - 1].space].loc3_y
-                    if vals.plays[vals.player - 1].num == 4:
-                        vals.plays[vals.player - 1].loc_x = board[vals.plays[vals.player - 1].space].loc4_x
-                        vals.plays[vals.player - 1].loc_y = board[vals.plays[vals.player - 1].space].loc4_y
+                    print(f'{current_player.name} on space: {board[current_player.space].name}')
+                    if current_player.num == 1:
+                        current_player.loc_x = board[current_player.space].loc1_x
+                        current_player.loc_y = board[current_player.space].loc1_y
+                    elif current_player.num == 2:
+                        current_player.loc_x = board[current_player.space].loc2_x
+                        current_player.loc_y = board[current_player.space].loc2_y
+                    elif current_player.num == 3:
+                        current_player.loc_x = board[current_player.space].loc3_x
+                        current_player.loc_y = board[current_player.space].loc3_y
+                    elif current_player.num == 4:
+                        current_player.loc_x = board[current_player.space].loc4_x
+                        current_player.loc_y = board[current_player.space].loc4_y
+                    current_player.wood -= board[current_player.space].price
+                    if board[current_player.space].name == "Launchpad":
+                        print('Jump')
+                        current_player.space += random.randint(1, 6)
+                        print('You jumped!')
 
                 #Checks if the player rolls doubles
                 if (875 < mx < 1175) and (50 < my < 750) and vals.num1 == vals.num2:
@@ -652,9 +704,11 @@ while (status):
 
         if vals.START:
             print_start()
-        if vals.SELEC:
+        elif vals.SELEC:
             print_selec()
-        if vals.GAME:
+        elif vals.INFO:
+            print_info()
+        elif vals.GAME:
             print_board()
             if vals.DICE:
                 # moves the dice to follow the mouse if the mouse is within the roll box
