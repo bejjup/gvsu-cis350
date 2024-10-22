@@ -28,11 +28,11 @@ class Values:
         self._p_2 = Players
         self._p_3 = Players
         self._p_4 = Players
-        self.dice1 = pygame.image.load(file.dice)
-        self.dice1 = pygame.transform.scale(self.dice1, (50, 50))
+        self._dice1 = pygame.image.load(file.dice)
+        self._dice1 = pygame.transform.scale(self._dice1, (50, 50))
         # sets dice2 to the image of the dice, and declares its size and location
-        self.dice2 = pygame.image.load(file.dice)
-        self.dice2 = pygame.transform.scale(self.dice2, (50, 50))
+        self._dice2 = pygame.image.load(file.dice)
+        self._dice2 = pygame.transform.scale(self._dice2, (50, 50))
 
     @property
     def DICE(self):
@@ -209,4 +209,13 @@ class Values:
     @p_4.setter
     def p_4(self, value):
         self._p_4 = value
+
+    @property
+    def dice1(self):
+        return self._dice1
+
+    @property
+    def dice2(self):
+        return self._dice2
+
 
