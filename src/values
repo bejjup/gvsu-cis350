@@ -1,13 +1,17 @@
 import random
 
+from players import Players
+
+
 class Values:
-    def __init__(self):
+    def __init__(self, pygame):
 
         self._DICE = True
         self._DOUBLES = False
         self._GAME = False
         self._START = True
         self._SELEC = False
+        self._INFO = False
         self._P1 = True
         self._P2 = True
         self._P3 = True
@@ -15,12 +19,16 @@ class Values:
         self._player = 1
         self._num1 = random.randint(1,6)
         self._num2 = random.randint(1,6)
-        self._font1 = ""
-        self._font2 = ""
-        self._font3 = ""
+        self._font1 = pygame.font.Font('freesansbold.ttf', 40)
+        self._font2 = pygame.font.Font('freesansbold.ttf', 20)
+        self._font3 = pygame.font.Font('freesansbold.ttf', 30)
         self._plays = []
         self._mus_time = 0
         self._clicking = False
+        self._p_1 = Players
+        self._p_2 = Players
+        self._p_3 = Players
+        self._p_4 = Players
 
     @property
     def DICE(self):
@@ -61,6 +69,14 @@ class Values:
     @SELEC.setter
     def SELEC(self, value):
         self._SELEC = value
+
+    @property
+    def INFO(self):
+        return self._INFO
+
+    @INFO.setter
+    def INFO(self, value):
+        self._INFO = value
 
     @property
     def P1(self):
@@ -157,3 +173,36 @@ class Values:
     @clicking.setter
     def clicking(self, value):
         self._clicking = value
+
+    @property
+    def p_1(self):
+        return self._p_1
+
+    @p_1.setter
+    def p_1(self, value):
+        self._p_1 = value
+
+    @property
+    def p_2(self):
+        return self._p_2
+
+    @p_2.setter
+    def p_2(self, value):
+        self._p_2 = value
+
+    @property
+    def p_3(self):
+        return self._p_3
+
+    @p_3.setter
+    def p_3(self, value):
+        self._p_3 = value
+
+    @property
+    def p_4(self):
+        return self._p_4
+
+    @p_4.setter
+    def p_4(self, value):
+        self._p_4 = value
+
