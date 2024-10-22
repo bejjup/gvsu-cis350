@@ -49,14 +49,7 @@ while status:
                 start_button(mx, my, vals)
 
             if vals.SELEC:
-                # if P1 icon is clicked while it is still available
-                icon_nog_ops(mx, my, vals, Players)
-                # if P2 icon is clicked while it is still available
-                icon_jonesy(mx, my, vals, Players)
-                # if P3 icon is clicked while it is still available
-                icon_raven(mx, my, vals, Players)
-                # if P4 icon is clicked while it is still available
-                icon_john_wick(mx, my, vals, Players)
+                icons(mx, my, vals, Players)
 
         # if the continue button is clicked, enters the game screen
                 continue_button(mx, my, vals)
