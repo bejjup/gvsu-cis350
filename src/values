@@ -1,10 +1,9 @@
 import random
-
 from players import Players
 
 
 class Values:
-    def __init__(self, pygame):
+    def __init__(self, pygame, file):
 
         self._DICE = True
         self._DOUBLES = False
@@ -29,6 +28,11 @@ class Values:
         self._p_2 = Players
         self._p_3 = Players
         self._p_4 = Players
+        self.dice1 = pygame.image.load(file.dice)
+        self.dice1 = pygame.transform.scale(self.dice1, (50, 50))
+        # sets dice2 to the image of the dice, and declares its size and location
+        self.dice2 = pygame.image.load(file.dice)
+        self.dice2 = pygame.transform.scale(self.dice2, (50, 50))
 
     @property
     def DICE(self):
