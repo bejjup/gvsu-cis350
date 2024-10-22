@@ -44,6 +44,14 @@ def icon_john_wick(mx, my, vals, Players):
         vals.p_4 = p_4
         vals.player += 1
         vals.plays.append(p_4)
+def icons(mx, my, vals, Players):
+    icon_nog_ops(mx, my, vals, Players)
+    # if P2 icon is clicked while it is still available
+    icon_jonesy(mx, my, vals, Players)
+    # if P3 icon is clicked while it is still available
+    icon_raven(mx, my, vals, Players)
+    # if P4 icon is clicked while it is still available
+    icon_john_wick(mx, my, vals, Players)
 
 def continue_button(mx, my, vals):
     if (510 < mx < 690) and (480 < my < 510) and vals.player == 5:
