@@ -49,7 +49,7 @@ while status:
                 start_button(mx, my, vals)
 
             if vals.SELEC:
-                icons(mx, my, vals, Players)
+                icons(mx, my, vals, Players, file)
 
         # if the continue button is clicked, enters the game screen
                 continue_button(mx, my, vals)
@@ -65,22 +65,21 @@ while status:
                 #Checks if the player rolls doubles
                 check_doubles(mx, my, vals)
 
-                #player rolls again after double
-
                 #Player presses next turn
                 next_turn(mx, my, vals, random)
 
                 #Player presses roll again
                 roll_again(mx, my, vals, random)
             print(f'{mx} {my}')
+
         elif i.type == MOUSEBUTTONUP and i.button == 1:
             vals.clicking = False
 
         if vals.START:
-            print_start(scrn, pygame)
+            print_start(scrn, pygame, file)
 
         elif vals.SELEC:
-            print_selec(scrn, pygame, vals)
+            print_selec(scrn, pygame, file, vals)
 
         elif vals.INFO:
             print_info(scrn, pygame, file, vals)
