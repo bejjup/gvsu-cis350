@@ -16,9 +16,8 @@ Y = 800
 scrn = pygame.display.set_mode((X, Y))
 
 #values that determine the current stage of the game
-vals = Values(pygame)
 file = File()
-
+vals = Values(pygame, file)
 board = []
 make_board(board)
 
@@ -42,12 +41,6 @@ while status:
     for i in pygame.event.get():
         #stores the x and y values of the mouse
         mx, my = pygame.mouse.get_pos()
-        dice1 = pygame.image.load(file.dice)
-        dice1 = pygame.transform.scale(dice1, (50, 50))
-
-        # sets dice2 to the image of the dice, and declares its size and location
-        dice2 = pygame.image.load(file.dice)
-        dice2 = pygame.transform.scale(dice2, (50, 50))
         #displays start screen if START is true
 
         if i.type == MOUSEBUTTONDOWN and i.button == 1:
@@ -100,7 +93,7 @@ while status:
             print_info(scrn, pygame, file, vals)
 
         elif vals.GAME:
-            print_board(scrn, pygame, file, vals, vals.p_1, vals.p_2, vals.p_3, vals.p_4, mx, my, dice1, dice2)
+            print_board(scrn, pygame, file, vals, vals.p_1, vals.p_2, vals.p_3, vals.p_4, mx, my, vals.dice1, vals.dice2)
 
         pygame.display.update()
 
