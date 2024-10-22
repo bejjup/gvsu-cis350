@@ -5,53 +5,54 @@ def start_button(mx, my, vals):
         vals.START = False
         vals.SELEC = True
 
-def icon_nog_ops(mx, my, vals, Players):
+def icon_nog_ops(mx, my, vals, Players, file):
     if (100 < mx < 400) and (100 < my < 400) and vals.P1:
         # declares that P1 can no longer be used and increases whose turn it is to choose by 1
         vals.P1 = False
-        p_1 = Players(1, vals.player)
+        p_1 = Players(1, vals.player, file)
         p_1.set_start_val()
         vals.p_1 = p_1
         vals.player += 1
         vals.plays.append(p_1)
 
-def icon_jonesy(mx, my, vals, Players):
+def icon_jonesy(mx, my, vals, Players, file):
     if (800 < mx < 1100) and (100 < my < 400) and vals.P2:
         # declares that P2 can no longer be used and increases whose turn it is to choose by 1
         vals.P2 = False
-        p_2 = Players(2, vals.player)
+        p_2 = Players(2, vals.player, file)
         p_2.set_start_val()
         vals.p_2 = p_2
         vals.player += 1
         vals.plays.append(p_2)
 
-def icon_raven(mx, my, vals, Players):
+def icon_raven(mx, my, vals, Players, file):
     if (100 < mx < 400) and (450 < my < 750) and vals.P3:
         # declares that P3 can no longer be used and increases whose turn it is to choose by 1
         vals.P3 = False
-        p_3 = Players(3, vals.player)
+        p_3 = Players(3, vals.player, file)
         p_3.set_start_val()
         vals.p_3 = p_3
         vals.player += 1
         vals.plays.append(p_3)
 
-def icon_john_wick(mx, my, vals, Players):
+def icon_john_wick(mx, my, vals, Players, file):
     if (800 < mx < 1100) and (450 < my < 750) and vals.P4:
         # declares that P4 can no longer be used and increases whose turn it is to choose by 1
         vals.P4 = False
-        p_4 = Players(4, vals.player)
+        p_4 = Players(4, vals.player, file)
         p_4.set_start_val()
         vals.p_4 = p_4
         vals.player += 1
         vals.plays.append(p_4)
-def icons(mx, my, vals, Players):
-    icon_nog_ops(mx, my, vals, Players)
+
+def icons(mx, my, vals, Players, file):
+    icon_nog_ops(mx, my, vals, Players, file)
     # if P2 icon is clicked while it is still available
-    icon_jonesy(mx, my, vals, Players)
+    icon_jonesy(mx, my, vals, Players, file)
     # if P3 icon is clicked while it is still available
-    icon_raven(mx, my, vals, Players)
+    icon_raven(mx, my, vals, Players, file)
     # if P4 icon is clicked while it is still available
-    icon_john_wick(mx, my, vals, Players)
+    icon_john_wick(mx, my, vals, Players, file)
 
 def continue_button(mx, my, vals):
     if (510 < mx < 690) and (480 < my < 510) and vals.player == 5:
