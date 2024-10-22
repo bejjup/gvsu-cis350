@@ -1,6 +1,6 @@
 class Players:
 
-    def __init__(self, num, p):
+    def __init__(self, num, p, file):
         self._order = num
         self._wood = 300
         self._brick = 200
@@ -15,7 +15,7 @@ class Players:
         self._name = "Placeholder"
         self._color = 0, 0, 0
         self._img = "Placeholder"
-        self.set_playa(num)
+        self.set_playa(num, file)
         self._space = 0
 
     # returns the name of the player
@@ -120,25 +120,25 @@ class Players:
             self._space = value
 
     # sets the name of the player depending on what icon they chose
-    def set_playa(self, num):
+    def set_playa(self, num, file):
         if num == 1:
             self.name = "Nog Ops"
             self.color = 89, 211, 227
-            self.img = "C:\\Users\\vinny\\Downloads\\nog_ops.jpg"
+            self.img = file.nog_ops
         if num == 2:
             self.name = "Jonesy"
             self.color = 219, 31, 62
-            self.img = "C:\\Users\\vinny\\Downloads\\jonesy.jpg"
+            self.img = file.jonesy
 
         if num == 3:
             self.name = "Raven"
             self.color = 137, 42, 156
-            self.img = "C:\\Users\\vinny\\Downloads\\Raven.jpg"
+            self.img = file.raven
 
         if num == 4:
             self.name = "John Wick"
             self.color = 82, 82, 82
-            self.img = "C:\\Users\\vinny\\Downloads\\John_wick.jpg"
+            self.img = file.john_wick
 
     def set_start_val(self):
         if self._num == 1:
