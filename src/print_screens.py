@@ -1,5 +1,4 @@
 def print_start(scrn, pygame, file):
-
     #fills the screen to blue
     scrn.fill((27, 144, 221))
 
@@ -80,14 +79,14 @@ def print_info(scrn, pygame, file, vals):
     subsurface2 = imp.subsurface((198, 685, 80, 115))
     scrn.blit(subsurface2, (100, 250))
 
-    text = vals.font2.render(f'When you land on a launchpad tile, 1-6 will be added to your next dice roll!', True, (245, 245, 245))
+    text = vals.font2.render(f'When you land on a launchpad tile, you will move 1-6 additional spaces!', True, (245, 245, 245))
     textRect = text.get_rect()
     textRect.center = (575, 157)
     scrn.blit(text, textRect)
 
     text = vals.font2.render(f'When you land on a chest tile,  you will gain materials!', True, (245, 245, 245))
     textRect = text.get_rect()
-    textRect.center = (505, 307)
+    textRect.center = (495, 307)
     scrn.blit(text, textRect)
 
     text = vals.font1.render(f'Rules: ', True, (245, 245, 245))
@@ -100,7 +99,7 @@ def print_info(scrn, pygame, file, vals):
     textRect.center = (200, 735)
     scrn.blit(text, textRect)
 
-def print_board(scrn, pygame, file, vals, p_1, p_2, p_3, p_4, mx, my, dice1, dice2):
+def print_board(scrn, pygame, file, vals, p_1, p_2, p_3, p_4, mx, my, dice1, dice2, board):
 
     #fills the screen to blue
     scrn.fill((27, 144, 221))
@@ -119,6 +118,7 @@ def print_board(scrn, pygame, file, vals, p_1, p_2, p_3, p_4, mx, my, dice1, dic
     textRect = text.get_rect()
     textRect.center = (50, 30)
     scrn.blit(text, textRect)
+
     #sets imp to the image of the board, and declares its size and location
     def map():
         imp = pygame.image.load(file.map)
@@ -211,4 +211,10 @@ def print_board(scrn, pygame, file, vals, p_1, p_2, p_3, p_4, mx, my, dice1, dic
         text = vals.font1.render('Next Turn:', True, (245, 245, 245))
         textRect = text.get_rect()
         textRect.center = (1025, 25)
+        scrn.blit(text, textRect)
+
+    if board[vals.plays[vals.player-1].space].buyable and board[vals.plays[vals.player-1].space] not in vals.plays[vals.player-1].inventory:
+        text = vals.font1.render(f'Purchase', True, (245, 245, 245), (0, 0, 0))
+        textRect = text.get_rect()
+        textRect.center = (760, 720)
         scrn.blit(text, textRect)
