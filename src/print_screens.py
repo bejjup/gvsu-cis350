@@ -1,25 +1,24 @@
-def print_start(scrn, pygame):
-
+def print_start(scrn, pygame, file):
     #fills the screen to blue
     scrn.fill((27, 144, 221))
 
     # sets imp to the image of the board, and declares its size
-    start_but = pygame.image.load("C:\\Users\\vinny\\Downloads\\start_button.jpg")
+    start_but = pygame.image.load(file.start)
     start_but = pygame.transform.scale(start_but, (300, 120))
     scrn.blit(start_but, (450, 450))
 
     #sets imp to the image of the board, and declares its size and location
-    title = pygame.image.load("C:\\Users\\vinny\\Downloads\\Title_text.png")
+    title = pygame.image.load(file.title)
     title = pygame.transform.scale(title, (900, 200))
     scrn.blit(title, (150, 150))
 
-def print_selec(scrn, pygame, vals):
+def print_selec(scrn, pygame, file, vals):
 
     #fills the screen to blue
     scrn.fill((27, 144, 221))
 
     #creates the selection screen text
-    title = pygame.image.load("C:\\Users\\vinny\\Downloads\\Title_text.png")
+    title = pygame.image.load(file.title)
     title = pygame.transform.scale(title, (400, 100))
     scrn.blit(title, (750, 5))
 
@@ -45,22 +44,22 @@ def print_selec(scrn, pygame, vals):
     #only shows the icons when they have not been selected yet
     def display_selec_icons():
         if vals.P1:
-            nog_ops = pygame.image.load("C:\\Users\\vinny\\Downloads\\nog_ops.jpg")
+            nog_ops = pygame.image.load(file.nog_ops)
             nog_ops = pygame.transform.scale(nog_ops, (300, 300))
             scrn.blit(nog_ops, (100, 100))
 
         if vals.P2:
-            jonesy = pygame.image.load("C:\\Users\\vinny\\Downloads\\jonesy.jpg")
+            jonesy = pygame.image.load(file.jonesy)
             jonesy = pygame.transform.scale(jonesy, (300, 300))
             scrn.blit(jonesy, (800, 100))
 
         if vals.P3:
-            raven = pygame.image.load("C:\\Users\\vinny\\Downloads\\Raven.jpg")
+            raven = pygame.image.load(file.raven)
             raven = pygame.transform.scale(raven, (300, 300))
             scrn.blit(raven, (100, 450))
 
         if vals.P4:
-            j_wick = pygame.image.load("C:\\Users\\vinny\\Downloads\\John_wick.jpg")
+            j_wick = pygame.image.load(file.john_wick)
             j_wick = pygame.transform.scale(j_wick, (300, 300))
             scrn.blit(j_wick, (800, 450))
     display_selec_icons()
@@ -68,8 +67,8 @@ def print_selec(scrn, pygame, vals):
 def print_info(scrn, pygame, file, vals):
     scrn.fill((27, 144, 221))
     title = pygame.image.load(file.title)
-    title = pygame.transform.scale(title, (400, 100))
-    scrn.blit(title, (750, 5))
+    title = pygame.transform.scale(title, (500, 100))
+    scrn.blit(title, (650, 5))
     pygame.draw.rect(scrn, (0, 0, 0), pygame.Rect(97, 97, 86, 121))
     pygame.draw.rect(scrn, (0, 0, 0), pygame.Rect(97, 247, 86, 121))
 
@@ -80,14 +79,14 @@ def print_info(scrn, pygame, file, vals):
     subsurface2 = imp.subsurface((198, 685, 80, 115))
     scrn.blit(subsurface2, (100, 250))
 
-    text = vals.font2.render(f'When you land on a launchpad tile, 1-6 will be added to your next dice roll!', True, (245, 245, 245))
+    text = vals.font2.render(f'When you land on a launchpad tile, you will move 1-6 additional spaces!', True, (245, 245, 245))
     textRect = text.get_rect()
     textRect.center = (575, 157)
     scrn.blit(text, textRect)
 
     text = vals.font2.render(f'When you land on a chest tile,  you will gain materials!', True, (245, 245, 245))
     textRect = text.get_rect()
-    textRect.center = (505, 307)
+    textRect.center = (495, 307)
     scrn.blit(text, textRect)
 
     text = vals.font1.render(f'Rules: ', True, (245, 245, 245))
@@ -100,7 +99,7 @@ def print_info(scrn, pygame, file, vals):
     textRect.center = (200, 735)
     scrn.blit(text, textRect)
 
-def print_board(scrn, pygame, file, vals, p_1, p_2, p_3, p_4, mx, my, dice1, dice2):
+def print_board(scrn, pygame, file, vals, p_1, p_2, p_3, p_4, mx, my, dice1, dice2, board):
 
     #fills the screen to blue
     scrn.fill((27, 144, 221))
@@ -119,6 +118,7 @@ def print_board(scrn, pygame, file, vals, p_1, p_2, p_3, p_4, mx, my, dice1, dic
     textRect = text.get_rect()
     textRect.center = (50, 30)
     scrn.blit(text, textRect)
+
     #sets imp to the image of the board, and declares its size and location
     def map():
         imp = pygame.image.load(file.map)
@@ -211,4 +211,10 @@ def print_board(scrn, pygame, file, vals, p_1, p_2, p_3, p_4, mx, my, dice1, dic
         text = vals.font1.render('Next Turn:', True, (245, 245, 245))
         textRect = text.get_rect()
         textRect.center = (1025, 25)
+        scrn.blit(text, textRect)
+
+    if board[vals.plays[vals.player-1].space].buyable and board[vals.plays[vals.player-1].space] not in vals.plays[vals.player-1].inventory:
+        text = vals.font1.render(f'Purchase', True, (245, 245, 245), (0, 0, 0))
+        textRect = text.get_rect()
+        textRect.center = (760, 720)
         scrn.blit(text, textRect)

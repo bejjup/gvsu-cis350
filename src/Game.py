@@ -19,7 +19,7 @@ scrn = pygame.display.set_mode((X, Y))
 file = File()
 vals = Values(pygame, file)
 board = []
-make_board(board)
+make_board(board, random)
 
 #sets the window name
 pygame.display.set_caption('Fortnite Monopoly')
@@ -49,14 +49,7 @@ while status:
                 start_button(mx, my, vals)
 
             if vals.SELEC:
-                # if P1 icon is clicked while it is still available
-                icon_nog_ops(mx, my, vals, Players)
-                # if P2 icon is clicked while it is still available
-                icon_jonesy(mx, my, vals, Players)
-                # if P3 icon is clicked while it is still available
-                icon_raven(mx, my, vals, Players)
-                # if P4 icon is clicked while it is still available
-                icon_john_wick(mx, my, vals, Players)
+                icons(mx, my, vals, Players, file)
 
         # if the continue button is clicked, enters the game screen
                 continue_button(mx, my, vals)
@@ -72,28 +65,29 @@ while status:
                 #Checks if the player rolls doubles
                 check_doubles(mx, my, vals)
 
-                #player rolls again after double
-
                 #Player presses next turn
                 next_turn(mx, my, vals, random)
 
                 #Player presses roll again
                 roll_again(mx, my, vals, random)
-            print(f'{mx} {my}')
+
+                purchase(mx, my, vals, board)
+            #print(f'{mx} {my}')
+
         elif i.type == MOUSEBUTTONUP and i.button == 1:
             vals.clicking = False
 
         if vals.START:
-            print_start(scrn, pygame)
+            print_start(scrn, pygame, file)
 
         elif vals.SELEC:
-            print_selec(scrn, pygame, vals)
+            print_selec(scrn, pygame, file, vals)
 
         elif vals.INFO:
             print_info(scrn, pygame, file, vals)
 
         elif vals.GAME:
-            print_board(scrn, pygame, file, vals, vals.p_1, vals.p_2, vals.p_3, vals.p_4, mx, my, vals.dice1, vals.dice2)
+            print_board(scrn, pygame, file, vals, vals.p_1, vals.p_2, vals.p_3, vals.p_4, mx, my, vals.dice1, vals.dice2, board)
 
         pygame.display.update()
 
