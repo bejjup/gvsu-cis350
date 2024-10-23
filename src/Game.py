@@ -19,7 +19,7 @@ scrn = pygame.display.set_mode((X, Y))
 file = File()
 vals = Values(pygame, file)
 board = []
-make_board(board)
+make_board(board, random)
 
 #sets the window name
 pygame.display.set_caption('Fortnite Monopoly')
@@ -70,7 +70,9 @@ while status:
 
                 #Player presses roll again
                 roll_again(mx, my, vals, random)
-            print(f'{mx} {my}')
+
+                purchase(mx, my, vals, board)
+            #print(f'{mx} {my}')
 
         elif i.type == MOUSEBUTTONUP and i.button == 1:
             vals.clicking = False
@@ -85,7 +87,7 @@ while status:
             print_info(scrn, pygame, file, vals)
 
         elif vals.GAME:
-            print_board(scrn, pygame, file, vals, vals.p_1, vals.p_2, vals.p_3, vals.p_4, mx, my, vals.dice1, vals.dice2)
+            print_board(scrn, pygame, file, vals, vals.p_1, vals.p_2, vals.p_3, vals.p_4, mx, my, vals.dice1, vals.dice2, board)
 
         pygame.display.update()
 
