@@ -17,6 +17,7 @@ class Players:
         self._img = "Placeholder"
         self.set_playa(num, file)
         self._space = 0
+        self._inventory = []
 
     # returns the name of the player
     @property
@@ -118,6 +119,13 @@ class Players:
             self.wood += 200
         else:
             self._space = value
+    @property
+    def inventory(self):
+        return self._inventory
+
+    @inventory.setter
+    def inventory(self, value):
+        self._inventory.append(value)
 
     # sets the name of the player depending on what icon they chose
     def set_playa(self, num, file):
@@ -125,6 +133,7 @@ class Players:
             self.name = "Nog Ops"
             self.color = 89, 211, 227
             self.img = file.nog_ops
+
         if num == 2:
             self.name = "Jonesy"
             self.color = 219, 31, 62
@@ -144,42 +153,64 @@ class Players:
         if self._num == 1:
             self.loc_x = 605
             self.loc_y = 605
+
         if self._num == 2:
             self.loc_x = 605
             self.loc_y = 625
+
         if self._num == 3:
             self.loc_x = 625
             self.loc_y = 605
+
         if self._num == 4:
             self.loc_x = 625
             self.loc_y = 625
 
-    def render_output(self, text_center, img_pos, mats_x_y, bool, vals, scrn, pygame):
+    def render_output(self, text_center, img_pos, mats_x, mats_y, vals, scrn, pygame):
         text = vals.font2.render(f'{self.name} {self.num}', True, (245, 245, 245))
         textRect = text.get_rect()
         textRect.center = text_center
         scrn.blit(text, textRect)
+
         img = pygame.image.load(self.img)
         img = pygame.transform.scale(img, (100, 100))
         scrn.blit(img, img_pos)
-        text = vals.font1.render(f'{self.wood} {self.brick} {self._metal}!', True, (245, 245, 245))
+
+        text = vals.font4.render(f'Wood: {self.wood}', True, (245, 245, 245))
         textRect = text.get_rect()
-        textRect.center = (mats_x_y)
-        if bool:
-            text = pygame.transform.rotate(text, 90)
+        textRect.center = (mats_x, mats_y)
         scrn.blit(text, textRect)
 
+        text = vals.font4.render(f'Brick: {self.brick}', True, (245, 245, 245))
+        textRect = text.get_rect()
+        textRect.center = (mats_x, mats_y+20)
+        scrn.blit(text, textRect)
+
+        text = vals.font4.render(f'Metal: {self.metal}', True, (245, 245, 245))
+        textRect = text.get_rect()
+        textRect.center = (mats_x, mats_y+40)
+        scrn.blit(text, textRect)
+
+        if self._inventory:
+            i = 0
+            for location in self._inventory:
+                text = vals.font4.render(f'Owns: {location.name}', True, (245, 245, 245))
+                textRect = text.get_rect()
+                textRect.center = (mats_x, mats_y + 60 + i)
+                scrn.blit(text, textRect)
+                i+=20
+
     def p1_out(self, vals, scrn, pygame):
-        self.render_output((195, 787), (145, 675), (425, 725), False, vals, scrn, pygame)
+        self.render_output((195, 787), (145, 675), 280, 690,  vals, scrn, pygame)
 
     def p2_out(self, vals, scrn, pygame):
-        self.render_output((75, 130), (25, 145), (175, 375), True, vals, scrn, pygame)
+        self.render_output((75, 130), (25, 145), 60, 260,  vals, scrn, pygame)
 
     def p3_out(self, vals, scrn, pygame):
-        self.render_output((195, 13), (145, 25), (425, 75), False, vals, scrn, pygame)
+        self.render_output((195, 13), (145, 25), 280, 40,  vals, scrn, pygame)
 
     def p4_out(self, vals, scrn, pygame):
-        self.render_output((725, 130), (675, 145), (825, 375), True, vals, scrn, pygame)
+        self.render_output((725, 130), (675, 145), 710, 260, vals, scrn, pygame)
 
     def render_circle(self, scrn, pygame):
         pygame.draw.circle(scrn, self.color, [self.loc_x, self.loc_y], 10, 0)
