@@ -21,6 +21,7 @@ class Values:
         self._font1 = pygame.font.Font('freesansbold.ttf', 40)
         self._font2 = pygame.font.Font('freesansbold.ttf', 20)
         self._font3 = pygame.font.Font('freesansbold.ttf', 30)
+        self._font4 = pygame.font.Font('freesansbold.ttf', 10)
         self._plays = []
         self._mus_time = 0
         self._clicking = False
@@ -161,6 +162,14 @@ class Values:
     @font3.setter
     def font3(self, value):
         self._font3 = value
+
+    @property
+    def font4(self):
+        return self._font4
+
+    @font4.setter
+    def font4(self, value):
+        self._font4 = value
 
     @property
     def plays(self):
