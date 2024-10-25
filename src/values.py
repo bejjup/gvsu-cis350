@@ -34,6 +34,8 @@ class Values:
         # sets dice2 to the image of the dice, and declares its size and location
         self._dice2 = pygame.image.load(file.dice)
         self._dice2 = pygame.transform.scale(self._dice2, (50, 50))
+        self._mx = 0
+        self._my = 0
 
     @property
     def DICE(self):
@@ -226,5 +228,21 @@ class Values:
     @property
     def dice2(self):
         return self._dice2
+
+    @property
+    def mx(self):
+        return self._mx
+
+    @mx.setter
+    def mx(self, value):
+        self._mx = value
+
+    @property
+    def my(self):
+        return self._my
+
+    @my.setter
+    def my(self, value):
+        self._my = value
 
 
