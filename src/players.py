@@ -2,9 +2,7 @@ class Players:
 
     def __init__(self, num, p, file):
         self._order = num
-        self._wood = 300
-        self._brick = 200
-        self._metal = 100
+        self._money = 300
         self._loc_x = 0
         self._loc_y = 0
         self._num = p
@@ -18,6 +16,8 @@ class Players:
         self.set_playa(num, file)
         self._space = 0
         self._inventory = []
+        self._material_image = file.materials
+        self._heath = 200
 
     # returns the name of the player
     @property
@@ -25,28 +25,12 @@ class Players:
         return self._order
 
     @property
-    def wood(self):
-        return self._wood
+    def money(self):
+        return self._money
 
-    @wood.setter
-    def wood(self, value):
-        self._wood = value
-
-    @property
-    def brick(self):
-        return self._brick
-
-    @brick.setter
-    def brick(self, value):
-        self._brick = value
-
-    @property
-    def metal(self):
-        return self._metal
-
-    @metal.setter
-    def metal(self, value):
-        self._metal = value
+    @money.setter
+    def money(self, value):
+        self._money = value
 
     @property
     def loc_x(self):
@@ -116,7 +100,7 @@ class Players:
     def space(self, value):
         if value > 31:
             self._space = value - 32
-            self.wood += 200
+            self.money += 200
         else:
             self._space = value
     @property
@@ -126,6 +110,18 @@ class Players:
     @inventory.setter
     def inventory(self, value):
         self._inventory.append(value)
+
+    @property
+    def material_image(self):
+        return self._material_image
+
+    @property
+    def health(self):
+        return self._heath
+
+    @health.setter
+    def health(self, value):
+        self._heath = value
 
     # sets the name of the player depending on what icon they chose
     def set_playa(self, num, file):
@@ -166,29 +162,19 @@ class Players:
             self.loc_x = 625
             self.loc_y = 625
 
-    def render_output(self, text_center, img_pos, mats_x, mats_y, vals, scrn, pygame):
-        text = vals.font2.render(f'{self.name} {self.num}', True, (245, 245, 245))
-        textRect = text.get_rect()
-        textRect.center = text_center
-        scrn.blit(text, textRect)
-
+    def render_output(self, img_pos, mats_x, mats_y, vals, scrn, pygame):
         img = pygame.image.load(self.img)
         img = pygame.transform.scale(img, (100, 100))
         scrn.blit(img, img_pos)
 
-        text = vals.font4.render(f'Wood: {self.wood}', True, (245, 245, 245))
-        textRect = text.get_rect()
-        textRect.center = (mats_x, mats_y)
-        scrn.blit(text, textRect)
+        pygame.draw.rect(scrn, (255, 0, 0), pygame.Rect(img_pos[0], img_pos[1]+105, 100, 10))
+        pygame.draw.rect(scrn, (0, 200, 0), pygame.Rect(img_pos[0], img_pos[1] + 105, self.health-100, 10))
+        if self.health > 100:
+            pygame.draw.rect(scrn, (0, 255, 255), pygame.Rect(img_pos[0], img_pos[1] + 105, self.health-100, 10))
 
-        text = vals.font4.render(f'Brick: {self.brick}', True, (245, 245, 245))
+        text = vals.font4.render(f'{self.money}', True, (245, 245, 245))
         textRect = text.get_rect()
-        textRect.center = (mats_x, mats_y+20)
-        scrn.blit(text, textRect)
-
-        text = vals.font4.render(f'Metal: {self.metal}', True, (245, 245, 245))
-        textRect = text.get_rect()
-        textRect.center = (mats_x, mats_y+40)
+        textRect.center = (mats_x+10, mats_y+20)
         scrn.blit(text, textRect)
 
         if self._inventory:
@@ -201,16 +187,16 @@ class Players:
                 i+=20
 
     def p1_out(self, vals, scrn, pygame):
-        self.render_output((195, 787), (145, 675), 280, 690,  vals, scrn, pygame)
+        self.render_output( (145, 675), 300, 690,  vals, scrn, pygame)
 
     def p2_out(self, vals, scrn, pygame):
-        self.render_output((75, 130), (25, 145), 60, 260,  vals, scrn, pygame)
+        self.render_output((25, 145), 60, 260,  vals, scrn, pygame)
 
     def p3_out(self, vals, scrn, pygame):
-        self.render_output((195, 13), (145, 25), 280, 40,  vals, scrn, pygame)
+        self.render_output((145, 25), 300, 40,  vals, scrn, pygame)
 
     def p4_out(self, vals, scrn, pygame):
-        self.render_output((725, 130), (675, 145), 710, 260, vals, scrn, pygame)
+        self.render_output((675, 145), 710, 260, vals, scrn, pygame)
 
     def render_circle(self, scrn, pygame):
         pygame.draw.circle(scrn, self.color, [self.loc_x, self.loc_y], 10, 0)
