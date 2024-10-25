@@ -40,54 +40,45 @@ while status:
     #iterate over the list of Event objects that was returned by pygame.event.get() method.
     for i in pygame.event.get():
         #stores the x and y values of the mouse
-        mx, my = pygame.mouse.get_pos()
+        vals.mx, vals.my = pygame.mouse.get_pos()
         #displays start screen if START is true
 
+        print_start(scrn, pygame, file, vals)
+        print_dice(pygame, scrn, vals)
         if i.type == MOUSEBUTTONDOWN and i.button == 1:
             vals.clicking = True
             if vals.START:
-                start_button(mx, my, vals)
+                start_button(vals)
 
             if vals.SELEC:
-                icons(mx, my, vals, Players, file)
+                icons(vals, Players, file)
+                print_selec(scrn, pygame, file, vals)
+                continue_button(vals)
 
-        # if the continue button is clicked, enters the game screen
-                continue_button(mx, my, vals)
-
-            if vals.INFO:
-                return_to_game(mx, my, vals)
             if vals.GAME:
-                info_button(mx, my, vals)
+                info_button(vals)
 
                 #Next Turn
-                roll_dice(mx, my, vals, mixer, file, pygame, board, random)
+                roll_dice(vals, mixer, file, pygame, board, random)
 
                 #Checks if the player rolls doubles
-                check_doubles(mx, my, vals)
+                check_doubles(vals)
 
                 #Player presses next turn
-                next_turn(mx, my, vals, random)
+                next_turn(vals, random)
 
                 #Player presses roll again
-                roll_again(mx, my, vals, random)
+                roll_again(vals, random)
 
-                purchase(mx, my, vals, board)
-            #print(f'{mx} {my}')
+                purchase(vals, board)
+                print_board(scrn, pygame, file, vals, board)
+            if vals.INFO:
+                print_info(scrn, pygame, file, vals)
+                return_to_game(scrn, pygame, file, vals, board)
 
         elif i.type == MOUSEBUTTONUP and i.button == 1:
             vals.clicking = False
 
-        if vals.START:
-            print_start(scrn, pygame, file)
-
-        elif vals.SELEC:
-            print_selec(scrn, pygame, file, vals)
-
-        elif vals.INFO:
-            print_info(scrn, pygame, file, vals)
-
-        elif vals.GAME:
-            print_board(scrn, pygame, file, vals, vals.p_1, vals.p_2, vals.p_3, vals.p_4, mx, my, vals.dice1, vals.dice2, board)
 
         pygame.display.update()
 
