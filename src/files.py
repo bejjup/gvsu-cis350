@@ -1,7 +1,7 @@
 class File:
     def __init__(self):
         self._title = "Assets/Title_text.png"
-        self._map = "Assets/Mappy .jpg"
+        self._map = "Assets/Mappy  (1).jpg"
         self._music = "Assets/01. Battle Royal (Guitar Theme).mp3"
         self._dice = "Assets/dice.png"
         self._roll_effect = "Assets/dice-142528.mp3"
@@ -10,6 +10,7 @@ class File:
         self._jonesy = "Assets/jonesy.jpg"
         self._raven = "Assets/Raven.jpg"
         self._john_wick = "Assets/John_wick.jpg"
+        self._materials = "Assets/Materials.png"
 
     @property
     def title(self):
@@ -41,5 +42,8 @@ class File:
     @property
     def john_wick(self):
         return self._john_wick
+    @property
+    def materials(self):
+        return self._materials
 
 
