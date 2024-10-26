@@ -1,16 +1,17 @@
-def print_start(scrn, pygame, file):
-    #fills the screen to blue
-    scrn.fill((27, 144, 221))
+def print_start(scrn, pygame, file, vals):
+    if vals.START:
+        #fills the screen to blue
+        scrn.fill((27, 144, 221))
 
-    # sets imp to the image of the board, and declares its size
-    start_but = pygame.image.load(file.start)
-    start_but = pygame.transform.scale(start_but, (300, 120))
-    scrn.blit(start_but, (450, 450))
+        # sets imp to the image of the board, and declares its size
+        start_but = pygame.image.load(file.start)
+        start_but = pygame.transform.scale(start_but, (300, 120))
+        scrn.blit(start_but, (450, 450))
 
-    #sets imp to the image of the board, and declares its size and location
-    title = pygame.image.load(file.title)
-    title = pygame.transform.scale(title, (900, 200))
-    scrn.blit(title, (150, 150))
+        #sets imp to the image of the board, and declares its size and location
+        title = pygame.image.load(file.title)
+        title = pygame.transform.scale(title, (900, 200))
+        scrn.blit(title, (150, 150))
 
 def print_selec(scrn, pygame, file, vals):
 
@@ -99,8 +100,41 @@ def print_info(scrn, pygame, file, vals):
     textRect.center = (200, 735)
     scrn.blit(text, textRect)
 
-def print_board(scrn, pygame, file, vals, p_1, p_2, p_3, p_4, mx, my, dice1, dice2, board):
+def print_dice(pygame, scrn, vals):
+    if vals.GAME:
+        if vals.DICE:
+            pygame.draw.rect(scrn, (27, 144, 221), pygame.Rect(865, 50, 335, 800))
+            pygame.draw.rect(scrn, (0, 0, 0), pygame.Rect(875, 50, 300, 700))
+            if (890 < vals.mx < 1175) and (73 < vals.my < 750):
+                scrn.blit(vals.dice1, (vals.mx - 25, vals.my - 25))
+                scrn.blit(vals.dice2, (vals.mx + 25, vals.my + 25))
 
+            # moves dice to default spot if the mouse is not within the roll box
+            else:
+                scrn.blit(vals.dice1, (1060, 675))
+                scrn.blit(vals.dice2, (1110, 675))
+
+                # sets the text size and location, and prints the Dice label
+                text = vals.font1.render('Dice:', True, (245, 245, 245), (0, 0, 0))
+                textRect = text.get_rect()
+                textRect.center = (960, 700)
+                scrn.blit(text, textRect)
+
+        elif vals.DOUBLES:
+            pygame.draw.rect(scrn, (27, 144, 221), pygame.Rect(865, 50, 335, 800))
+            pygame.draw.rect(scrn, (0, 0, 0), pygame.Rect(875, 50, 300, 700))
+            if (890 < vals.mx < 1175) and (73 < vals.my < 750):
+                scrn.blit(vals.dice1, (vals.mx - 25, vals.my - 25))
+                scrn.blit(vals.dice2, (vals.mx + 25, vals.my + 25))
+
+            else:
+                # moves dice to default spot if the mouse is not within the roll box
+                text = vals.font1.render(f'You Rolled {vals.num1 + vals.num2}!', True, (245, 245, 245))
+                textRect = text.get_rect()
+                textRect.center = (1025, 700)
+                scrn.blit(text, textRect)
+
+def print_board(scrn, pygame, file, vals, board):
     #fills the screen to blue
     scrn.fill((27, 144, 221))
 
@@ -108,10 +142,10 @@ def print_board(scrn, pygame, file, vals, p_1, p_2, p_3, p_4, mx, my, dice1, dic
     def recs():
         pygame.draw.rect(scrn, (0,0,0), pygame.Rect(145, 145, 510, 510))
         pygame.draw.rect(scrn, (0,0,0), pygame.Rect(875, 50, 300, 700))
-        pygame.draw.rect(scrn, (0,0,0), pygame.Rect(145, 675, 510, 100))
-        pygame.draw.rect(scrn, (0,0,0), pygame.Rect(25, 145, 100, 510))
-        pygame.draw.rect(scrn, (0,0,0), pygame.Rect(675, 145, 100, 510))
-        pygame.draw.rect(scrn, (0,0,0), pygame.Rect(145, 25, 510, 100))
+        pygame.draw.rect(scrn, (0,0,0), pygame.Rect(265, 675, 390, 100))
+        pygame.draw.rect(scrn, (0,0,0), pygame.Rect(25, 265, 100, 390))
+        pygame.draw.rect(scrn, (0,0,0), pygame.Rect(675, 265, 100, 390))
+        pygame.draw.rect(scrn, (0,0,0), pygame.Rect(265, 25, 390, 100))
     recs()
 
     text = vals.font3.render(f'Info', True, (245, 245, 245))
@@ -139,48 +173,21 @@ def print_board(scrn, pygame, file, vals, p_1, p_2, p_3, p_4, mx, my, dice1, dic
             elif num == 4:
                 p.p4_out(vals, scrn, pygame)
 
-    process(p_1)
-    process(p_2)
-    process(p_3)
-    process(p_4)
+    process(vals.p_1)
+    process(vals.p_2)
+    process(vals.p_3)
+    process(vals.p_4)
 
     text = vals.font3.render(f'{vals.plays[vals.player-1].name}\'s turn', True, (245, 245, 245), vals.plays[vals.player-1].color)
     textRect = text.get_rect()
     textRect.center = (775, 25)
     scrn.blit(text, textRect)
-    vals.plays[0].render_circle(scrn, pygame)
-    vals.plays[1].render_circle(scrn, pygame)
-    vals.plays[2].render_circle(scrn, pygame)
-    vals.plays[3].render_circle(scrn, pygame)
 
     if vals.DICE:
-        # moves the dice to follow the mouse if the mouse is within the roll box
-        if (875 < mx < 1175) and (50 < my < 750):
-            scrn.blit(dice1, (mx - 25, my - 25))
-            scrn.blit(dice2, (mx + 25, my + 25))
-
-        # moves dice to default spot if the mouse is not within the roll box
-        else:
-            scrn.blit(dice1, (1060, 675))
-            scrn.blit(dice2, (1110, 675))
-
-            # sets the text size and location, and prints the Dice label
-            text = vals.font1.render('Dice:', True, (245, 245, 245), (0, 0, 0))
-            textRect = text.get_rect()
-            textRect.center = (960, 700)
-            scrn.blit(text, textRect)
+        pass
 
     # if the previous dice were doubles
     elif vals.DOUBLES:
-        # moves the dice to follow the mouse if the mouse is within the roll box
-        if (875 < mx < 1175) and (50 < my < 750):
-            scrn.blit(dice1, (mx - 25, my - 25))
-            scrn.blit(dice2, (mx + 25, my + 25))
-
-        else:
-            # moves dice to default spot if the mouse is not within the roll box
-            scrn.blit(dice1, (1060, 675))
-            scrn.blit(dice2, (1110, 675))
 
         # Displays the sum of the numbers rolled as well as that they were doubles
         text = vals.font1.render(f'Doubles {vals.num1 + vals.num2}!', True, (245, 245, 245))
@@ -218,3 +225,37 @@ def print_board(scrn, pygame, file, vals, p_1, p_2, p_3, p_4, mx, my, dice1, dic
         textRect = text.get_rect()
         textRect.center = (760, 720)
         scrn.blit(text, textRect)
+    mat_img = pygame.image.load(file.materials)
+    mat_img = pygame.transform.scale(mat_img, (50, 30))
+    scrn.blit(mat_img, (260, 695))
+    scrn.blit(mat_img, (20, 265))
+    scrn.blit(mat_img, (260, 45))
+    scrn.blit(mat_img, (670, 265))
+    if vals.P1:
+        vals.plays[0].render_circle(scrn, pygame)
+    else:
+        pygame.draw.rect(scrn, (0,0,0), pygame.Rect(265, 675, 390, 100))
+    if vals.P2:
+        vals.plays[1].render_circle(scrn, pygame)
+    else:
+        pygame.draw.rect(scrn, (0,0,0), pygame.Rect(25, 265, 100, 390))
+    if vals.P3:
+        vals.plays[2].render_circle(scrn, pygame)
+    else:
+        pygame.draw.rect(scrn, (0,0,0), pygame.Rect(265, 25, 390, 100))
+    if vals.P4:
+        vals.plays[3].render_circle(scrn, pygame)
+    else:
+        pygame.draw.rect(scrn, (0,0,0), pygame.Rect(675, 265, 100, 390))
+
+def print_win(scrn, vals, pygame, file, mixer):
+    mixer.music.load(file.win_sound)
+    pygame.mixer.music.queue(file.music)
+    mixer.music.play()
+    scrn.fill((27, 144, 221))
+    title = pygame.image.load(file.win)
+    title = pygame.transform.scale(title, (400, 100))
+    scrn.blit(title, (750, 5))
+    winner = pygame.image.load(vals.winner.img)
+    winner = pygame.transform.scale(winner, (300, 300))
+    scrn.blit(winner, (100, 100))
