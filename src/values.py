@@ -11,6 +11,7 @@ class Values:
         self._START = True
         self._SELEC = False
         self._INFO = False
+        self._WIN = False
         self._P1 = True
         self._P2 = True
         self._P3 = True
@@ -34,6 +35,9 @@ class Values:
         # sets dice2 to the image of the dice, and declares its size and location
         self._dice2 = pygame.image.load(file.dice)
         self._dice2 = pygame.transform.scale(self._dice2, (50, 50))
+        self._mx = 0
+        self._my = 0
+        self._winner = "temp"
 
     @property
     def DICE(self):
@@ -227,4 +231,33 @@ class Values:
     def dice2(self):
         return self._dice2
 
+    @property
+    def mx(self):
+        return self._mx
 
+    @mx.setter
+    def mx(self, value):
+        self._mx = value
+
+    @property
+    def my(self):
+        return self._my
+
+    @my.setter
+    def my(self, value):
+        self._my = value
+
+    @property
+    def WIN(self):
+        return self._WIN
+
+    @WIN.setter
+    def WIN(self, value):
+        self._WIN = value
+
+    @property
+    def winner(self):
+        return self._winner
+    @winner.setter
+    def winner(self, value):
+        self._winner = value
