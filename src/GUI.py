@@ -5,7 +5,7 @@ from enum import Enum
 # from main import Game
 import random
 
-IMAGE_SIZE = 52
+
 
 class tiles(Enum):
     tile_1 = 1
@@ -21,17 +21,21 @@ class tiles(Enum):
     tile_flag = 11
 
 class GUI:
+    
 
     def __init__(self) -> None:
         self.printed = 0
         pg.init()
-        self.screen = pg.display.set_mode((1280, 480), pg.SCALED)
+        self.screen = pg.display.set_mode((960, 540), pg.RESIZABLE)
         pg.display.set_caption("RogueSweeper")
 
         # Create The Background
         self.background = pg.Surface(self.screen.get_size())
         self.background = self.background.convert()
         self.background.fill((170, 155, 187))
+        self.IMAGE_SIZE = lambda: self.screen.get_height() // 12
+        self.getXmargin = lambda: self.screen.get_width() - self.IMAGE_SIZE() * 10 # where grid starts
+        self.getYmargin = lambda: self.IMAGE_SIZE() * 3
      
     @classmethod
     def load_images(cls):
@@ -41,8 +45,7 @@ class GUI:
             height = 16
             surf = pg.Surface((width, height), pg.SRCALPHA)
             surf.blit(SS, (0, 0), pg.rect.Rect(width * (count % 8), height * (count // 8), width, height))
-            surf_scaled = pg.transform.scale(surf, (IMAGE_SIZE, IMAGE_SIZE)) # Change to image size
-            return surf_scaled
+            return surf
 
         cls.sprites = {}
         for st in range(16): # change to spritetype
@@ -67,6 +70,7 @@ class GUI:
 
             
             # Draw to screen
+            self.background = pg.transform.scale(self.background, self.screen.get_size())
             self.screen.blit(self.background, (0, 0))
             self.__draw_board__()
             pg.display.flip()
@@ -76,8 +80,9 @@ class GUI:
             for y in range(8):
                 # selected = Game.tile_at(x, y)
                 selected = self.printed
-                pg.draw.rect(self.screen, (255, 255, 255), pg.rect.Rect(x * IMAGE_SIZE, y * IMAGE_SIZE, IMAGE_SIZE, IMAGE_SIZE))
-                self.screen.blit(copy.deepcopy(GUI.sprites[selected]), (x * IMAGE_SIZE, y * IMAGE_SIZE))
+                # pg.draw.rect(self.screen, (255, 255, 255), pg.rect.Rect(x * self.IMAGE_SIZE(), y * self.IMAGE_SIZE(), self.IMAGE_SIZE(), self.IMAGE_SIZE()))
+                scaled_sprite = pg.transform.scale(copy.deepcopy(GUI.sprites[selected]), (self.IMAGE_SIZE(), self.IMAGE_SIZE()))
+                self.screen.blit(scaled_sprite, (x * self.IMAGE_SIZE() + self.getXmargin(), y * self.IMAGE_SIZE() + self.getYmargin()))
 
 
 def main():
