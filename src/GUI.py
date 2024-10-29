@@ -8,17 +8,19 @@ import random
 
 
 class tiles(Enum):
-    tile_1 = 1
-    tile_2 = 2
-    tile_3 = 3
-    tile_4 = 4
-    tile_5 = 5
-    tile_6 = 6
-    tile_7 = 7
-    tile_8 = 8
-    tile_empty = 9
-    tile_tile = 10
-    tile_flag = 11
+    tile = 0
+    tile_empty = 1
+    tile_flag = 2
+    tile_mine = 5
+    tile_clicked_mine = 6
+    tile_1 = 8
+    tile_2 = 9
+    tile_3 = 10
+    tile_4 = 11
+    tile_5 = 12
+    tile_6 = 13
+    tile_7 = 14
+    tile_8 = 15
 
 class GUI:
     
@@ -52,6 +54,8 @@ class GUI:
             cls.sprites[st] = load_image(st) 
             print(GUI.sprites)
 
+    def tile_at(x, y):
+        
         
     def __run_game__(self):
         print('running')
