@@ -1,5 +1,5 @@
-class model():
-    def __init__(self, size, mines):
+class Model:
+    def __init__(self, size: int, mines: int):
         self.mines = mines
         self.board = []
         for i in range(size):
@@ -7,36 +7,59 @@ class model():
             for j in range(size):
                 row.append(0)
             self.board.append(row)
-        self.board = [[0,0,0,"x",0],[0,"x",0,0,0],[0,0,"x",0,0],[0,0,0,0,0],[0,0,0,0,0]]
+    """
+    Traverses through board to find mines and sends to helper function to increment adjacent spaces
 
+    """
     def generate_numbers(self):
         for row in range(len(self.board)):
             for column in range(len(self.board[row])):
                 if self.board[row][column] == "x":
-                    self.__generate_numbers_helper(self.board, row, column, len(self.board))
+                    self.__generate_numbers_helper(self.board, row, column)
 
-    def __generate_numbers_helper(self, board, row, column, size):
+    """
+    Helper function for generate numbers and increments adjacent space based in an input bomb coordinate
+
+    Parameters
+    ----------
+    board
+        - The current board being incremented
+    row
+        - the row coordinate of the current bomb
+    column
+        - the column coordinate of current bomb
+    
+    """
+    def __generate_numbers_helper(self, board, row, column):
+
+        # Increments spaces above the mine
         if row - 1 >= 0:
             if isinstance(board[row - 1][column], int) is True:
                 board[row - 1][column] += 1
                 if column - 1 >= 0:
                     if isinstance(board[row - 1][column - 1], int) is True:
                         board[row - 1][column - 1] += 1
-                if column + 1 < size:
+                if column + 1 < len(board[row]):
                     if isinstance(board[row - 1][column + 1], int) is True:
                         board[row - 1][column + 1] += 1
-        if row + 1 < size:
+
+        # Increments spaces below the mine
+        if row + 1 < len(board):
             if isinstance(board[row + 1][column], int) is True:
                 self.board[row + 1][column] += 1
                 if column - 1 >= 0:
                     if isinstance(board[row + 1][column - 1], int) is True:
                         board[row + 1][column - 1] += 1
-                if column + 1 < size:
+                if column + 1 < len(board[row]):
                     if isinstance(board[row + 1][column + 1], int) is True:
                         board[row + 1][column + 1] += 1
+
+        # Increments the space to the right of the mine
         if column - 1 >= 0:
             if isinstance(board[row][column - 1], int) is True:
                 board[row][column - 1] += 1
-        if column + 1 < size:
+
+        # Increments the space to the right of the mine
+        if column + 1 < len(board[row]):
             if isinstance(board[row][column + 1], int) is True:
                 board[row][column + 1] += 1
