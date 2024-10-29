@@ -9,17 +9,30 @@ class Model:
             - The total number of mines to be placed on the board
         self.board
             - minesweeper board
+        self.revealed_board
+            - the portion of the board revealed to the player
+            - 0s are not revealed and 1s are revealed
 
         """
         self.mines = mines
+
         self.board = []
-
-
         for i in range(size):
             row = []
             for j in range(size):
                 row.append(0)
             self.board.append(row)
+
+        self.revealed_board = []
+        for i in range(size):
+            row = []
+        for j in range(size):
+            row.append(0)
+        self.revealed_board.append(row)
+
+
+        
+
 
     def generate_numbers(self):
         """
