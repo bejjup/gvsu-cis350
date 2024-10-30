@@ -1,75 +1,42 @@
+from render import *
+
+
 def print_start(scrn, pygame, file, vals):
     if vals.START:
-        #fills the screen to blue
-        scrn.fill((27, 144, 221))
-
-        # sets imp to the image of the board, and declares its size
-        start_but = pygame.image.load(file.start)
-        start_but = pygame.transform.scale(start_but, (300, 120))
-        scrn.blit(start_but, (450, 450))
-
-        #sets imp to the image of the board, and declares its size and location
-        title = pygame.image.load(file.title)
-        title = pygame.transform.scale(title, (900, 200))
-        scrn.blit(title, (150, 150))
+        scrn.fill(vals.current)
+        start_button = render_images(pygame, file.start, scrn, (300, 120), (450, 450))
+        title_text_image = render_images(pygame, file.title, scrn, (900, 200), (150, 150))
 
 def print_selec(scrn, pygame, file, vals):
 
-    #fills the screen to blue
-    scrn.fill((27, 144, 221))
-
-    #creates the selection screen text
-    title = pygame.image.load(file.title)
-    title = pygame.transform.scale(title, (400, 100))
-    scrn.blit(title, (750, 5))
+    scrn.fill(vals.current)
+    title_text_image = render_images(pygame, file.title, scrn, (500, 100), (650, 5))
 
     #tells the user whose turn it is to choose a player
     if vals.player <5:
-        text = vals.font1.render(f'Player {vals.player} Choose:', True, (245, 245, 245))
-        textRect = text.get_rect()
-        textRect.center = (200, 50)
-        scrn.blit(text, textRect)
+        render_text(vals.font1, scrn, f'Player {vals.player} Choose:', (245, 245, 245), (200, 50))
 
     #the user is told to continue when all players are selected
     else:
-        text = vals.font1.render(f'Please Continue!', True, (245, 245, 245))
-        textRect = text.get_rect()
-        textRect.center = (200, 50)
-        scrn.blit(text, textRect)
-
-        text = vals.font1.render(f'Continue', True, (245, 245, 245))
-        textRect = text.get_rect()
-        textRect.center = (600, 500)
-        scrn.blit(text, textRect)
+        render_text(vals.font1, scrn, f'Please Continue!', (245, 245, 245), (200, 50))
+        render_text(vals.font1, scrn, f'Continue', (245, 245, 245), (600, 500))
 
     #only shows the icons when they have not been selected yet
-    def display_selec_icons():
-        if vals.P1:
-            nog_ops = pygame.image.load(file.nog_ops)
-            nog_ops = pygame.transform.scale(nog_ops, (300, 300))
-            scrn.blit(nog_ops, (100, 100))
+    if vals.P1:
+        render_images(pygame, file.nog_ops, scrn, (300, 300), (100, 100))
 
-        if vals.P2:
-            jonesy = pygame.image.load(file.jonesy)
-            jonesy = pygame.transform.scale(jonesy, (300, 300))
-            scrn.blit(jonesy, (800, 100))
+    if vals.P2:
+        render_images(pygame, file.jonesy, scrn, (300, 300), (800, 100))
 
-        if vals.P3:
-            raven = pygame.image.load(file.raven)
-            raven = pygame.transform.scale(raven, (300, 300))
-            scrn.blit(raven, (100, 450))
+    if vals.P3:
+        render_images(pygame, file.raven, scrn, (300, 300), (100, 450))
 
-        if vals.P4:
-            j_wick = pygame.image.load(file.john_wick)
-            j_wick = pygame.transform.scale(j_wick, (300, 300))
-            scrn.blit(j_wick, (800, 450))
-    display_selec_icons()
+    if vals.P4:
+        render_images(pygame, file.john_wick, scrn, (300, 300), (800, 450))
 
 def print_info(scrn, pygame, file, vals):
-    scrn.fill((27, 144, 221))
-    title = pygame.image.load(file.title)
-    title = pygame.transform.scale(title, (500, 100))
-    scrn.blit(title, (650, 5))
+    scrn.fill(vals.current)
+    render_images(pygame, file.title, scrn, (500, 100), (650, 5))
     pygame.draw.rect(scrn, (0, 0, 0), pygame.Rect(97, 97, 86, 121))
     pygame.draw.rect(scrn, (0, 0, 0), pygame.Rect(97, 247, 86, 121))
 
@@ -80,30 +47,39 @@ def print_info(scrn, pygame, file, vals):
     subsurface2 = imp.subsurface((198, 685, 80, 115))
     scrn.blit(subsurface2, (100, 250))
 
-    text = vals.font2.render(f'When you land on a launchpad tile, you will move 1-6 additional spaces!', True, (245, 245, 245))
-    textRect = text.get_rect()
-    textRect.center = (575, 157)
-    scrn.blit(text, textRect)
+    render_text(vals.font2, scrn, f'When you land on a launchpad tile, you will move 1-6 additional spaces!', (245, 245, 245), (575, 157))
+    render_text(vals.font2, scrn, f'When you land on a chest tile,  you will gain materials!',(245, 245, 245), (495, 307))
+    render_text(vals.font1, scrn, f'Rules: ', (245, 245, 245),(163, 50))
+    render_text(vals.font1, scrn, f'Return to Game', (245, 245, 245), (200, 735))
 
-    text = vals.font2.render(f'When you land on a chest tile,  you will gain materials!', True, (245, 245, 245))
-    textRect = text.get_rect()
-    textRect.center = (495, 307)
-    scrn.blit(text, textRect)
+def print_settings(scrn, pygame, file, vals):
+    scrn.fill(vals.current)
+    render_images(pygame, file.title, scrn, (500, 100), (650, 5))
+    pygame.draw.rect(scrn, (220, 220, 90), pygame.Rect(125, 125, 950, 550))
+    pygame.draw.rect(scrn, (220, 220, 20), pygame.Rect(150, 150, 900, 500))
 
-    text = vals.font1.render(f'Rules: ', True, (245, 245, 245))
-    textRect = text.get_rect()
-    textRect.center = (163, 50)
-    scrn.blit(text, textRect)
+    render_text(vals.font1, scrn, 'Screen size:', (245, 245, 245), (300, 200))
 
-    text = vals.font1.render(f'Return to Game', True, (245, 245, 245))
-    textRect = text.get_rect()
-    textRect.center = (200, 735)
-    scrn.blit(text, textRect)
+    render_text(vals.font3, scrn, '1200x800', (245, 245, 245), (600, 200))
+    render_text(vals.font3, scrn, '1800x900', (245, 245, 245), (800, 200))
+
+    render_text(vals.font1, scrn, 'Volume:', (245, 245, 245), (258, 300))
+
+    i = 0
+    while i <= 100:
+        render_text(vals.font1, scrn, f'{i}', (245, 245, 245), (370 + 5*i, 300))
+        i+=20
+
+    render_text(vals.font1, scrn, 'Screen Mode:', (245, 245, 245), (315, 400))
+    render_text(vals.font1, scrn, 'Light Mode:', (245, 245, 245), (600, 400))
+    render_text(vals.font1, scrn, 'Dark Mode:', (245, 245, 245), (900, 400))
+
+    render_text(vals.font1, scrn, f'Return to Game', (245, 245, 245), (200, 735))
 
 def print_dice(pygame, scrn, vals):
     if vals.GAME:
         if vals.DICE:
-            pygame.draw.rect(scrn, (27, 144, 221), pygame.Rect(865, 50, 335, 800))
+            pygame.draw.rect(scrn, vals.current, pygame.Rect(865, 50, 335, 800))
             pygame.draw.rect(scrn, (0, 0, 0), pygame.Rect(875, 50, 300, 700))
             if (890 < vals.mx < 1175) and (73 < vals.my < 750):
                 scrn.blit(vals.dice1, (vals.mx - 25, vals.my - 25))
@@ -115,13 +91,10 @@ def print_dice(pygame, scrn, vals):
                 scrn.blit(vals.dice2, (1110, 675))
 
                 # sets the text size and location, and prints the Dice label
-                text = vals.font1.render('Dice:', True, (245, 245, 245), (0, 0, 0))
-                textRect = text.get_rect()
-                textRect.center = (960, 700)
-                scrn.blit(text, textRect)
+                render_text(vals.font1, scrn, f'Dice:', (245, 245, 245), (960, 700))
 
         elif vals.DOUBLES:
-            pygame.draw.rect(scrn, (27, 144, 221), pygame.Rect(865, 50, 335, 800))
+            pygame.draw.rect(scrn, vals.current, pygame.Rect(865, 50, 335, 800))
             pygame.draw.rect(scrn, (0, 0, 0), pygame.Rect(875, 50, 300, 700))
             if (890 < vals.mx < 1175) and (73 < vals.my < 750):
                 scrn.blit(vals.dice1, (vals.mx - 25, vals.my - 25))
@@ -129,36 +102,24 @@ def print_dice(pygame, scrn, vals):
 
             else:
                 # moves dice to default spot if the mouse is not within the roll box
-                text = vals.font1.render(f'You Rolled {vals.num1 + vals.num2}!', True, (245, 245, 245))
-                textRect = text.get_rect()
-                textRect.center = (1025, 700)
-                scrn.blit(text, textRect)
+                render_text(vals.font1, scrn, f'You Rolled {vals.num1 + vals.num2}!', (245, 245, 245), (1025, 700))
 
 def print_board(scrn, pygame, file, vals, board):
     #fills the screen to blue
-    scrn.fill((27, 144, 221))
+    scrn.fill(vals.current)
 
     #draws the rectangles
-    def recs():
-        pygame.draw.rect(scrn, (0,0,0), pygame.Rect(145, 145, 510, 510))
-        pygame.draw.rect(scrn, (0,0,0), pygame.Rect(875, 50, 300, 700))
-        pygame.draw.rect(scrn, (0,0,0), pygame.Rect(265, 675, 390, 100))
-        pygame.draw.rect(scrn, (0,0,0), pygame.Rect(25, 265, 100, 390))
-        pygame.draw.rect(scrn, (0,0,0), pygame.Rect(675, 265, 100, 390))
-        pygame.draw.rect(scrn, (0,0,0), pygame.Rect(265, 25, 390, 100))
-    recs()
+    pygame.draw.rect(scrn, (0,0,0), pygame.Rect(130, 130, 540, 540))
+    pygame.draw.rect(scrn, (0,0,0), pygame.Rect(875, 50, 300, 700))
+    pygame.draw.rect(scrn, (0,0,0), pygame.Rect(265, 675, 390, 100))
+    pygame.draw.rect(scrn, (0,0,0), pygame.Rect(25, 265, 100, 390))
+    pygame.draw.rect(scrn, (0,0,0), pygame.Rect(675, 265, 100, 390))
+    pygame.draw.rect(scrn, (0,0,0), pygame.Rect(265, 25, 390, 100))
 
-    text = vals.font3.render(f'Info', True, (245, 245, 245))
-    textRect = text.get_rect()
-    textRect.center = (50, 30)
-    scrn.blit(text, textRect)
+    render_text(vals.font2, scrn, f'Settings', (245, 245, 245), (50, 30))
+    render_text(vals.font2, scrn, f'Info', (245, 245, 245), (50, 60))
 
-    #sets imp to the image of the board, and declares its size and location
-    def map():
-        imp = pygame.image.load(file.map)
-        imp = pygame.transform.scale(imp, (500, 500))
-        scrn.blit(imp, (150, 150))
-    map()
+    render_images(pygame, file.map, scrn, (500, 500), (150, 150))
 
     #displays player 1's information
     def process(p):
@@ -178,10 +139,7 @@ def print_board(scrn, pygame, file, vals, board):
     process(vals.p_3)
     process(vals.p_4)
 
-    text = vals.font3.render(f'{vals.plays[vals.player-1].name}\'s turn', True, (245, 245, 245), vals.plays[vals.player-1].color)
-    textRect = text.get_rect()
-    textRect.center = (775, 25)
-    scrn.blit(text, textRect)
+    render_text_with_bg(vals.font3, scrn, f'{vals.plays[vals.player-1].name}\'s turn', (245, 245, 245),vals.plays[vals.player-1].color, (775, 25))
 
     if vals.DICE:
         pass
@@ -190,47 +148,34 @@ def print_board(scrn, pygame, file, vals, board):
     elif vals.DOUBLES:
 
         # Displays the sum of the numbers rolled as well as that they were doubles
-        text = vals.font1.render(f'Doubles {vals.num1 + vals.num2}!', True, (245, 245, 245))
-        textRect = text.get_rect()
-        textRect.center = (1000, 630)
-        scrn.blit(text, textRect)
+        render_text(vals.font1, scrn, f'Doubles {vals.num1 + vals.num2}!', (245, 245, 245), (1000, 630))
+
 
         # sets the text size and location, and prints the Dice label
-        text = vals.font1.render('Dice:', True, (245, 245, 245))
-        textRect = text.get_rect()
-        textRect.center = (960, 700)
-        scrn.blit(text, textRect)
+        render_text(vals.font1, scrn, f'Dice:', (245, 245, 245), (960, 700))
 
         # displays the Roll Again button if the player can roll after had rolling doubles
-        text = vals.font1.render('Roll Again:', True, (245, 245, 245))
-        textRect = text.get_rect()
-        textRect.center = (1025, 25)
-        scrn.blit(text, textRect)
+        render_text(vals.font1, scrn, 'Roll Again:', (245, 245, 245), (1025, 25))
 
     else:
         # Displays the sum of the numbers rolled
-        text = vals.font1.render(f'You Rolled {vals.num1 + vals.num2}!', True, (245, 245, 245))
-        textRect = text.get_rect()
-        textRect.center = (1025, 700)
-        scrn.blit(text, textRect)
+        render_text(vals.font1, scrn, f'You Rolled {vals.num1 + vals.num2}!', (245, 245, 245), (1025, 700))
 
         # displays the Next Turn button if the player can roll
-        text = vals.font1.render('Next Turn:', True, (245, 245, 245))
-        textRect = text.get_rect()
-        textRect.center = (1025, 25)
-        scrn.blit(text, textRect)
+        render_text(vals.font1, scrn, 'Next Turn:', (245, 245, 245), (1025, 25))
 
     if board[vals.plays[vals.player-1].space].buyable and board[vals.plays[vals.player-1].space] not in vals.plays[vals.player-1].inventory:
-        text = vals.font1.render(f'Purchase', True, (245, 245, 245), (0, 0, 0))
-        textRect = text.get_rect()
-        textRect.center = (760, 720)
-        scrn.blit(text, textRect)
-    mat_img = pygame.image.load(file.materials)
-    mat_img = pygame.transform.scale(mat_img, (50, 30))
-    scrn.blit(mat_img, (260, 695))
-    scrn.blit(mat_img, (20, 265))
-    scrn.blit(mat_img, (260, 45))
-    scrn.blit(mat_img, (670, 265))
+        if vals.plays[vals.player-1].money > board[vals.plays[vals.player-1].space].price:
+            render_text_with_bg(vals.font1, scrn, f'Purchase', (245, 245, 245), (0, 0, 0), (760, 720))
+
+    render_images(pygame, file.materials, scrn, (50, 30), (260, 695))
+    render_images(pygame, file.materials, scrn, (50, 30), (20, 265))
+    render_images(pygame, file.materials, scrn, (50, 30), (260, 45))
+    render_images(pygame, file.materials, scrn, (50, 30), (670, 265))
+
+    for spaces in board:
+        spaces.print_owner(pygame, scrn)
+
     if vals.P1:
         vals.plays[0].render_circle(scrn, pygame)
     else:
@@ -249,13 +194,14 @@ def print_board(scrn, pygame, file, vals, board):
         pygame.draw.rect(scrn, (0,0,0), pygame.Rect(675, 265, 100, 390))
 
 def print_win(scrn, vals, pygame, file, mixer):
-    mixer.music.load(file.win_sound)
-    pygame.mixer.music.queue(file.music)
-    mixer.music.play()
-    scrn.fill((27, 144, 221))
-    title = pygame.image.load(file.win)
-    title = pygame.transform.scale(title, (400, 100))
-    scrn.blit(title, (750, 5))
-    winner = pygame.image.load(vals.winner.img)
-    winner = pygame.transform.scale(winner, (300, 300))
-    scrn.blit(winner, (100, 100))
+    if vals.WIN:
+        mixer.music.load(file.win_sound)
+        pygame.mixer.music.queue(file.music)
+        mixer.music.play()
+        scrn.fill(vals.current)
+
+        render_images(pygame, file.win, scrn, (400, 100), (750, 5))
+        render_images(pygame, vals.winner.img, scrn, (300, 300), (100, 100))
+
+def print_easter_egg(scrn, pygame, vals):
+    pygame.draw.rect(scrn, vals.current, pygame.Rect(1175, 100, 400, 800))
