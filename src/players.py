@@ -1,9 +1,12 @@
+from render import render_text
+
+
 class Players:
 
     def __init__(self, num, p, file):
         self._order = num
-        self._money = 0
-        #self._money = 300
+        #self._money = 0
+        self._money = 200
         self._loc_x = 0
         self._loc_y = 0
         self._num = p
@@ -102,7 +105,7 @@ class Players:
     def space(self, value):
         if value > 31:
             self._space = value - 32
-            #self.money += 200
+            self.money += 100
         else:
             self._space = value
     @property
@@ -179,20 +182,8 @@ class Players:
             pygame.draw.rect(scrn, (0, 200, 0), pygame.Rect(img_pos[0], img_pos[1] + 105, 100, 10))
             pygame.draw.rect(scrn, (0, 255, 255), pygame.Rect(img_pos[0], img_pos[1] + 105, self.health-100, 10))
 
+        render_text(vals.font4, scrn, f'{self.money}', (245, 245, 245), (mats_x+10, mats_y+20))
 
-        text = vals.font4.render(f'{self.money}', True, (245, 245, 245))
-        textRect = text.get_rect()
-        textRect.center = (mats_x+10, mats_y+20)
-        scrn.blit(text, textRect)
-
-        if self._inventory:
-            i = 0
-            for location in self._inventory:
-                text = vals.font4.render(f'Owns: {location.name}', True, (245, 245, 245))
-                textRect = text.get_rect()
-                textRect.center = (mats_x, mats_y + 60 + i)
-                scrn.blit(text, textRect)
-                i+=20
 
     def p1_out(self, vals, scrn, pygame):
         self.render_output( (145, 675), 300, 690,  vals, scrn, pygame)
