@@ -1,1 +1,1 @@
-Placeholder for documents folder
+Documents outlining the project of Fortnite Monopoly. 
