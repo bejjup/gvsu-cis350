@@ -2,17 +2,18 @@ class Spaces:
 
     def __init__(self, name, x, y, num, booln):
         self._name = name
-        self._loc_1_x = x
-        self._loc_2_x = self._loc_1_x
-        self._loc_3_x = self._loc_1_x + 20
-        self._loc_4_x = self._loc_1_x + 20
-        self._loc_1_y = y
-        self._loc_2_y = self._loc_1_y + 20
-        self._loc_3_y = self._loc_1_y
-        self._loc_4_y = self._loc_1_y + 20
+        self._loc1_x = x
+        self._loc2_x = self.loc1_x
+        self._loc3_x = self.loc1_x + 20
+        self._loc4_x = self.loc1_x + 20
+        self._loc1_y = y
+        self._loc2_y = self.loc1_y + 20
+        self._loc3_y = self.loc1_y
+        self._loc4_y = self.loc1_y + 20
         self._pos = num
         self._price = 5*num
         self._owner = []
+        self._owner_color = (0, 0, 0)
         self._buyable = booln
 
     @property
@@ -25,67 +26,67 @@ class Spaces:
 
     @property
     def loc1_x(self):
-        return self._loc_1_x
+        return self._loc1_x
 
     @loc1_x.setter
     def loc1_x(self, value):
-        self._loc_1_x = value
+        self._loc1_x = value
 
     @property
     def loc2_x(self):
-        return self._loc_2_x
+        return self._loc2_x
 
     @loc2_x.setter
     def loc2_x(self, value):
-        self._loc_2_x = value
+        self._loc2_x = value
 
     @property
     def loc3_x(self):
-        return self._loc_3_x
+        return self._loc3_x
 
     @loc3_x.setter
     def loc3_x(self, value):
-        self._loc_3_x = value
+        self._loc3_x = value
 
     @property
     def loc4_x(self):
-        return self._loc_4_x
+        return self._loc4_x
 
     @loc4_x.setter
     def loc4_x(self, value):
-        self._loc_4_x = value
+        self._loc4_x = value
 
     @property
     def loc1_y(self):
-        return self._loc_1_y
+        return self._loc1_y
 
     @loc1_y.setter
     def loc1_y(self, value):
-        self._loc_1_y = value
+        self._loc1_y = value
 
     @property
     def loc2_y(self):
-        return self._loc_2_y
+        return self._loc2_y
 
     @loc2_y.setter
     def loc2_y(self, value):
-        self._loc_2_y = value
+        self._loc2_y = value
 
     @property
     def loc3_y(self):
-        return self._loc_3_y
+        return self._loc3_y
 
     @loc3_y.setter
     def loc3_y(self, value):
-        self._loc_3_y = value
+        self._loc3_y = value
 
     @property
     def loc4_y(self):
-        return self._loc_4_y
+        return self._loc4_y
 
     @loc4_y.setter
     def loc4_y(self, value):
-        self._loc_4_y = value
+        self._loc4_y = value
 
     @property
     def pos(self):
@@ -105,7 +106,8 @@ class Spaces:
 
     @owner.setter
     def owner(self, value):
-        self._owner.append(value)
+        self._owner = value
+        self._owner_color = value.color
 
     @property
     def buyable(self):
@@ -114,6 +116,25 @@ class Spaces:
     @buyable.setter
     def buyable(self, value):
         self._buyable = value
+
+    @property
+    def owner_color(self):
+        return self._owner_color
+
+    @owner_color.setter
+    def owner_color(self, value):
+        self._owner_color = value
+
+    def print_owner(self, pygame, scrn):
+        if self.owner:
+            if 0 < self.pos < 8:
+                pygame.draw.rect(scrn, self.owner_color, pygame.Rect(self.loc1_x-14, self.loc1_y+46, 50, 10))
+            if 8 < self.pos < 16:
+                pygame.draw.rect(scrn, self.owner_color, pygame.Rect(self.loc1_x-25, self.loc1_y-14, 10, 50))
+            if 16 < self.pos < 24:
+                pygame.draw.rect(scrn, self.owner_color, pygame.Rect(self.loc1_x-14, self.loc1_y-24, 50, 10))
+            if 24 < self.pos < 32:
+                pygame.draw.rect(scrn, self.owner_color, pygame.Rect(self.loc1_x+40, self.loc1_y-14, 10, 50))
 
 def make_board(board, random):
     p = 0
@@ -214,3 +235,4 @@ def make_board(board, random):
         p_palms = Spaces('Paradise Palms', 610, 541, p, True)
         board.append(p_palms)
         p += 1
+
