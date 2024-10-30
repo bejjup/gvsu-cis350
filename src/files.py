@@ -14,6 +14,7 @@ class File:
         self._win = "Assets/winnerPicture.png"
         self._death = "Assets/death.mp3"
         self._win_sound = "Assets/win.mp3"
+        self._dance = ""
 
     @property
     def title(self):
@@ -57,5 +58,7 @@ class File:
     @property
     def win_sound(self):
         return self._win_sound
-
+    @property
+    def dance(self):
+        return self._dance
 
