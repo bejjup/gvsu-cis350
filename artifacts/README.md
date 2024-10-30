@@ -1,1 +1,1 @@
-Placeholder for artifacts
+Holds the Artifacts for the project.
