@@ -10,6 +10,7 @@ class Values:
         self._GAME = False
         self._START = True
         self._SELEC = False
+        self._SETTINGS = False
         self._INFO = False
         self._WIN = False
         self._P1 = True
@@ -32,12 +33,15 @@ class Values:
         self._p_4 = Players
         self._dice1 = pygame.image.load(file.dice)
         self._dice1 = pygame.transform.scale(self._dice1, (50, 50))
-        # sets dice2 to the image of the dice, and declares its size and location
         self._dice2 = pygame.image.load(file.dice)
         self._dice2 = pygame.transform.scale(self._dice2, (50, 50))
         self._mx = 0
         self._my = 0
         self._winner = "temp"
+        self._full_screen = False
+        self._black = (0, 0, 0)
+        self._blue = (27, 144, 221)
+        self._current = self.blue
 
     @property
     def DICE(self):
@@ -86,6 +90,13 @@ class Values:
     @INFO.setter
     def INFO(self, value):
         self._INFO = value
+    @property
+    def SETTINGS(self):
+        return self._SETTINGS
+
+    @SETTINGS.setter
+    def SETTINGS(self, value):
+        self._SETTINGS = value
 
     @property
     def P1(self):
@@ -258,6 +269,31 @@ class Values:
     @property
     def winner(self):
         return self._winner
+
     @winner.setter
     def winner(self, value):
         self._winner = value
+
+    @property
+    def full_screen(self):
+        return self._full_screen
+
+    @full_screen.setter
+    def full_screen(self, value):
+        self._full_screen = value
+
+    @property
+    def black(self):
+        return self._black
+
+    @property
+    def blue(self):
+        return self._blue
+
+    @property
+    def current(self):
+        return self._current
+
+    @current.setter
+    def current(self, value):
+        self._current = value
