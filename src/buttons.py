@@ -72,11 +72,46 @@ def continue_button(vals):
 def return_to_game(scrn, pygame, file, vals, board):
     if (50 < vals.mx < 352) and (715 < vals.my < 750):
         vals.INFO = False
+        vals.SETTINGS = False
         vals.GAME = True
         print_board(scrn, pygame, file, vals, board)
 
+def settings_button(vals):
+    if (8 < vals.mx < 91) and (20 < vals.my < 36):
+        vals.GAME = False
+        vals.SETTINGS = True
+
+def volume_button(vals, mixer):
+    if (360 < vals.mx < 380) and (280 < vals.my < 315):
+        mixer.music.set_volume(0)
+    elif (450 < vals.mx < 490) and (280 < vals.my < 315):
+        mixer.music.set_volume(.2)
+    elif (547 < vals.mx < 593) and (280 < vals.my < 315):
+        mixer.music.set_volume(.4)
+    elif (648 < vals.mx < 693) and (280 < vals.my < 315):
+        mixer.music.set_volume(.6)
+    elif (748 < vals.mx < 793) and (280 < vals.my < 315):
+        mixer.music.set_volume(.8)
+    elif (838 < vals.mx < 905) and (280 < vals.my < 315):
+        mixer.music.set_volume(1)
+
+def resize_screen(vals, pygame):
+    if (528 < vals.mx < 674) and (187 < vals.my < 211):
+        pygame.display.set_mode((1200, 800))
+        vals.full_screen = False
+    elif (729 < vals.mx < 872) and (187 < vals.my < 211):
+        pygame.display.set_mode((1800, 900))
+        vals.full_screen = True
+
+def screen_mode(vals):
+    if (495 < vals.mx < 708) and (382 < vals.my < 411):
+        vals.current = vals.blue
+    elif (797 < vals.mx < 1006) and (382 < vals.my < 411):
+        vals.current = vals.black
+
+
 def info_button(vals):
-    if (20 < vals.mx < 80) and (15 < vals.my < 40):
+    if (32 < vals.mx < 68) and (51 < vals.my < 66):
         vals.GAME = False
         vals.INFO = True
 
@@ -110,8 +145,9 @@ def roll_dice(vals, mixer, file, pygame, board, random):
         for p in range(0,3):
             owner = vals.plays[p]
             if board[current_player.space] in owner.inventory and owner != current_player:
+                print(f'{owner.name} owns this space.')
                 if current_player.money - board[current_player.space].price >= 0:
-                    #owner.money += board[current_player.space].price
+                    owner.money += board[current_player.space].price
                     current_player.money -= board[current_player.space].price
                     print(f'{current_player.name} paid {owner.name} {board[current_player.space].price}')
                 else:
@@ -127,6 +163,7 @@ def roll_dice(vals, mixer, file, pygame, board, random):
                             vals.P4 = False
                         for stuff in current_player.inventory:
                             owner.add_to_inventory(stuff)
+                            stuff.owner = owner
                         current_player.inventory = []
                         mixer.music.load(file.death)
                         pygame.mixer.music.queue(file.music)
@@ -140,6 +177,7 @@ def roll_dice(vals, mixer, file, pygame, board, random):
                 print()
                 vals.winner = vals.plays[0]
                 vals.WIN = True
+                vals.GAME = False
                 mixer.music.load(file.death)
                 pygame.mixer.music.queue(file.music)
                 mixer.music.play()
@@ -149,18 +187,21 @@ def roll_dice(vals, mixer, file, pygame, board, random):
                 print()
                 vals.winner = vals.plays[1]
                 vals.WIN = True
+                vals.GAME = False
             elif not vals.P1 and not vals.P2 and vals.P3 and not vals.P4:
                 print()
                 print(f'{vals.plays[2].name} WON!')
                 print()
                 vals.winner = vals.plays[2]
                 vals.WIN = True
+                vals.GAME = False
             elif not vals.P1 and not vals.P2 and not vals.P3 and vals.P4:
                 print()
                 print(f'{vals.plays[3].name} WON!')
                 print()
                 vals.winner = vals.plays[3]
                 vals.WIN = True
+                vals.GAME = False
         check_for_win()
 
         if current_player.num == 1:
@@ -222,8 +263,10 @@ def roll_again(vals, random):
 
 def purchase(vals, board):
     if board[vals.plays[vals.player - 1].space].buyable and board[vals.plays[vals.player - 1].space] not in vals.plays[vals.player - 1].inventory:
-        if (669 < vals.mx < 852) and (700 < vals.my < 740):
-            vals.plays[vals.player - 1].add_to_inventory(board[vals.plays[vals.player - 1].space])
-            board[vals.plays[vals.player - 1].space].buyable = False
-            vals.plays[vals.player - 1].money -= board[vals.plays[vals.player - 1].space].price
-            print(f'{vals.plays[vals.player - 1].name} bought {board[vals.plays[vals.player - 1].space].name} for {board[vals.plays[vals.player - 1].space].price}')
+        if vals.plays[vals.player - 1].money > board[vals.plays[vals.player - 1].space].price:
+            if (669 < vals.mx < 852) and (700 < vals.my < 740):
+                vals.plays[vals.player - 1].add_to_inventory(board[vals.plays[vals.player - 1].space])
+                board[vals.plays[vals.player - 1].space].buyable = False
+                vals.plays[vals.player - 1].money -= board[vals.plays[vals.player - 1].space].price
+                board[vals.plays[vals.player - 1].space].owner = vals.plays[vals.player - 1]
+                print(f'{vals.plays[vals.player - 1].name} bought {board[vals.plays[vals.player - 1].space].name} for {board[vals.plays[vals.player - 1].space].price}')
