@@ -15,6 +15,13 @@ class Spaces:
         self._owner = []
         self._owner_color = (0, 0, 0)
         self._buyable = booln
+        if self.name == 'Jail':
+            self._loc2_x = self.loc1_x
+            self._loc3_x = self.loc1_x + 30
+            self._loc4_x = self.loc1_x + 50
+            self._loc2_y = self.loc1_y + 20
+            self._loc3_y = self.loc1_y + 50
+            self._loc4_y = self.loc1_y + 50
 
     @property
     def name(self):
@@ -163,7 +170,7 @@ def make_board(board, random):
         pp = Spaces('Polar Peak', 237, 605, p, True)
         board.append(pp)
         p += 1
-        jail = Spaces('Jail', 170, 605, 0, False)
+        jail = Spaces('Jail', 155, 595, 0, False)
         board.append(jail)
         p += 1
         ff = Spaces('Frosty Flights', 165, 541, p, True)
