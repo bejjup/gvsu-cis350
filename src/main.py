@@ -72,6 +72,8 @@ while status:
 
                 purchase(vals, board)
 
+                pay(vals, board)
+
                 print_board(scrn, pygame, file, vals, board)
 
             if vals.INFO:
