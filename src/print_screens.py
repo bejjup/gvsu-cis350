@@ -4,13 +4,13 @@ from render import *
 def print_start(scrn, pygame, file, vals):
     if vals.START:
         scrn.fill(vals.current)
-        start_button = render_images(pygame, file.start, scrn, (300, 120), (450, 450))
-        title_text_image = render_images(pygame, file.title, scrn, (900, 200), (150, 150))
+        render_images(pygame, file.start, scrn, (300, 120), (450, 450))
+        render_images(pygame, file.title, scrn, (900, 200), (150, 150))
 
 def print_selec(scrn, pygame, file, vals):
 
     scrn.fill(vals.current)
-    title_text_image = render_images(pygame, file.title, scrn, (500, 100), (650, 5))
+    render_images(pygame, file.title, scrn, (500, 100), (650, 5))
 
     #tells the user whose turn it is to choose a player
     if vals.player <5:
@@ -71,8 +71,8 @@ def print_settings(scrn, pygame, file, vals):
         i+=20
 
     render_text(vals.font1, scrn, 'Screen Mode:', (245, 245, 245), (315, 400))
-    render_text(vals.font1, scrn, 'Light Mode:', (245, 245, 245), (600, 400))
-    render_text(vals.font1, scrn, 'Dark Mode:', (245, 245, 245), (900, 400))
+    render_text(vals.font1, scrn, 'Light Mode', (245, 245, 245), (600, 400))
+    render_text(vals.font1, scrn, 'Dark Mode', (245, 245, 245), (900, 400))
 
     render_text(vals.font1, scrn, f'Return to Game', (245, 245, 245), (200, 735))
 
@@ -168,6 +168,10 @@ def print_board(scrn, pygame, file, vals, board):
         if vals.plays[vals.player-1].money > board[vals.plays[vals.player-1].space].price:
             render_text_with_bg(vals.font1, scrn, f'Purchase', (245, 245, 245), (0, 0, 0), (760, 720))
 
+    if board[vals.plays[vals.player - 1].space].name == 'Jail' and vals.plays[vals.player - 1].jail:
+        if vals.plays[vals.player - 1].money >= 50:
+            render_text_with_bg(vals.font1, scrn, f'Pay 50', (245, 245, 245), (0, 0, 0), (760, 720))
+
     render_images(pygame, file.materials, scrn, (50, 30), (260, 695))
     render_images(pygame, file.materials, scrn, (50, 30), (20, 265))
     render_images(pygame, file.materials, scrn, (50, 30), (260, 45))
@@ -175,6 +179,7 @@ def print_board(scrn, pygame, file, vals, board):
 
     for spaces in board:
         spaces.print_owner(pygame, scrn)
+
 
     if vals.P1:
         vals.plays[0].render_circle(scrn, pygame)
