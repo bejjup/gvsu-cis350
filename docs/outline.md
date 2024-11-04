@@ -1,4 +1,5 @@
 https://d3js.org/  https://observablehq.com/ 
+https://youtube.com/playlist?list=PL4cUxeGkcC9iNnY07bh_UPaRIQZcJfARY&si=8XEJqgMf82mA791y vidoe of money tracker app/website we could follow  
 
 Figma- 
 https://www.figma.com/slides/ArV59Nz3VrSJ4CkvqCIHgq/Untitled?node-id=1-9&node-type=slide&t=yGo6aZOcB1YXDifk-0 
@@ -9,7 +10,7 @@ https://lucid.app/lucidchart/128deea1-ac1e-439b-9e2d-a9f0a69d7c6b/edit?viewport_
 Jira
 https://mail-team-gpj.atlassian.net/jira/software/projects/SCRUM/settings/access 
 
-Gantt chart - https://mail980242.monday.com/users/sign_up?invitationId=45024614654211780000&inviter_id=67494122 
+Gantt chart - https://mail526346.monday.com/boards/7770845767 
 
 #### Outline
 Monthly money tracker which shows how much money you have spent and how much you have left over. Maybe it can compare to other months. Input your income for the month and fixed monthly spending such as bills, subscriptions, groceries then shows what you have left over. 
