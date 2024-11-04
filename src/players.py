@@ -23,6 +23,8 @@ class Players:
         self._material_image = file.materials
         #self._health = 200
         self._health = 50
+        self._jail = False
+        self._doubles_count = 0
 
     # returns the name of the player
     @property
@@ -131,6 +133,25 @@ class Players:
     def health(self, value):
         self._health = value
 
+    @property
+    def jail(self):
+        return self._jail
+
+    @jail.setter
+    def jail(self, value):
+        self._jail = value
+
+    @property
+    def doubles_count(self):
+        return self._doubles_count
+
+    @doubles_count.setter
+    def doubles_count(self, value):
+        self._doubles_count = value
+        if self.doubles_count == 3:
+            self.jail = True
+            self.space = 8
+
     # sets the name of the player depending on what icon they chose
     def set_playa(self, num, file):
         if num == 1:
@@ -170,6 +191,23 @@ class Players:
             self.loc_x = 625
             self.loc_y = 625
 
+    def get_icon_location(self, board):
+        if self.num == 1:
+            self.loc_x = board[self.space].loc1_x
+            self.loc_y = board[self.space].loc1_y
+
+        elif self.num == 2:
+            self.loc_x = board[self.space].loc2_x
+            self.loc_y = board[self.space].loc2_y
+
+        elif self.num == 3:
+            self.loc_x = board[self.space].loc3_x
+            self.loc_y = board[self.space].loc3_y
+
+        elif self.num == 4:
+            self.loc_x = board[self.space].loc4_x
+            self.loc_y = board[self.space].loc4_y
+
     def render_output(self, img_pos, mats_x, mats_y, vals, scrn, pygame):
         img = pygame.image.load(self.img)
         img = pygame.transform.scale(img, (100, 100))
@@ -183,6 +221,7 @@ class Players:
             pygame.draw.rect(scrn, (0, 255, 255), pygame.Rect(img_pos[0], img_pos[1] + 105, self.health-100, 10))
 
         render_text(vals.font4, scrn, f'{self.money}', (245, 245, 245), (mats_x+10, mats_y+20))
+        render_text(vals.font2, scrn, f'{self.doubles_count}', (245, 245, 245), (mats_x + 10, mats_y + 40))
 
 
     def p1_out(self, vals, scrn, pygame):
@@ -198,4 +237,9 @@ class Players:
         self.render_output((675, 145), 710, 260, vals, scrn, pygame)
 
     def render_circle(self, scrn, pygame):
-        pygame.draw.circle(scrn, self.color, [self.loc_x, self.loc_y], 10, 0)
+        if self.space == 8 and self.jail:
+            self.loc_x = 170 + 10*self.num
+            self.loc_y = 585 + 10*self.num
+            pygame.draw.circle(scrn, self.color, [self.loc_x, self.loc_y], 10, 0)
+        else:
+            pygame.draw.circle(scrn, self.color, [self.loc_x, self.loc_y], 10, 0)
