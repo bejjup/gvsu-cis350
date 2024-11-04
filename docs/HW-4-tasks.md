@@ -39,3 +39,7 @@ Tasks that have not yet been completed
 - Shows users visually where their money is going
 - 5-7 days
 - Jaylon
+
+  
+[Gantt.pdf](https://github.com/user-attachments/files/17613683/Gantt.pdf)
+
