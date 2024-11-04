@@ -136,6 +136,7 @@ def roll_dice(vals, mixer, file, pygame, board, random):
 
         if board[current_player.space].name == "Go To Jail":
             current_player.space = 8
+            current_player.jail = True
             print("You go to jail now!")
 
         if board[current_player.space].name == "Chest":
@@ -204,25 +205,12 @@ def roll_dice(vals, mixer, file, pygame, board, random):
                 vals.GAME = False
         check_for_win()
 
-        if current_player.num == 1:
-            current_player.loc_x = board[current_player.space].loc1_x
-            current_player.loc_y = board[current_player.space].loc1_y
-
-        elif current_player.num == 2:
-            current_player.loc_x = board[current_player.space].loc2_x
-            current_player.loc_y = board[current_player.space].loc2_y
-
-        elif current_player.num == 3:
-            current_player.loc_x = board[current_player.space].loc3_x
-            current_player.loc_y = board[current_player.space].loc3_y
-
-        elif current_player.num == 4:
-            current_player.loc_x = board[current_player.space].loc4_x
-            current_player.loc_y = board[current_player.space].loc4_y
+        current_player.get_icon_location(board)
 
 def check_doubles(vals):
     if (875 < vals.mx < 1175) and (50 < vals.my < 750) and vals.num1 == vals.num2:
         # declares that the player has doubles
+        vals.plays[vals.player-1].doubles_count += 1
         vals.DOUBLES = True
         vals.DICE = False
         vals.ROLLING = False
@@ -234,6 +222,7 @@ def check_doubles(vals):
 
 def next_turn(vals, random):
     if (920 < vals.mx < 1130) and (5 < vals.my < 45) and not vals.DICE and not vals.DOUBLES:
+        vals.plays[vals.player - 1].doubles_count = 0
         vals.DICE = True
         vals.DOUBLES = False
         vals.num1 = random.randint(1, 6)
@@ -270,3 +259,12 @@ def purchase(vals, board):
                 vals.plays[vals.player - 1].money -= board[vals.plays[vals.player - 1].space].price
                 board[vals.plays[vals.player - 1].space].owner = vals.plays[vals.player - 1]
                 print(f'{vals.plays[vals.player - 1].name} bought {board[vals.plays[vals.player - 1].space].name} for {board[vals.plays[vals.player - 1].space].price}')
+
+def pay(vals, board):
+    if board[vals.plays[vals.player - 1].space].name == 'Jail' and vals.plays[vals.player - 1].jail:
+            if (669 < vals.mx < 852) and (700 < vals.my < 740) and vals.plays[vals.player - 1].money >= 50:
+                current_player = vals.plays[vals.player - 1]
+                current_player.jail = False
+                current_player.money -= 50
+                current_player.get_icon_location(board)
+                print(f'{current_player.name} paid to get out of jail')
