@@ -36,41 +36,41 @@
 
 **Tasks Remaining**
 - Tile Class
-    - Description:
-    - Expected Time to Complete:
-    - Responsible:
+    - Description: Creating a class that can be recurred 
+    - Expected Time to Complete: 1 week
+    - Responsible: Aiden
     
 - Generate Mines
-    - Description:
-    - Expected Time to Complete:
-    - Responsible:
+    - Description: Randomly assigning mines to spaces.
+    - Expected Time to Complete: 3 days
+    - Responsible: Logan
     
 - Flag Placement
-    - Description:
-    - Expected Time to Complete:
-    - Responsible:
+    - Description: Feature to place/remove flags in order to mark mines.
+    - Expected Time to Complete: 3 days
+    - Responsible: Aiden, Logan
       
 - Revealing tiles
-    - Description:
-    - Expected Time to Complete:
-    - Responsible:
+    - Description: Being able to reveal a tile and have all 0 tiles reveal themselves that are next to each other.
+    - Expected Time to Complete: 1 week
+    - Responsible: Aiden, Logan, Brody
       
-- Endgame screen
-    - Description:
-    - Expected Time to Complete:
-    - Responsible:
+- Endgame 
+    - Description: Checks if all numebers are revealed and coints the number of coins.
+    - Expected Time to Complete: 1 week
+    - Responsible: Aiden
     
 - Game file
-    - Description:
-    - Expected Time to Complete:
-    - Responsible:
+    - Description: Creates levels and loops through players input for endgame.
+    - Expected Time to Complete: 1 week
+    - Responsible: Aiden, Logan
     
 - Sprites
-    - Description:
-    - Expected Time to Complete:
-    - Responsible:
+    - Description: Creating front end visual elements.
+    - Expected Time to Complete: 1 week
+    - Responsible: Josh, Brody
     
 - Shop
-    - Description:
-    - Expected Time to Complete:
-    - Responsible: 
+    - Description: Displaying a shop where items can be bought in-between levels.
+    - Expected Time to Complete: 2 weeks
+    - Responsible: Everyone
