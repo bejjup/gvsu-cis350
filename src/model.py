@@ -1,3 +1,8 @@
+class Tile:
+    def __init__(self, tile_type):
+        self.tile_type = tile_type
+        self.status = 0
+
 class Model:
     def __init__(self, size: int, mines: int):
         """
