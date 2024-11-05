@@ -36,10 +36,41 @@
 
 **Tasks Remaining**
 - Tile Class
+    - Description:
+    - Expected Time to Complete:
+    - Responsible:
+    
 - Generate Mines
+    - Description:
+    - Expected Time to Complete:
+    - Responsible:
+    
 - Flag Placement
+    - Description:
+    - Expected Time to Complete:
+    - Responsible:
+      
 - Revealing tiles
+    - Description:
+    - Expected Time to Complete:
+    - Responsible:
+      
 - Endgame screen
+    - Description:
+    - Expected Time to Complete:
+    - Responsible:
+    
 - Game file
+    - Description:
+    - Expected Time to Complete:
+    - Responsible:
+    
 - Sprites
+    - Description:
+    - Expected Time to Complete:
+    - Responsible:
+    
 - Shop
+    - Description:
+    - Expected Time to Complete:
+    - Responsible: 
