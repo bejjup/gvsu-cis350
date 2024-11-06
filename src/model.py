@@ -76,23 +76,23 @@ class Model:
         if row - 1 >= 0:
             if board[row - 1][column].tile_type >= 0:
                 board[row - 1][column].tile_type += 1
-                if column - 1 >= 0:
-                    if board[row - 1][column - 1].tile_type >= 0:
-                        board[row - 1][column - 1].tile_type += 1
-                if column + 1 < len(board[row]):
-                    if board[row - 1][column + 1].tile_type >= 0:
-                        board[row - 1][column + 1].tile_type += 1
+            if column - 1 >= 0:
+                if board[row - 1][column - 1].tile_type >= 0:
+                    board[row - 1][column - 1].tile_type += 1
+            if column + 1 < len(board[row]):
+                if board[row - 1][column + 1].tile_type >= 0:
+                    board[row - 1][column + 1].tile_type += 1
 
         # Increments spaces below the mine
         if row + 1 < len(board):
             if board[row + 1][column].tile_type >= 0:
                 self.board[row + 1][column].tile_type += 1
-                if column - 1 >= 0:
-                    if board[row + 1][column - 1].tile_type >= 0:
-                        board[row + 1][column - 1].tile_type += 1
-                if column + 1 < len(board[row]):
-                    if board[row + 1][column + 1].tile_type >= 0:
-                        board[row + 1][column + 1].tile_type += 1
+            if column - 1 >= 0:
+                if board[row + 1][column - 1].tile_type >= 0:
+                    board[row + 1][column - 1].tile_type += 1
+            if column + 1 < len(board[row]):
+                if board[row + 1][column + 1].tile_type >= 0:
+                    board[row + 1][column + 1].tile_type += 1
 
         # Increments the space to the left of the mine
         if column - 1 >= 0:
