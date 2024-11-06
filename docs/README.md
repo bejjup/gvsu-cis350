@@ -1,6 +1,6 @@
-Tasks in Scope:
+# Tasks in Scope:
 
-Completed:
+## Completed:
 	* Design the board - Make our own monopoly board where the game will be played. 
 	* User selection page - Use pygame to make the section of the game where users are selected.
 	* Game page - Use pygame to make the section of the game where the game is played. 
@@ -13,7 +13,7 @@ Completed:
 	* Purchase - If the player lands on a space that is for sale, then they can buy it. 
 	* Sound effects - Sound effects for rolling dice, background music, for dying, and for winning. 
 
-Not Yet Completed:
+## Not Yet Completed:
 	* Game cpu - A bot that will play the game in the absence of 4 person players. - 2hrs
 	* Easter Egg - Add functionality that comes from the player changing the screen size. - 1hr
 	* Alter windscreen - Make the windscreen more satisfying for the player. - 1hr
