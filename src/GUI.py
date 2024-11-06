@@ -7,7 +7,7 @@ import random
 import time
 import pygame.freetype as ft
 from model import Model
-
+from typing import Tuple
 
 class tiles(Enum):
     tile = 0
@@ -70,6 +70,23 @@ class GUI:
         grid_y = (pos[1] - self.getYmargin()) // self.IMAGE_SIZE()
         return grid_x, grid_y
 
+    def reveal_tiles(self, x: int, y: int):
+        if (x < 0 or x > 7) or (y < 0 or y > 7):
+            return
+        b = self.model.board
+        if b[x][y].status != 1: # Not Revealed
+            b[x][y].status = 1
+            if b[x][y].tile_type == -1:
+                for i in range(8):
+                    for j in range(8):
+                        b[i][j].status = 1
+            elif b[x][y].tile_type == 0: # empty
+                l = [-1, 0, 1]
+                for i in l:
+                    for j in l:
+                        self.reveal_tiles(x + i, y + j)
+            
+
     def run_pause(self):
         paused = True
         clock = pg.time.Clock()
@@ -108,7 +125,16 @@ class GUI:
                     self.run_pause()
                 elif event.type == pg.MOUSEBUTTONDOWN:
                     x, y = self.tile_at(pg.mouse.get_pos())
-                    self.model.board[x][y].status = 1
+                    if 0 <= x <= 7 and 0 <= y <= 7:
+                        if event.button == 3: # right click
+                            selected = self.model.board[x][y]
+                            if selected.status == 0:
+                                selected.status = -1 # set to flag
+                            elif selected.status == -1:
+                                selected.status = 0 # remove flag
+                                     
+                        elif event.button == 1: # left click
+                            self.reveal_tiles(x, y)                    
 
             
             # Draw to screen
