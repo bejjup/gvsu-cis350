@@ -1,3 +1,5 @@
+import random
+
 class Tile:
     def __init__(self, type = 0):
         self.tile_type = type
@@ -44,8 +46,6 @@ class Model:
             if self.board[row][column].tile_type != -1:
                 self.board[row][column].tile_type = -1
                 mines_place += 1
-
-        self.generate_numbers()
 
     def generate_numbers(self):
         """
