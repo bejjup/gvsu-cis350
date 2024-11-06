@@ -23,3 +23,17 @@ class modeltest(unittest.TestCase):
         tile.tile_type = 2
         self.assertIsInstance(tile.tile_type, int)
         self.assertEqual(str(tile), '2')
+
+    # 
+    def test_board(self, size=10, mines=5):
+        board = Model(size, mines)
+
+        self.assertEqual(len(board.board), size)
+        for row in board.board:
+            self.assertEqual(len(row), size)
+            for square in board.board:
+                self.assertIsInstance(square, size)
+    
+if __name__ == '__main__':
+    unittest.main()
+
