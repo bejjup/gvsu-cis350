@@ -48,7 +48,8 @@ class GUI:
         # set pause screen
         self.pause_bg = pg.Surface(self.screen.get_size(), pg.SRCALPHA)
         # init pause font
-        self.pause_font = ft.SysFont('Comic Sans MS', 30)
+        pause_font = ft.SysFont('Comic Sans MS', 30)
+        self.pause_text, rect = pause_font.render("Hello World!", (0, 0, 0), (255, 255, 255))
         
                 
     @classmethod
@@ -74,13 +75,13 @@ class GUI:
         if (x < 0 or x > 7) or (y < 0 or y > 7):
             return
         b = self.model.board
-        if b[x][y].status != 1: # Not Revealed
-            b[x][y].status = 1
-            if b[x][y].tile_type == -1:
+        if b[y][x].status != 1: # Not Revealed
+            b[y][x].status = 1
+            if b[y][x].tile_type == -1:
                 for i in range(8):
                     for j in range(8):
                         b[i][j].status = 1
-            elif b[x][y].tile_type == 0: # empty
+            elif b[y][x].tile_type == 0: # empty
                 l = [-1, 0, 1]
                 for i in l:
                     for j in l:
@@ -107,9 +108,10 @@ class GUI:
             self.__draw_board__()
             pg.draw.rect(self.pause_bg, (255, 0, 255, 127), self.pause_bg.get_rect())
             self.screen.blit(self.pause_bg, (0, 0))
+            rect = self.pause_text.get_rect().center
+            rect = (self.screen.get_width() // 2, self.screen.get_height() * .2)
+            self.screen.blit(self.pause_text, rect)
             pg.display.flip()
-            pause_text, rect = self.pause_font.render("Hello World!", True, (0, 0, 0))
-            self.screen.blit(pause_text, (40, 250))
                 
     def __run_game__(self):
         print('running')
@@ -127,7 +129,7 @@ class GUI:
                     x, y = self.tile_at(pg.mouse.get_pos())
                     if 0 <= x <= 7 and 0 <= y <= 7:
                         if event.button == 3: # right click
-                            selected = self.model.board[x][y]
+                            selected = self.model.board[y][x]
                             if selected.status == 0:
                                 selected.status = -1 # set to flag
                             elif selected.status == -1:
@@ -146,7 +148,7 @@ class GUI:
     def __draw_board__(self):
         for x in range(8):
             for y in range(8):
-                selected = self.model.board[x][y]
+                selected = self.model.board[y][x]
                 
                 # get current sprite
                 if selected.status == -1:
