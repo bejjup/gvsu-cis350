@@ -71,7 +71,6 @@ class Model:
             - the column coordinate of current bomb
         
         """
-        print("going to helper")
         # Increments spaces above the mine
         if row - 1 >= 0:
             if board[row - 1][column].tile_type >= 0:
