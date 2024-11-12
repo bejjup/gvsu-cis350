@@ -7,6 +7,14 @@ def print_start(scrn, pygame, file, vals):
         render_images(pygame, file.start, scrn, (300, 120), (450, 450))
         render_images(pygame, file.title, scrn, (900, 200), (150, 150))
 
+
+def choose_players(scrn, pygame, file, vals):
+
+    scrn.fill(vals.current)
+    render_images(pygame, file.title, scrn, (500, 100), (650, 5))
+
+    render_text(vals.font1, scrn, f'Please choose the amount of players!',(245, 245, 245), (600, 500))
+
 def print_selec(scrn, pygame, file, vals):
 
     scrn.fill(vals.current)

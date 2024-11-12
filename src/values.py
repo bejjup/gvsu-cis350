@@ -9,6 +9,7 @@ class Values:
         self._DOUBLES = False
         self._GAME = False
         self._START = True
+        self._CHOOSE = False
         self._SELEC = False
         self._SETTINGS = False
         self._INFO = False
@@ -74,6 +75,15 @@ class Values:
     @START.setter
     def START(self, value):
         self._START = value
+
+
+    @property
+    def CHOOSE(self):
+        return self._CHOOSE
+    
+    @CHOOSE.setter
+    def CHOOSE(self, value):
+        self._CHOOSE = value
 
     @property
     def SELEC(self):
