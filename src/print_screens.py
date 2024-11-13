@@ -7,13 +7,29 @@ def print_start(scrn, pygame, file, vals):
         render_images(pygame, file.start, scrn, (300, 120), (450, 450))
         render_images(pygame, file.title, scrn, (900, 200), (150, 150))
 
-def print_selec(scrn, pygame, file, vals):
+def print_num_players(scrn, pygame, file, vals):
+    scrn.fill(vals.current)
 
+    #tells the user to pick the amount of players
+    render_text(vals.font1, scrn, f'Please choose the amount of players!', (245, 245, 245), (600, 50))
+
+    #diplays icons for each mode
+    render_images(pygame, file.solo, scrn, (300, 300), (100, 100))
+    render_images(pygame, file.duos, scrn, (300, 300), (800, 100))
+    render_images(pygame, file.trios, scrn, (300, 300), (100, 450))
+    render_images(pygame, file.squads, scrn, (300, 300), (800, 450))
+
+    if vals.num_players == 1:
+        scrn.fill(vals.current)
+        render_text(vals.font1, scrn, f'Continue', (245, 245, 245), (600, 500))
+
+
+def print_selec(scrn, pygame, file, vals):
     scrn.fill(vals.current)
     render_images(pygame, file.title, scrn, (500, 100), (650, 5))
 
     #tells the user whose turn it is to choose a player
-    if vals.player <5:
+    if vals.player < 5:
         render_text(vals.font1, scrn, f'Player {vals.player} Choose:', (245, 245, 245), (200, 50))
 
     #the user is told to continue when all players are selected

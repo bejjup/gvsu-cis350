@@ -6,6 +6,13 @@ def start_button(vals):
         # TEST FOR WHEN THE START BUTTON HAS BEEN PRESSED
         print("You clicked start")
         vals.START = False
+        vals._CHOOSE = True
+
+def choose_players(vals):
+    if (100 < vals.jx < 400) and (100 < vals.jy < 400):
+        print("You clicked the amount of players")
+        vals._CHOOSE = False
+        vals.num_players += 1
         vals.SELEC = True
 
 def icon_nog_ops(vals, Players, file):
