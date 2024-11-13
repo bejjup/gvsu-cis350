@@ -11,6 +11,7 @@ class Values:
         self._START = True
         self._CHOOSE = False
         self._SELEC = False
+        self._CHOOSE = False
         self._SETTINGS = False
         self._INFO = False
         self._WIN = False
@@ -43,6 +44,13 @@ class Values:
         self._black = (0, 0, 0)
         self._blue = (27, 144, 221)
         self._current = self.blue
+        self._solo = True
+        self._duos = True
+        self._trios = True
+        self._squads = True
+        self._jx = 0
+        self._jy = 0
+        self._num_players = 0
 
     @property
     def DICE(self):
@@ -76,6 +84,14 @@ class Values:
     def START(self, value):
         self._START = value
 
+
+    @property
+    def CHOOSE(self):
+        return self._CHOOSE
+    
+    @CHOOSE.setter
+    def CHOOSE(self, value):
+        self._CHOOSE = value
 
     @property
     def CHOOSE(self):
@@ -307,3 +323,59 @@ class Values:
     @current.setter
     def current(self, value):
         self._current = value
+
+    @property
+    def solo(self):
+        return self._solo
+    
+    @solo.setter
+    def solo(self, value):
+        self._solo = value
+
+    @property
+    def duos(self):
+        return self._duos
+    
+    @duos.setter
+    def duos(self, value):
+        self._duos = value
+
+    @property
+    def trios(self):
+        return self._trios
+    
+    @trios.setter
+    def trios(self, value):
+        self._trios = value
+
+    @property
+    def squads(self):
+        return self._squads
+    
+    @squads.setter
+    def squads(self, value):
+        self._squads = value
+
+    @property
+    def jx(self):
+        return self._jx
+    
+    @jx.setter
+    def jx(self, value):
+        self._jx = value
+
+    @property
+    def jy(self):
+        return self._jy
+    
+    @jy.setter
+    def jy(self, value):
+        self._jy = value
+
+    @property
+    def num_players(self):
+        return self._num_players
+    
+    @num_players.setter
+    def num_players(self, value):
+        self._num_players = value

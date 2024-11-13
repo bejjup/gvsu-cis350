@@ -15,6 +15,10 @@ class File:
         self._death = "Assets/death.mp3"
         self._win_sound = "Assets/win.mp3"
         self._dance = ""
+        self._solo = "Assets/solo.jpg"
+        self._duos = "Assets/duos.jpeg"
+        self._trios = "Assets/trios.jpg"
+        self._squads = "Assets/squads.jpg"
 
     @property
     def title(self):
@@ -61,4 +65,20 @@ class File:
     @property
     def dance(self):
         return self._dance
+    
+    @property
+    def solo(self):
+        return self._solo
+    
+    @property
+    def duos(self):
+        return self._duos
+    
+    @property
+    def trios(self):
+        return self._trios
+    
+    @property
+    def squads(self):
+        return self._squads
 

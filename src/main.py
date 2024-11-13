@@ -40,6 +40,7 @@ while status:
     #iterate over the list of Event objects that was returned by pygame.event.get() method.
     for i in pygame.event.get():
         #stores the x and y values of the mouse
+        vals.jx, vals.jy = pygame.mouse.get_pos()
         vals.mx, vals.my = pygame.mouse.get_pos()
         #displays start screen if START is true
 
@@ -47,6 +48,10 @@ while status:
             vals.clicking = True
             if vals.START:
                 start_button(vals)
+
+            if vals._CHOOSE:
+                choose_players(vals)
+                print_num_players(scrn, pygame, file, vals)
 
             if vals.SELEC:
                 icons(vals, Players, file)
@@ -89,6 +94,7 @@ while status:
             if vals.WIN:
                 print_win(scrn, vals, pygame, file, mixer)
             print(f'{vals.mx} {vals.my}')
+            print(f'{vals.jx} {vals.jy}')
 
         elif i.type == MOUSEBUTTONUP and i.button == 1:
             vals.clicking = False
