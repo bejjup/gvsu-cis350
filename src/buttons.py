@@ -14,6 +14,22 @@ def choose_players(vals):
         vals._CHOOSE = False
         vals.num_players += 1
         vals.SELEC = True
+    elif (800 < vals.mx < 1100) and (100 < vals.my < 400):
+        print("You clicked the amount of players")
+        vals._CHOOSE = False
+        vals.num_players += 1
+        vals.SELEC = True
+    elif (100 < vals.mx < 400) and (450 < vals.my < 750):
+        print("You clicked the amount of players")
+        vals._CHOOSE = False
+        vals.num_players += 1
+        vals.SELEC = True
+    else:
+        if (800 < vals.mx < 1100) and (450 < vals.my < 750):
+            print("You clicked the amount of players")
+            vals._CHOOSE = False
+            vals.num_players += 1
+            vals.SELEC = True
 
 def icon_nog_ops(vals, Players, file):
     if (100 < vals.mx < 400) and (100 < vals.my < 400) and vals.P1:

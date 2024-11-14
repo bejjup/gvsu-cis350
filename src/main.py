@@ -49,15 +49,16 @@ while status:
             if vals.START:
                 start_button(vals)
 
-            if vals._CHOOSE:
+            elif vals._CHOOSE:
                 choose_players(vals)
                 print_num_players(scrn, pygame, file, vals)
 
-            if vals.SELEC:
-                icons(vals, Players, file)
-                print_selec(scrn, pygame, file, vals)
-                continue_button(vals)
-
+            else: 
+                if vals.SELEC:
+                    icons(vals, Players, file)
+                    print_selec(scrn, pygame, file, vals)
+                    continue_button(vals)
+ 
             if vals.GAME:
                 settings_button(vals)
 
@@ -94,7 +95,6 @@ while status:
             if vals.WIN:
                 print_win(scrn, vals, pygame, file, mixer)
             print(f'{vals.mx} {vals.my}')
-            print(f'{vals.jx} {vals.jy}')
 
         elif i.type == MOUSEBUTTONUP and i.button == 1:
             vals.clicking = False
