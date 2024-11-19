@@ -1,8 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'; 
 import { scheduleDailyNotification } from './Notification';
 import { registerForPushNotificationsAsync } from './Notification';
-import { useEffect } from 'react';
+import SettingsPage from './SettingsPage';
+
 
 const App = () => {
   useEffect(() => {
