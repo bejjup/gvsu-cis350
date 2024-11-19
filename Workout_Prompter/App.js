@@ -1,20 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
+import { scheduleDailyNotification } from './Notification';
+import { registerForPushNotificationsAsync } from './Notification';
+import { useEffect } from 'react';
 
-export default function App() {
+const App = () => {
+  useEffect(() => {
+    scheduleDailyNotification();
+  }, []); 
+
   return (
-    <View style={styles.container}>
-      <Text>Hello World</Text>
-      <StatusBar style="auto" />
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Button title="Send Notification" onPress={scheduleDailyNotification} />
     </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App; 
