@@ -55,9 +55,9 @@ class Model:
         for row in range(len(self.board)):
             for column in range(len(self.board[row])):
                 if self.board[row][column].tile_type == -1:
-                    self.__generate_numbers_helper(self.board, row, column)
+                    self.__generate_numbers_helper(row, column)
 
-    def __generate_numbers_helper(self, board, row, column):
+    def __generate_numbers_helper(self, row, column):
         """
         Helper function for generate numbers and increments adjacent space based in an input bomb coordinate
 
@@ -73,35 +73,52 @@ class Model:
         """
         # Increments spaces above the mine
         if row - 1 >= 0:
-            if board[row - 1][column].tile_type >= 0:
-                board[row - 1][column].tile_type += 1
+            if self.board[row - 1][column].tile_type >= 0:
+                self.board[row - 1][column].tile_type += 1
             if column - 1 >= 0:
-                if board[row - 1][column - 1].tile_type >= 0:
-                    board[row - 1][column - 1].tile_type += 1
-            if column + 1 < len(board[row]):
-                if board[row - 1][column + 1].tile_type >= 0:
-                    board[row - 1][column + 1].tile_type += 1
+                if self.board[row - 1][column - 1].tile_type >= 0:
+                    self.board[row - 1][column - 1].tile_type += 1
+            if column + 1 < len(self.board[row]):
+                if self.board[row - 1][column + 1].tile_type >= 0:
+                    self.board[row - 1][column + 1].tile_type += 1
 
         # Increments spaces below the mine
-        if row + 1 < len(board):
-            if board[row + 1][column].tile_type >= 0:
+        if row + 1 < len(self.board):
+            if self.board[row + 1][column].tile_type >= 0:
                 self.board[row + 1][column].tile_type += 1
             if column - 1 >= 0:
-                if board[row + 1][column - 1].tile_type >= 0:
-                    board[row + 1][column - 1].tile_type += 1
-            if column + 1 < len(board[row]):
-                if board[row + 1][column + 1].tile_type >= 0:
-                    board[row + 1][column + 1].tile_type += 1
+                if self.board[row + 1][column - 1].tile_type >= 0:
+                    self.board[row + 1][column - 1].tile_type += 1
+            if column + 1 < len(self.board[row]):
+                if self.board[row + 1][column + 1].tile_type >= 0:
+                    self.board[row + 1][column + 1].tile_type += 1
 
         # Increments the space to the left of the mine
         if column - 1 >= 0:
-            if board[row][column - 1].tile_type >= 0:
-                board[row][column - 1].tile_type += 1
+            if self.board[row][column - 1].tile_type >= 0:
+                self.board[row][column - 1].tile_type += 1
 
         # Increments the space to the right of the mine
-        if column + 1 < len(board[row]):
-            if board[row][column + 1].tile_type >= 0:
-                board[row][column + 1].tile_type += 1
+        if column + 1 < len(self.board[row]):
+            if self.board[row][column + 1].tile_type >= 0:
+                self.board[row][column + 1].tile_type += 1
+
+    def is_complete(self):
+        """
+        Traverses through the board to determine if the board is complete
+
+        Returns
+        -------
+        True
+            - if all numbers on the board are revealed
+        False
+            - if a number is still yet to be revealed
+        """
+        for row in self.board:
+            for column in self.board[row]:
+                if self.board[row][column].type > 0 and self.board[row][column].status == 0:
+                    return False
+        return True
 
     def __str__(self):
         printmodel = []
