@@ -114,9 +114,9 @@ class Model:
         False
             - if a number is still yet to be revealed
         """
-        for row in self.board:
-            for column in self.board[row]:
-                if self.board[row][column].type > 0 and self.board[row][column].status == 0:
+        for row in range(len(self.board)):
+            for column in range(len(self.board[row])):
+                if self.board[row][column].tile_type > 0 and self.board[row][column].status == 0:
                     return False
         return True
 
