@@ -1,5 +1,4 @@
 import pygame as pg
-import pygame_gui as GUI
 import copy
 from enum import Enum
 # from main import Game
@@ -24,6 +23,27 @@ class tiles(Enum):
     tile_7 = 14
     tile_8 = 15
 
+class Button:
+    def __init__(self, screen, pos, text, color, font):
+        self.screen = screen
+        self.pos = pos
+        self.text = text
+        self.color = color
+        self.cont_button = font.render(text, (0, 0, 0))
+    def update(self):
+        rect = self.cont_button[1]
+        center = rect.copy()
+        rect.center = center.center = (self.screen.get_width() * self.pos[0], self.screen.get_height() * self.pos[1])
+        if rect.collidepoint(pg.mouse.get_pos()):
+            rect = rect.scale_by(1.05, 1.05)
+            tmp_clr = tuple(map(lambda i, j: i + j, self.color, (10, 10, 25)))
+        else: tmp_clr = self.color
+        rect = rect.scale_by(1.2, 1.2)
+        rect.center = center.center
+        pg.draw.rect(self.screen, tmp_clr, rect, border_radius=10)
+        self.screen.blit(self.cont_button[0], center) 
+
+
 class GUI:
     
 
@@ -33,7 +53,9 @@ class GUI:
         self.model.generate_numbers()
         self.printed = 0
         pg.init()
+        self.btn_clr = (170, 155, 187)
         self.screen = pg.display.set_mode((960, 540), pg.RESIZABLE)
+        # self.ui_manager = GUI.UIManager(self.screen.get_size())
         pg.display.set_caption("RogueSweeper")
 
         # Create The Background
@@ -48,12 +70,14 @@ class GUI:
         # set pause screen
         self.pause_bg = pg.Surface(self.screen.get_size(), pg.SRCALPHA)
         # init pause font
-        pause_font = ft.SysFont('Comic Sans MS', 30)
-        self.pause_text, rect = pause_font.render("Hello World!", (0, 0, 0), (255, 255, 255))
-        
-                
+        font = ft.SysFont('Comic Sans MS', 30)
+        self.pause_text, rect = font.render("Paused", (0, 0, 0))
+        #init buttons
+        self.cont_btn = Button(self.screen, (.5, .4), 'Continue', self.btn_clr, font)
+    # class method that is ran before game to load sprites                
     @classmethod
     def load_images(cls):
+        # helper function ran for each individual sprite
         def load_image(count):
             SS = pg.image.load('./images/MS_Sprites.png')
             width = 17
@@ -67,11 +91,13 @@ class GUI:
             cls.sprites[st] = load_image(st) 
 
     def tile_at(self, pos):
+        # returns minesweeper grid pos for a mouse click
         grid_x = (pos[0] - self.getXmargin()) // self.IMAGE_SIZE()
         grid_y = (pos[1] - self.getYmargin()) // self.IMAGE_SIZE()
         return grid_x, grid_y
 
     def reveal_tiles(self, x: int, y: int):
+        # recursive function to reveal empty spaces
         if (x < 0 or x > 7) or (y < 0 or y > 7):
             return
         b = self.model.board
@@ -101,17 +127,25 @@ class GUI:
                         return
                 if event.type == pg.KEYDOWN and event.key == pg.K_UP:
                     print(time.time())
-            
+                if event.type == pg.MOUSEBUTTONDOWN:
+                    pos = pg.mouse.get_pos()
+                    if self.cont_btn.cont_button[1].collidepoint(pos):
+                        paused = False
+
             # draw transparent background
             self.background = pg.transform.scale(self.background, self.screen.get_size())
             self.screen.blit(self.background, (0, 0))
             self.__draw_board__()
-            pg.draw.rect(self.pause_bg, (255, 0, 255, 127), self.pause_bg.get_rect())
+            pg.draw.rect(self.pause_bg, (100, 100, 100, 127), self.pause_bg.get_rect())
             self.screen.blit(self.pause_bg, (0, 0))
-            rect = self.pause_text.get_rect().center
-            rect = (self.screen.get_width() // 2, self.screen.get_height() * .2)
+            # draw text
+            rect = self.pause_text.get_rect()
+            rect.center = (self.screen.get_width() // 2, self.screen.get_height() * .2)
             self.screen.blit(self.pause_text, rect)
+            # draw buttons
+            self.cont_btn.update()
             pg.display.flip()
+                
                 
     def __run_game__(self):
         print('running')
@@ -126,7 +160,9 @@ class GUI:
                 elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                     self.run_pause()
                 elif event.type == pg.MOUSEBUTTONDOWN:
-                    x, y = self.tile_at(pg.mouse.get_pos())
+                    pos = pg.mouse.get_pos()
+                    # TODO check each button to see if it was clicked
+                    x, y = self.tile_at(pos)
                     if 0 <= x <= 7 and 0 <= y <= 7:
                         if event.button == 3: # right click
                             selected = self.model.board[y][x]
@@ -174,3 +210,4 @@ def main():
     
 if __name__ == '__main__':
     main()
+    
