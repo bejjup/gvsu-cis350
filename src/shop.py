@@ -14,9 +14,12 @@ class Item(ABC):
         ---------
         self.obtained
             - Status of player ownership
+        self.level
+            - sets the level of the item
 
         """
         self.obtained = False
+        self.level = 0
 
     @abstractmethod
     def buy_item(self):
@@ -31,18 +34,7 @@ class Fireball(Item):
     Class for the fireball item
 
     """
-    def __init__(self):
-        """
-        Initializes the fireball item
 
-        Variables
-        ---------
-        self.level
-            - sets the level of the item
-
-        """         
-        self.level = 0
-    
     def buy_item(self, coins):
         """
         Changes obtained variable if player has sufficient funds
