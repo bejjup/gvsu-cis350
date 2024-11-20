@@ -109,13 +109,40 @@ class Fireball(Item):
         y
             - the y coordinate
         """
-        model.board[x][y].status = 1
+        if self.level > 0:
+            model.board[x][y].status = 1
+        if self.level > 1:
+            if x - 1 >= 0:
+                model.board[x - 1][y].status = 1
+            if x + 1 <= len(model.board) - 1:
+                model.board[x + 1][y].status = 1
+            if y - 1 >= 0:
+                model.board[x][y - 1].status = 1
+            if y + 1 <= len(model.board[x]) - 1:
+                model.board[x][y + 1].status = 1
+        if self.level > 2:
+            if x - 1 >= 0:
+                if y - 1 >= 0:
+                    model.board[x - 1][y - 1].status = 1
+                if y + 1 <= len(model.board[x]) - 1:
+                    model.board[x - 1][y + 1].status = 1
+            if x + 1 <= len(model.board) - 1:
+                if y - 1 >= 0:
+                    model.board[x + 1][y - 1].status = 1
+                if y + 1 <= len(model.board[x]) - 1:
+                    model.board[x + 1][y + 1].status = 1
+
 
 """
 b = Model(8, 10)
 f = Fireball()
-
-f.use_item(b, 0, 1)
+print(f.buy_item(500))
+print(f.level)
+print(f.upgrade_item(450))
+print(f.level)
+print(f.upgrade_item(350))
+print(f.level)
+f.use_item(b, 0, 0)
 
 
 printmodel = []
@@ -127,4 +154,3 @@ for row in range(len(b.board)):
 
 print(printmodel)
 """
-
