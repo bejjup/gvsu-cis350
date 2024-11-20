@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///expenses.db'  # Database URI pointing to an SQLite file
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disables modification tracking for better performance
 db = SQLAlchemy(app)  # Initializes SQLAlchemy with the app
-
+#adding comment
 # Defines the Expense model
 class Expense(db.Model):
     id = db.Column(db.Integer, primary_key=True)  # Unique ID for each record
