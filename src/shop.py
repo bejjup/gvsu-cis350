@@ -34,7 +34,6 @@ class Fireball(Item):
     Class for the fireball item
 
     """
-
     def buy_item(self, coins):
         """
         Changes obtained variable if player has sufficient funds
@@ -124,6 +123,94 @@ class Fireball(Item):
                 if y + 1 <= len(model.board[x]) - 1:
                     model.board[x + 1][y + 1].status = 1
 
+class Lazer(Item):
+    """
+    Class for the lazer item
+
+    """
+    def buy_item(self, coins):
+        """
+        Changes obtained variable if player has sufficient funds
+
+        Parameters
+        ----------
+        coins
+            - the amount of coins the player has
+
+        Returns
+        -------
+        The amount of coins remaining
+
+        """
+        if coins < 20:
+            return coins
+        else:
+            coins -= 20
+            self.obtained = True
+            self.level += 1
+            return coins
+    
+    def upgrade_item(self, coins):
+        """
+        Upgrades the fireball if the plater has sufficient funds
+
+        Parameters
+        ----------
+        coins
+            - the amount of coins the player has
+
+        Returns
+        -------
+        The amount of coins remaining
+
+        """
+        if self.obtained is False:
+            return coins
+        elif self.level == 1:
+            if coins < 50:
+                return coins
+            else:
+                coins -= 50
+                self.level +=1
+                return coins
+        elif self.level == 2:
+            if coins < 100:
+                return coins
+            else:
+                coins -= 100
+                self.level +=1
+        return coins
+        
+    def use_item(self, model, x: int, y: int):
+        """
+        Uses the lazer item
+
+        Parameters
+        ----------
+        model
+            - the board class to be fireballed
+        x
+            - the x coordinate
+        y
+            - the y coordinate
+
+        """
+        if self.level > 0:
+            model.board[x][y].status = 1
+            if x - 1 >= 0:
+                model.board[x - 1][y].status = 1
+            if x + 1 <= len(model.board) - 1:
+                model.board[x + 1][y].status = 1
+        if self.level > 1:
+            if x - 2 >= 0:
+                model.board[x - 2][y].status = 1
+            if x + 2 <= len(model.board) - 1:
+                model.board[x + 2][y].status = 1
+        if self.level > 2:
+            if x - 3 >= 0:
+                model.board[x - 3][y].status = 1
+            if x + 3 <= len(model.board) - 1:
+                model.board[x + 3][y].status = 1
 
 """
 b = Model(8, 10)
@@ -135,6 +222,27 @@ print(f.level)
 print(f.upgrade_item(350))
 print(f.level)
 f.use_item(b, 0, 0)
+
+
+printmodel = []
+for row in range(len(b.board)):
+    row_placeholder = []
+    for column in range(len(b.board[row])):
+        row_placeholder.append(b.board[row][column].status)
+    printmodel.append(row_placeholder)
+
+print(printmodel)
+
+
+b = Model(8, 10)
+l = Lazer()
+print(l.buy_item(500))
+print(l.level)
+print(l.upgrade_item(450))
+print(l.level)
+print(l.upgrade_item(350))
+print(l.level)
+l.use_item(b, 4, 4)
 
 
 printmodel = []
