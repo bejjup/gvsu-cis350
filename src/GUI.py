@@ -24,24 +24,26 @@ class tiles(Enum):
     tile_8 = 15
 
 class Button:
-    def __init__(self, screen, pos, text, color, font):
+    def __init__(self, screen, pos, text, color, font, text_color=(0, 0, 0)):
         self.screen = screen
         self.pos = pos
         self.text = text
         self.color = color
-        self.cont_button = font.render(text, (0, 0, 0))
+        self.cont_button = font.render(text, text_color)
+        
     def update(self):
         rect = self.cont_button[1]
-        center = rect.copy()
-        rect.center = center.center = (self.screen.get_width() * self.pos[0], self.screen.get_height() * self.pos[1])
+        self.bg = rect.copy()
+        self.bg.width = self.screen.get_width() * .15
+        rect.center = self.bg.center = (self.screen.get_width() * self.pos[0], self.screen.get_height() * self.pos[1])
         if rect.collidepoint(pg.mouse.get_pos()):
-            rect = rect.scale_by(1.05, 1.05)
+            self.bg = self.bg.scale_by(1.05, 1.05)
             tmp_clr = tuple(map(lambda i, j: i + j, self.color, (10, 10, 25)))
         else: tmp_clr = self.color
-        rect = rect.scale_by(1.2, 1.2)
-        rect.center = center.center
-        pg.draw.rect(self.screen, tmp_clr, rect, border_radius=10)
-        self.screen.blit(self.cont_button[0], center) 
+        self.bg = self.bg.scale_by(1.2, 1.2)
+        self.bg.center = rect.center
+        pg.draw.rect(self.screen, tmp_clr, self.bg, border_radius=10)
+        self.screen.blit(self.cont_button[0], rect) 
 
 
 class GUI:
@@ -54,7 +56,7 @@ class GUI:
         self.printed = 0
         pg.init()
         self.btn_clr = (170, 155, 187)
-        self.screen = pg.display.set_mode((960, 540), pg.RESIZABLE)
+        self.screen = pg.display.set_mode((960, 630), pg.RESIZABLE)
         # self.ui_manager = GUI.UIManager(self.screen.get_size())
         pg.display.set_caption("RogueSweeper")
 
@@ -64,16 +66,17 @@ class GUI:
         self.background = self.background.convert()
         self.background.fill((170, 155, 187))
         self.IMAGE_SIZE = lambda: self.screen.get_height() // 12
-        self.getXmargin = lambda: self.screen.get_width() - self.IMAGE_SIZE() * 10 # where grid starts
+        self.getXmargin = lambda: self.screen.get_width() - self.IMAGE_SIZE() * 9 # where grid starts
         self.getYmargin = lambda: self.IMAGE_SIZE() * 3
         
         # set pause screen
         self.pause_bg = pg.Surface(self.screen.get_size(), pg.SRCALPHA)
         # init pause font
         font = ft.SysFont('Comic Sans MS', 30)
-        self.pause_text, rect = font.render("Paused", (0, 0, 0))
+        self.pause_text = Button(self.screen, (.5, .2), 'Paused', (55, 55, 55), font, (225, 225, 225))
         #init buttons
         self.cont_btn = Button(self.screen, (.5, .4), 'Continue', self.btn_clr, font)
+        self.exit_btn = Button(self.screen, (.5, .6), 'Exit', self.btn_clr, font)
     # class method that is ran before game to load sprites                
     @classmethod
     def load_images(cls):
@@ -131,19 +134,22 @@ class GUI:
                     pos = pg.mouse.get_pos()
                     if self.cont_btn.cont_button[1].collidepoint(pos):
                         paused = False
+                    elif self.exit_btn.cont_button[1].collidepoint(pos):
+                        exit()
 
             # draw transparent background
             self.background = pg.transform.scale(self.background, self.screen.get_size())
             self.screen.blit(self.background, (0, 0))
             self.__draw_board__()
+            self.__draw_layout__()
             pg.draw.rect(self.pause_bg, (100, 100, 100, 127), self.pause_bg.get_rect())
+            self.pause_bg = pg.transform.scale(self.pause_bg, self.screen.get_size())
             self.screen.blit(self.pause_bg, (0, 0))
             # draw text
-            rect = self.pause_text.get_rect()
-            rect.center = (self.screen.get_width() // 2, self.screen.get_height() * .2)
-            self.screen.blit(self.pause_text, rect)
+            self.pause_text.update()
             # draw buttons
             self.cont_btn.update()
+            self.exit_btn.update()
             pg.display.flip()
                 
                 
@@ -178,6 +184,7 @@ class GUI:
             # Draw to screen
             self.background = pg.transform.scale(self.background, self.screen.get_size())
             self.screen.blit(self.background, (0, 0))
+            self.__draw_layout__()
             self.__draw_board__()
             pg.display.flip()
             
@@ -201,6 +208,10 @@ class GUI:
                 # pg.draw.rect(self.screen, (255, 255, 255), pg.rect.Rect(x * self.IMAGE_SIZE(), y * self.IMAGE_SIZE(), self.IMAGE_SIZE(), self.IMAGE_SIZE()))
                 scaled_sprite = pg.transform.scale(copy.deepcopy(GUI.sprites[sprite]), (self.IMAGE_SIZE(), self.IMAGE_SIZE()))
                 self.screen.blit(scaled_sprite, (x * self.IMAGE_SIZE() + self.getXmargin(), y * self.IMAGE_SIZE() + self.getYmargin()))
+
+    def __draw_layout__(self):
+        pg.draw.line(self.screen, (0, 0, 0), (self.getXmargin() - self.IMAGE_SIZE(), self.getYmargin() - self.IMAGE_SIZE()), (self.screen.get_width(), self.getYmargin() - self.IMAGE_SIZE()), 3)
+        pg.draw.line(self.screen, (0, 0, 0), (self.getXmargin() - self.IMAGE_SIZE(), 0), (self.getXmargin() - self.IMAGE_SIZE(), self.screen.get_height()), 3)
 
 
 def main():
