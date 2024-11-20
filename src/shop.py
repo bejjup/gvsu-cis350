@@ -41,7 +41,7 @@ class Fireball(Item):
             - sets the level of the item
 
         """         
-        self.level = 1
+        self.level = 0
     
     def buy_item(self, coins):
         """
@@ -61,7 +61,8 @@ class Fireball(Item):
             return coins
         else:
             coins -= 50
-            self.obtained is True
+            self.obtained = True
+            self.level += 1
             return coins
     
     def upgrade_item(self, coins):
