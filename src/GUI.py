@@ -52,14 +52,12 @@ class GUI:
     def __init__(self) -> None:
         
         self.model = Model(8, 10)
-        self.model.generate_numbers()
         self.printed = 0
         pg.init()
         self.btn_clr = (170, 155, 187)
         self.screen = pg.display.set_mode((960, 630), pg.RESIZABLE)
         # self.ui_manager = GUI.UIManager(self.screen.get_size())
         pg.display.set_caption("RogueSweeper")
-
         # Create The Background
         
         self.background = pg.Surface(self.screen.get_size())
@@ -98,7 +96,7 @@ class GUI:
         grid_x = (pos[0] - self.getXmargin()) // self.IMAGE_SIZE()
         grid_y = (pos[1] - self.getYmargin()) // self.IMAGE_SIZE()
         return grid_x, grid_y
-
+    
     def reveal_tiles(self, x: int, y: int):
         # recursive function to reveal empty spaces
         if (x < 0 or x > 7) or (y < 0 or y > 7):
@@ -114,9 +112,8 @@ class GUI:
                 l = [-1, 0, 1]
                 for i in l:
                     for j in l:
-                        self.reveal_tiles(x + i, y + j)
-            
-
+                        self.reveal_tiles(x + i, y + j) 
+    
     def run_pause(self):
         paused = True
         clock = pg.time.Clock()
@@ -178,6 +175,9 @@ class GUI:
                                 selected.status = 0 # remove flag
                                      
                         elif event.button == 1: # left click
+                            # if we haven't called generate_mines yet, we need to call it
+                            if not self.model.generated:
+                                self.model.generate_mines(x, y)
                             self.reveal_tiles(x, y)                    
 
             

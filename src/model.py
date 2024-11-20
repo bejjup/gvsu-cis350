@@ -7,7 +7,7 @@ class Tile:
 
     def __str__(self):
         return str(self.tile_type)
-
+    
 class Model:
     def __init__(self, size: int, mines: int):
         """
@@ -19,20 +19,19 @@ class Model:
             - The total number of mines to be placed on the board
         self.board
             - minesweeper board
-
         """
+        
         self.mines = mines
-
+        self.generated = False
+        
         self.board = []
         for i in range(size):
             row = []
             for j in range(size):
                 row.append(Tile())
             self.board.append(row)
-    
-        self.generate_mines()
-
-    def generate_mines(self):
+       
+    def generate_mines(self, x, y):
         """
         Randomly places mines (tile_type = -1) on the board
         and ensures that the number of mines equals self.mines
@@ -42,11 +41,14 @@ class Model:
         while mines_place < self.mines:
             row = random.randint(0, size - 1)
             column = random.randint(0, size - 1)
-            # Check if there is not already a mine at the randomly selected position
-            if self.board[row][column].tile_type != -1:
+            # Check if there is not already a mine at the randomly selected position and that the first tile clicked isn't a mine
+            if self.board[row][column].tile_type != -1 and not (y-1 <= row <= y+1 and x-1 <= column <= x+1):
                 self.board[row][column].tile_type = -1
                 mines_place += 1
 
+        self.generate_numbers()
+        self.generated = True
+    
     def generate_numbers(self):
         """
         Traverses through board to find mines and sends to helper function to increment adjacent spaces
