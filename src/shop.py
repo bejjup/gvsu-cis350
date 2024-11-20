@@ -8,7 +8,7 @@ class Item(ABC):
     """
     def __init__(self):
         """
-        Initializes a new game of chess
+        Initializes the item
 
         Variables
         ---------
