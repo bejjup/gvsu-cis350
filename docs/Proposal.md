@@ -2,10 +2,10 @@ Team name: Comp Sci French Fries
 
 Team members:
 
-Dylan Toomey
-Rachael Eapen
-Colin Nagley
-Lauren Applegate
+    * Dylan Toomey 
+    * Rachael Eapen
+    * Colin Nagley
+    * Lauren Applegate
 
 # Introduction
 
@@ -15,7 +15,7 @@ All members in our group believe that an active life improves mental well-being 
 
 # Anticipated Technologies
 
-*We are going to used JavaScript + React to build the interface of the website. If we plan on doing data handling we probably will end up using a DataBase like MariaDB or MySQL (by microsoft)
+* We are going to used JavaScript + React to build the interface of the website. If we plan on doing data handling we probably will end up using a DataBase like MariaDB or MySQL (by microsoft)
 * We are going to be needing to use different React librarys like Material UI.
 * JIRA for group organizing, bug fixing, and coordinating pushes and Merging
 * VScode as our programming interface
@@ -30,16 +30,26 @@ In our meeting today we discussed attacking this project in 3 different phases
 
 # Estimated Timeline
 
-In this next week, we will have our group roles figured out and JIRA sorted to allow us to seemlessly communicate errors and progress.
+## Weeks 1 and 2: 
 
-Following that we assume we will take a minimum of 2 weeks to finish the questionare side of our project.
+* Dylan Shall work on creating the database for our website
+* Colin Shall work on implementing Expo for iOS/Andriod use
+* Rachael Shall work on creating a local server
+* Lauren Shall work on the questionairre
 
-spending 3 weeks creating the backend where we start researching and personalizing this application for the average user.
+## Week 3:
 
-late November early December for bug fixing and beta testing. 
+* Dylan Shall work on connecting the database to Expo 
+* Colin Shall help lauren work on the questionairre
+* Lauren Shall work on the questionairre
+* Rachael Shall work on questionairre 
 
-December (finals): Have a completed and polished final project!
+## Week 4:
 
+* Dylan Shall work to connect the questionairre to the database
+* Colin Shall create the settings page of the app
+* Rachael shall connect the water stats 
+* Lauren shall create the home page
 
 # Anticipated Problems
 
@@ -49,4 +59,25 @@ Researching will be interesting
 
 Porting to iOS will be new.
 
-Those are the only forseable problems that we have been able to come up with so far. It's hard to know the issues ahead when dealing with a new language and platform.
+Those are theonly forseable problems that we have been able to come up with so far. It's hard to know the issues ahead when dealing with a new language and platform.
+
+## Project Features 
+
+### Essential Features 
+
+    * questionnaire
+    * ability to send notifications
+    * visual interface
+    * settings page
+
+### Nonessential Features 
+
+    * Login feature 
+    * 2 factor authentication
+    * list of workout plans
+    * homepage to check stats
+
+
+
+
+
