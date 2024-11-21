@@ -1,1 +1,18 @@
-{}
+{
+    "items": [
+      {
+        "id": 1699982478123,
+        "name": "John Doe",
+        "weight": "70",
+        "age": "25",
+        "gender": "Male",
+        "experience": "Little",
+        "type": "Endurance",
+        "length": "15 mins",
+        "intensityScale": "4",
+        "promptTime": "7 AM",
+        "hourlyWaterNotif": "Yes"
+      }
+    ]
+  }
+  
