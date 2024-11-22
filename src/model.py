@@ -118,7 +118,7 @@ class Model:
         """
         for row in range(len(self.board)):
             for column in range(len(self.board[row])):
-                if self.board[row][column].tile_type > 0 and self.board[row][column].status == 0:
+                if self.board[row][column].tile_type != -1 and self.board[row][column].status != 1:
                     return False
         return True
 

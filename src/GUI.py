@@ -1,12 +1,12 @@
 import pygame as pg
 import copy
 from enum import Enum
-# from main import Game
 import random
 import time
 import pygame.freetype as ft
 from model import Model
 from typing import Tuple
+from levels import Levels
 
 class tiles(Enum):
     tile = 0
@@ -108,85 +108,12 @@ class GUI:
                 for i in range(8):
                     for j in range(8):
                         b[i][j].status = 1
+                       
             elif b[y][x].tile_type == 0: # empty
                 l = [-1, 0, 1]
                 for i in l:
                     for j in l:
-                        self.reveal_tiles(x + i, y + j) 
-    
-    def run_pause(self):
-        paused = True
-        clock = pg.time.Clock()
-        start = time.time()
-
-        while paused:
-            clock.tick(60)
-            for event in pg.event.get():
-                if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
-                        paused = False
-                        return
-                if event.type == pg.KEYDOWN and event.key == pg.K_UP:
-                    print(time.time())
-                if event.type == pg.MOUSEBUTTONDOWN:
-                    pos = pg.mouse.get_pos()
-                    if self.cont_btn.cont_button[1].collidepoint(pos):
-                        paused = False
-                    elif self.exit_btn.cont_button[1].collidepoint(pos):
-                        exit()
-
-            # draw transparent background
-            self.background = pg.transform.scale(self.background, self.screen.get_size())
-            self.screen.blit(self.background, (0, 0))
-            self.__draw_board__()
-            self.__draw_layout__()
-            pg.draw.rect(self.pause_bg, (100, 100, 100, 127), self.pause_bg.get_rect())
-            self.pause_bg = pg.transform.scale(self.pause_bg, self.screen.get_size())
-            self.screen.blit(self.pause_bg, (0, 0))
-            # draw text
-            self.pause_text.update()
-            # draw buttons
-            self.cont_btn.update()
-            self.exit_btn.update()
-            pg.display.flip()
-                
-                
-    def __run_game__(self):
-        print('running')
-        going = True
-        clock = pg.time.Clock()
-        while going:
-
-            # Handle Input Events
-            for event in pg.event.get():
-                if event.type == pg.QUIT:
-                    going = False
-                elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
-                    self.run_pause()
-                elif event.type == pg.MOUSEBUTTONDOWN:
-                    pos = pg.mouse.get_pos()
-                    # TODO check each button to see if it was clicked
-                    x, y = self.tile_at(pos)
-                    if 0 <= x <= 7 and 0 <= y <= 7:
-                        if event.button == 3: # right click
-                            selected = self.model.board[y][x]
-                            if selected.status == 0:
-                                selected.status = -1 # set to flag
-                            elif selected.status == -1:
-                                selected.status = 0 # remove flag
-                                     
-                        elif event.button == 1: # left click
-                            # if we haven't called generate_mines yet, we need to call it
-                            if not self.model.generated:
-                                self.model.generate_mines(x, y)
-                            self.reveal_tiles(x, y)                    
-
-            
-            # Draw to screen
-            self.background = pg.transform.scale(self.background, self.screen.get_size())
-            self.screen.blit(self.background, (0, 0))
-            self.__draw_layout__()
-            self.__draw_board__()
-            pg.display.flip()
+                        self.reveal_tiles(x + i, y + j)   
             
     def __draw_board__(self):
         for x in range(8):
@@ -217,7 +144,8 @@ class GUI:
 def main():
     GUI.load_images()
     g = GUI()
-    g.__run_game__()
+    levels = Levels(g)
+    levels.run_game()
     
 if __name__ == '__main__':
     main()
