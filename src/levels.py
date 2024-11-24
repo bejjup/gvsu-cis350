@@ -29,8 +29,34 @@ class Levels(GUI):
                 "size": 14
             }
         ]
-    
+
+        self.home_image = pg.image.load('./images/homescreen.png')
+        self.home_image = pg.transform.scale(self.home_image, self.screen.get_size())  # Scale the image to fit the screen size
+
+    def run_home_screen(self):
+        showing = True
+        while showing:
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    exit()
+                elif event.type == pg.KEYDOWN or event.type == pg.MOUSEBUTTONDOWN:
+                    showing = False  # Exit the home screen when a key is pressed
+            
+            # Draw the home screen image
+            self.screen.blit(self.home_image, (0, 0))
+            
+            
+            font = pg.font.Font(None, 50)
+            text = font.render("Press any key to start the game", True, (255, 255, 255))
+            text_rect = text.get_rect(center=self.screen.get_rect().center)
+            self.screen.blit(text, text_rect)
+            
+            # Update the display
+            pg.display.flip()
+
     def run_game(self):
+        self.run_home_screen()
+
         going = True
         while going:
 
