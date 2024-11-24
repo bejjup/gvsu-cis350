@@ -6,7 +6,6 @@ import time
 import pygame.freetype as ft
 from model import Model
 from typing import Tuple
-from levels import Levels
 
 class tiles(Enum):
     tile = 0
@@ -22,6 +21,16 @@ class tiles(Enum):
     tile_6 = 13
     tile_7 = 14
     tile_8 = 15
+    
+class Image:
+    def __init__(self, screen, rect, image):
+        self.screen = screen
+        self.rect = rect
+        self.image = image
+    
+    def update(self):
+        self.image = pg.transform.scale(self.image, self.rect.size)
+        self.screen.blit(self.image, self.rect) 
 
 class Button:
     def __init__(self, screen, pos, text, color, font, text_color=(0, 0, 0)):
@@ -29,21 +38,22 @@ class Button:
         self.pos = pos
         self.text = text
         self.color = color
-        self.cont_button = font.render(text, text_color)
+        self.button = font.render(text, text_color)
+        self.interactive = True
         
     def update(self):
-        rect = self.cont_button[1]
+        rect = self.button[1]
         self.bg = rect.copy()
         self.bg.width = self.screen.get_width() * .15
         rect.center = self.bg.center = (self.screen.get_width() * self.pos[0], self.screen.get_height() * self.pos[1])
-        if rect.collidepoint(pg.mouse.get_pos()):
+        if rect.collidepoint(pg.mouse.get_pos()) and self.interactive:
             self.bg = self.bg.scale_by(1.05, 1.05)
             tmp_clr = tuple(map(lambda i, j: i + j, self.color, (10, 10, 25)))
         else: tmp_clr = self.color
         self.bg = self.bg.scale_by(1.2, 1.2)
         self.bg.center = rect.center
         pg.draw.rect(self.screen, tmp_clr, self.bg, border_radius=10)
-        self.screen.blit(self.cont_button[0], rect) 
+        self.screen.blit(self.button[0], rect) 
 
 
 class GUI:
@@ -66,15 +76,22 @@ class GUI:
         self.IMAGE_SIZE = lambda: self.screen.get_height() // 12
         self.getXmargin = lambda: self.screen.get_width() - self.IMAGE_SIZE() * 9 # where grid starts
         self.getYmargin = lambda: self.IMAGE_SIZE() * 3
-        
-        # set pause screen
-        self.pause_bg = pg.Surface(self.screen.get_size(), pg.SRCALPHA)
-        # init pause font
         font = ft.SysFont('Comic Sans MS', 30)
+        
+        # set pause screen and buttons
+        self.pause_bg = pg.Surface(self.screen.get_size(), pg.SRCALPHA)
         self.pause_text = Button(self.screen, (.5, .2), 'Paused', (55, 55, 55), font, (225, 225, 225))
-        #init buttons
+        self.pause_text.interactive = False
         self.cont_btn = Button(self.screen, (.5, .4), 'Continue', self.btn_clr, font)
         self.exit_btn = Button(self.screen, (.5, .6), 'Exit', self.btn_clr, font)
+        # set lose screen and button
+        self.lose_bg = pg.Surface(self.screen.get_size(), pg.SRCALPHA)
+        self.lose_text = Button(self.screen, (.5, .2), 'Game Over', (55, 55, 55), font, (225, 225, 225))
+        self.lose_text.interactive = False
+        r = pg.Rect(0, 0, self.IMAGE_SIZE() * 3, self.IMAGE_SIZE() * 3)
+        r.center = self.screen.get_rect().center
+        self.img_mine = Image(self.screen, r, self.sprites[tiles.tile_clicked_mine.value])
+        self.restart_btn = Button(self.screen, (.5, .8), 'Restart', self.btn_clr, font)
     # class method that is ran before game to load sprites                
     @classmethod
     def load_images(cls):
@@ -139,14 +156,3 @@ class GUI:
     def __draw_layout__(self):
         pg.draw.line(self.screen, (0, 0, 0), (self.getXmargin() - self.IMAGE_SIZE(), self.getYmargin() - self.IMAGE_SIZE()), (self.screen.get_width(), self.getYmargin() - self.IMAGE_SIZE()), 3)
         pg.draw.line(self.screen, (0, 0, 0), (self.getXmargin() - self.IMAGE_SIZE(), 0), (self.getXmargin() - self.IMAGE_SIZE(), self.screen.get_height()), 3)
-
-
-def main():
-    GUI.load_images()
-    g = GUI()
-    levels = Levels(g)
-    levels.run_game()
-    
-if __name__ == '__main__':
-    main()
-    
