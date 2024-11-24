@@ -62,7 +62,7 @@ class GUI:
     def __init__(self) -> None:
         
         self.model = Model(8, 10)
-        self.printed = 0
+        self.size = lambda: len(self.model.board)
         pg.init()
         self.btn_clr = (170, 155, 187)
         self.screen = pg.display.set_mode((960, 630), pg.RESIZABLE)
@@ -73,9 +73,9 @@ class GUI:
         self.background = pg.Surface(self.screen.get_size())
         self.background = self.background.convert()
         self.background.fill((170, 155, 187))
-        self.IMAGE_SIZE = lambda: self.screen.get_height() // 12
-        self.getXmargin = lambda: self.screen.get_width() - self.IMAGE_SIZE() * 9 # where grid starts
-        self.getYmargin = lambda: self.IMAGE_SIZE() * 3
+        self.IMAGE_SIZE = lambda: self.screen.get_height() // (self.size() + 4)
+        self.getXmargin = lambda: self.screen.get_width() - self.IMAGE_SIZE() * (self.size() + 1) # where grid starts
+        self.getYmargin = lambda: self.IMAGE_SIZE() * 3 # Where grid starts
         font = ft.SysFont('Comic Sans MS', 30)
         
         # set pause screen and buttons
@@ -116,7 +116,7 @@ class GUI:
     
     def reveal_tiles(self, x: int, y: int):
         # recursive function to reveal empty spaces
-        if (x < 0 or x > 7) or (y < 0 or y > 7):
+        if (x < 0 or x >= self.size()) or (y < 0 or y >= self.size()):
             return
         b = self.model.board
         if b[y][x].status != 1: # Not Revealed
@@ -133,8 +133,8 @@ class GUI:
                         self.reveal_tiles(x + i, y + j)   
             
     def __draw_board__(self):
-        for x in range(8):
-            for y in range(8):
+        for x in range(self.size()):
+            for y in range(self.size()):
                 selected = self.model.board[y][x]
                 
                 # get current sprite

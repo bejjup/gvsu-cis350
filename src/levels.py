@@ -44,7 +44,7 @@ class Levels(GUI):
                     pos = pg.mouse.get_pos()
                     # TODO check each button to see if it was clicked
                     x, y = self.tile_at(pos)
-                    if 0 <= x <= 7 and 0 <= y <= 7:
+                    if 0 <= x < self.size() and 0 <= y < self.size():
                         selected = self.model.board[y][x]
                         if event.button == 3: # right click
                             if selected.status == 0:
@@ -112,7 +112,8 @@ class Levels(GUI):
                 elif event.type == pg.MOUSEBUTTONDOWN:
                     pos = pg.mouse.get_pos()
                     if self.restart_btn.button[1].collidepoint(pos):
-                        going = False
+                        self.run_reset(full_reset = True)
+                        going = False # TODO: change to full reset, for now this lets us test easily.
         
             # draw transparent background
             self.background = pg.transform.scale(self.background, self.screen.get_size())
@@ -129,12 +130,15 @@ class Levels(GUI):
             pg.display.flip()
         
     def run_win(self):
-        print("win!")
-        self.level += 1
-        self.model = Model(self.levels[self.level]['size'], self.levels[self.level]['mines'])
-        #Temporary pause
-        self.run_pause()
+        self.run_reset()
         
+    def run_reset(self, full_reset = False):
+        if full_reset:
+            self.level = 0
+        else:
+            self.level += 1
+        self.model = Model(self.levels[self.level]['size'], self.levels[self.level]['mines'])
+            
         
 if __name__ == '__main__':
     GUI.load_images()
