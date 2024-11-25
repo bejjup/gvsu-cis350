@@ -5,13 +5,13 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 
 # Configures the SQLite database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///expenses.db'  # Database URI pointing to an SQLite file
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disables modification tracking for better performance
-db = SQLAlchemy(app)  # Initializes SQLAlchemy with the app
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///expenses.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
 # Defines the Expense model
 class Expense(db.Model):
-    id = db.Column(db.Integer, primary_key=True)  # Unique ID for each record
+    id = db.Column(db.Integer, primary_key=True)
     rent = db.Column(db.Float, default=0)
     utilities = db.Column(db.Float, default=0)
     food = db.Column(db.Float, default=0)
@@ -20,10 +20,15 @@ class Expense(db.Model):
     savings = db.Column(db.Float, default=0)
     miscellaneous = db.Column(db.Float, default=0)
 
+# Defines the Transaction model
+class Transaction(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    category = db.Column(db.String(50), nullable=False)
+    amount = db.Column(db.Float, nullable=False)
+
 # Initialize the database
 with app.app_context():
-    db.create_all()  # Creates tables if they don't exist
-    # Check if there are existing records; if not, add a default one
+    db.create_all()
     if not Expense.query.first():
         db.session.add(Expense())
         db.session.commit()
@@ -58,6 +63,19 @@ template = """
     #chart {
       margin: 20px auto;
     }
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+      width: 50%;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: darkgrey;
+    }
   </style>
 </head>
 <body>
@@ -78,6 +96,24 @@ template = """
   <form method="POST" action="/reset">
     <button type="submit" style="background-color: red; color: white;">Reset All</button>
   </form>
+  <h2>Transaction Log</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for transaction in transactions %}
+      <tr>
+        <td>{{ transaction.category }}</td>
+        <td>${{ "%.2f"|format(transaction.amount) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <h3>Total Expenses: ${{ "%.2f"|format(total) }}</h3>
   <svg id="chart" width="500" height="500"></svg>
   <script>
     const categories = ["Rent", "Utilities", "Food", "Transportation", "Subscriptions", "Savings", "Miscellaneous"];
@@ -119,7 +155,10 @@ def home():
         added_value = float(request.form["value"])
         current_value = getattr(expense, category)
         setattr(expense, category, current_value + added_value)
+        db.session.add(Transaction(category=category, amount=added_value))
         db.session.commit()
+    transactions = Transaction.query.all()
+    total = sum(transaction.amount for transaction in transactions)
     chart_data = [
         expense.rent,
         expense.utilities,
@@ -129,7 +168,7 @@ def home():
         expense.savings,
         expense.miscellaneous,
     ]
-    return render_template_string(template, chart_data=chart_data)
+    return render_template_string(template, chart_data=chart_data, transactions=transactions, total=total)
 
 @app.route("/reset", methods=["POST"])
 def reset():
@@ -141,6 +180,7 @@ def reset():
     expense.subscriptions = 0
     expense.savings = 0
     expense.miscellaneous = 0
+    db.session.query(Transaction).delete()
     db.session.commit()
     return redirect(url_for("home"))
 
