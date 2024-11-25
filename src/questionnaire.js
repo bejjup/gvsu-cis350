@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect } from 'react';
-import { StatusBar } from 'expo-status-bar';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { initializeDatabase, addItem } from './src/db'; // Import your database functions
 
