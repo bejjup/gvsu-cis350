@@ -1,15 +1,19 @@
-import React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'; 
-import Home from '.src/home'
-import { initializeDatabase } from './db';
-import Questionnaire from './questionnaire';
-import { scheduleDailyNotification } from './notification';
-import Settings from './settings';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'; 
+import Home from './src/home'
+import Settings from '.src/settings'; 
+import Questionnaire from '.src/questionnaire';
+import { initializeDatabase } from './src/db'; 
 
 const App = () => {
-  //initializeDatabase();
-  //scheduleDailyNotification(); 
+  useEffect(() => {
+  // Initialize the database when the app starts
+  const initialize = async () => {
+    await initializeDatabase(); 
+  } ;
+  initialize(); 
+}, []); 
+
   return (
     <Router>
       <div>
@@ -17,7 +21,7 @@ const App = () => {
         <nav>
           <ul>
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/accountSettings">AccountSettings</Link></li>
+            <li><Link to="/settings">AccountSettings</Link></li>
             <li><Link to="/questionnaire">Questionnaire</Link></li>
           </ul>
         </nav>
