@@ -30,7 +30,7 @@ const fieldNames = [
   "hourlyWaterNotif"
 ];
 
-const App = () => {
+const Questionnaire = () => {
   const [answers, setAnswers] = useState({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [text, setText] = useState('');
@@ -111,3 +111,5 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
 });
+
+export default Questionnaire; 

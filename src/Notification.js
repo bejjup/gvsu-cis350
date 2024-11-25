@@ -1,5 +1,6 @@
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
+import { getItems } from './src/db';
 
 export const registerForPushNotificationsAsync = async () => {
   const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
@@ -16,13 +17,15 @@ registerForPushNotificationsAsync();
 export const scheduleDailyNotification = async () => {
   await Notifications.cancelAllScheduledNotificationsAsync();
     
-  // Calculates time to be 9 a.m. 
+  // Calculates time and sets equal to input from questionnaire 
   const now = new Date(); 
-  const tomorrow9AM = new Date(); 
-  tomorrow9AM.setHours(9, 0, 0, 0); // Sets time to 9am
+  const scheduledTime = new Date(); 
+  const items = getItems(); 
+  const timeItem = items[8]; 
+  scheduledTime.setHours(timeItem, 0, 0, 0); // Sets time to read from questionnaire
     
-  if (now.getHours() >= 9) {
-    tomorrow9AM.setDate(now.getDate() + 1); 
+  if (now.getHours() >= timeItem) {
+    scheduledTime.setDate(now.getDate() + 1); 
   }
 
   // Schedules notification
@@ -33,7 +36,7 @@ export const scheduleDailyNotification = async () => {
       data: { data: "goes here" },
     },
     trigger: {
-      hour: 9,
+      hour: timeItem,
       minute: 0, 
       repeats: true, 
     },
@@ -45,5 +48,3 @@ return (
     <Button title="Send Notification" onPress={handleNotification} />
   </View>
 );
-
-export default App;

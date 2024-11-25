@@ -1,11 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { getItems } from './src/db';
 
 const AccountSettings = () => {
-    const [name, setName] = useState(''); 
-    const [email, setEmail] = useState(''); 
+    const [name, setName] = useState('');
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            const items = await getItems(); 
+            if (items.length > 0) {
+                const firstInput = items[0];
+                setName(firstInput.name || ''); // Assuming 'name' is a field in the user data
+            }
+        };
+
+        fetchUserData();
+    }, []);
 
     const handleSave = () => {
-        console.log('Account settings saved', { name, email }); 
+        console.log('Account settings saved', { name });
     };
 
     return (
@@ -17,15 +29,9 @@ const AccountSettings = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
             />
-            <input  
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
             <button onClick={handleSave}>Save</button>
         </div>
     );
 };
 
-export default AccountSettings; 
+export default AccountSettings;
