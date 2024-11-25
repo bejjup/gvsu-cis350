@@ -24,9 +24,15 @@ Our project is a new take on workout applications. Our goal is to prompt the use
 
 2.	Enter your command prompt/terminal (either in VS code or in the command prompt). 
 
-3.	You need to move into the directory where we have our files in order to start the development server. There is a directory in our project labeled 'src' which contains all the source files/necessary elements to run the project. 
+3.	Move into the 'src' directory which contains all the neccessary files to run the project. 
 
-4.	Once you are in the ‘src’ directory, you will run the command ‘npx expo start’ from your command line.  
+    `cd src`
+    
+
+4.	Once you are in the ‘src’ directory run this command: 
+
+    `npx expo start`
+
     * If you get errors in this step it is probably because you haven’t installed npx commands or expo. Follow the instructions on the screen if it prompts you to install something. Try running the ‘npx expo start’ command after you install something to see if it works. 
 
 5.	If you receive no errors running ‘npx expo start’ you will see a QR code pop up in the terminal. 
