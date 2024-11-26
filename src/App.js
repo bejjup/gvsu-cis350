@@ -3,16 +3,30 @@ import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import Home from './src/home'
 import Settings from '.src/settings'; 
 import Questionnaire from '.src/questionnaire';
-import { initializeDatabase } from './src/db'; 
+import { initializeDatabase, getItems } from './src/db'; 
+import { scheduleNotification } from './notification';
 
 const App = () => {
+  const [items, setItems] = useState([]); 
+
   useEffect(() => {
   // Initialize the database when the app starts
   const initialize = async () => {
     await initializeDatabase(); 
+    fetchItems(); 
   } ;
-  initialize(); 
-}, []); 
+  initialize();   
+}, []);
+
+  // Fetch items from the database
+  const fetchItems = async () => {
+    const fetchedItems = getItems(); 
+    setItems(fetchedItems); 
+    const userSettings = fetchedItems.find(item => item.id === 8); 
+    if (userSettings) {
+      scheduleNotification(new Date(userSettings.promptTime)); 
+    }
+  };  
 
   return (
     <Router>
