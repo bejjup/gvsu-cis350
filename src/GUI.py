@@ -92,6 +92,11 @@ class GUI:
         r.center = self.screen.get_rect().center
         self.img_mine = Image(self.screen, r, self.sprites[tiles.tile_clicked_mine.value])
         self.restart_btn = Button(self.screen, (.5, .8), 'Restart', self.btn_clr, font)
+        # set win screen and button
+        self.win_bg = pg.Surface(self.screen.get_size(), pg.SRCALPHA)
+        self.win_text = Button(self.screen, (.5, .2), 'You Win', (55, 55, 55), font, (225, 225, 225))
+        self.win_text.interactive = False
+        self.win_btn = Button(self.screen, (.5, .6), 'Shop', (224, 184, 52), font)
     # class method that is ran before game to load sprites                
     @classmethod
     def load_images(cls):

@@ -62,6 +62,8 @@ class Levels(GUI):
 
             # Handle Input Events
             for event in pg.event.get():
+                if event.type == pg.KEYDOWN and event.key == pg.K_LSHIFT:
+                    self.run_win()
                 if event.type == pg.QUIT:
                     going = False
                 elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
@@ -156,6 +158,29 @@ class Levels(GUI):
             pg.display.flip()
         
     def run_win(self):
+        print("You Win!")
+        going = True
+        while going:
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    exit()
+                elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
+                    exit()
+                elif event.type == pg.MOUSEBUTTONDOWN:
+                    pos = pg.mouse.get_pos()
+                    if self.win_btn.button[1].collidepoint(pos):
+                        going = False
+                        # TODO: change to shop screen
+            self.background = pg.transform.scale(self.background, self.screen.get_size())
+            self.screen.blit(self.background, (0, 0))
+            self.__draw_board__()
+            self.__draw_layout__()
+            self.win_bg = pg.transform.scale(self.win_bg, self.screen.get_size())
+            pg.draw.rect(self.win_bg, (50, 200, 50, 127), self.win_bg.get_rect())
+            self.screen.blit(self.win_bg, (0, 0))
+            self.win_text.update()
+            self.win_btn.update()
+            pg.display.flip()
         self.run_reset()
         
     def run_reset(self, full_reset = False):
