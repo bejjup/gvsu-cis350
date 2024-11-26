@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@react-native-community/cli": "latest",
     "react-router-dom": "^7.0.1"
   }
 }
