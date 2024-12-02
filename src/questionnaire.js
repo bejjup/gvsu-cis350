@@ -1,8 +1,7 @@
 
-import React, { useState, useEffect } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
-import { initializeDatabase, addItem } from './src/db'; // Import your database functions
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet, Alert, StatusBar } from 'react-native';
+import { addItem } from './src/db'; // Import the addItem function
 
 const questions = [
   "What is your name?",
@@ -30,18 +29,10 @@ const fieldNames = [
   "hourlyWaterNotif"
 ];
 
-const App = () => {
+const Questionnaire = () => {
   const [answers, setAnswers] = useState({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [text, setText] = useState('');
-
-  useEffect(() => {
-    // Initialize the database when the app loads
-    const initialize = async () => {
-      await initializeDatabase();
-    };
-    initialize();
-  }, []);
 
   const handleSubmit = async () => {
     if (text.trim() === '') {
@@ -111,3 +102,5 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
 });
+
+export default Questionnaire; 
