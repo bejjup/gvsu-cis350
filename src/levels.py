@@ -62,16 +62,30 @@ class Levels(GUI):
 
             # Handle Input Events
             for event in pg.event.get():
+                pos = pg.mouse.get_pos()
+                x, y = self.tile_at(pos)
+                # These are for dev control
                 if event.type == pg.KEYDOWN and event.key == pg.K_LSHIFT:
                     self.run_win()
+                elif event.type == pg.KEYDOWN and event.key == pg.K_LCTRL:
+                    self.coins += 5
+                if event.type == pg.KEYDOWN and event.key == pg.K_q:
+                    if self.fb_cls.count > 0:
+                        print('used fireball')
+                        self.fb_cls.use_item(self.model, y, x)
+                    
+                # regular commands
                 if event.type == pg.QUIT:
                     going = False
                 elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                     self.run_pause()
                 elif event.type == pg.MOUSEBUTTONDOWN:
-                    pos = pg.mouse.get_pos()
-                    # TODO check each button to see if it was clicked
-                    x, y = self.tile_at(pos)
+                    # check buttons
+                    if self.fb_buy.button[1].collidepoint(pos):
+                        self.coins = self.fb_cls.buy_item(self.coins)
+                    elif self.fb_ug.button[1].collidepoint(pos) and self.fb_ug.interactive:
+                        self.coins = self.fb_cls.upgrade_item(self.coins)
+                        
                     if 0 <= x < self.size() and 0 <= y < self.size():
                         selected = self.model.board[y][x]
                         if event.button == 3: # right click
@@ -88,6 +102,7 @@ class Levels(GUI):
                                 self.reveal_tiles(x, y)
                             if selected.tile_type == -1:
                                 self.run_lose()
+                            
                                              
             if self.model.is_complete():
                 self.run_win()
@@ -98,6 +113,7 @@ class Levels(GUI):
             self.screen.blit(self.background, (0, 0))
             self.__draw_layout__()
             self.__draw_board__()
+            self.__draw_shop__()
             pg.display.flip()
         
     def run_pause(self):
@@ -158,7 +174,11 @@ class Levels(GUI):
             pg.display.flip()
         
     def run_win(self):
-        print("You Win!")
+        # count up total coins earned
+        for y, _ in enumerate(self.model.board):
+            for x, _ in enumerate(self.model.board):
+                if self.model.board[y][x].status == -1:
+                    self.coins += 1
         going = True
         while going:
             for event in pg.event.get():

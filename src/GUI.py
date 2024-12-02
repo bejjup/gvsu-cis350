@@ -1,11 +1,11 @@
 import pygame as pg
 import copy
 from enum import Enum
-import random
-import time
+import shop
 import pygame.freetype as ft
 from model import Model
 from typing import Tuple
+import shop
 
 class tiles(Enum):
     tile = 0
@@ -23,37 +23,43 @@ class tiles(Enum):
     tile_8 = 15
     
 class Image:
-    def __init__(self, screen, rect, image):
+    def __init__(self, screen: pg.Surface, rect: pg.Rect, image: pg.Surface):
         self.screen = screen
         self.rect = rect
         self.image = image
     
     def update(self):
+        self.rect
         self.image = pg.transform.scale(self.image, self.rect.size)
         self.screen.blit(self.image, self.rect) 
 
 class Button:
-    def __init__(self, screen, pos, text, color, font, text_color=(0, 0, 0)):
+    def __init__(self, screen: pg.Surface, pos: Tuple[float, float], text: str, color: Tuple, font: pg.font.Font, text_color: Tuple=(0, 0, 0)):
         self.screen = screen
         self.pos = pos
         self.text = text
         self.color = color
         self.button = font.render(text, text_color)
         self.interactive = True
+        self.__text_color__ = text_color
+        self.__font__ = font
         
     def update(self):
-        rect = self.button[1]
-        self.bg = rect.copy()
-        self.bg.width = self.screen.get_width() * .15
-        rect.center = self.bg.center = (self.screen.get_width() * self.pos[0], self.screen.get_height() * self.pos[1])
-        if rect.collidepoint(pg.mouse.get_pos()) and self.interactive:
+        center = self.button[1]
+        self.bg = center.copy()
+        self.bg.width = self.bg.width + 10
+        center.center = self.bg.center = (self.screen.get_width() * self.pos[0], self.screen.get_height() * self.pos[1])
+        if center.collidepoint(pg.mouse.get_pos()) and self.interactive:
             self.bg = self.bg.scale_by(1.05, 1.05)
             tmp_clr = tuple(map(lambda i, j: i + j, self.color, (10, 10, 25)))
         else: tmp_clr = self.color
         self.bg = self.bg.scale_by(1.2, 1.2)
-        self.bg.center = rect.center
+        self.bg.center = center.center
         pg.draw.rect(self.screen, tmp_clr, self.bg, border_radius=10)
-        self.screen.blit(self.button[0], rect) 
+        self.screen.blit(self.button[0], center) 
+        
+    def change_text_color(self, text):
+        self.button = self.__font__.render(text, self.__text_color__)
 
 
 class GUI:
@@ -65,18 +71,19 @@ class GUI:
         self.size = lambda: len(self.model.board)
         pg.init()
         self.btn_clr = (170, 155, 187)
+        self.shop_clr = (224, 184, 52)
         self.screen = pg.display.set_mode((960, 630), pg.RESIZABLE)
-        # self.ui_manager = GUI.UIManager(self.screen.get_size())
         pg.display.set_caption("RogueSweeper")
+        self.fb_cls = shop.Fireball(0)
+        self.lazer_cls = shop.Lazer(0)
         # Create The Background
-        
         self.background = pg.Surface(self.screen.get_size())
         self.background = self.background.convert()
-        self.background.fill((170, 155, 187))
+        self.background.fill((64, 110, 153))
         self.IMAGE_SIZE = lambda: self.screen.get_height() // (self.size() + 4)
         self.getXmargin = lambda: self.screen.get_width() - self.IMAGE_SIZE() * (self.size() + 1) # where grid starts
         self.getYmargin = lambda: self.IMAGE_SIZE() * 3 # Where grid starts
-        font = ft.SysFont('Comic Sans MS', 30)
+        self.font = font = ft.SysFont('Comic Sans MS', 30)
         
         # set pause screen and buttons
         self.pause_bg = pg.Surface(self.screen.get_size(), pg.SRCALPHA)
@@ -84,6 +91,7 @@ class GUI:
         self.pause_text.interactive = False
         self.cont_btn = Button(self.screen, (.5, .4), 'Continue', self.btn_clr, font)
         self.exit_btn = Button(self.screen, (.5, .6), 'Exit', self.btn_clr, font)
+        
         # set lose screen and button
         self.lose_bg = pg.Surface(self.screen.get_size(), pg.SRCALPHA)
         self.lose_text = Button(self.screen, (.5, .2), 'Game Over', (55, 55, 55), font, (225, 225, 225))
@@ -92,11 +100,21 @@ class GUI:
         r.center = self.screen.get_rect().center
         self.img_mine = Image(self.screen, r, self.sprites[tiles.tile_clicked_mine.value])
         self.restart_btn = Button(self.screen, (.5, .8), 'Restart', self.btn_clr, font)
+        
         # set win screen and button
         self.win_bg = pg.Surface(self.screen.get_size(), pg.SRCALPHA)
         self.win_text = Button(self.screen, (.5, .2), 'You Win', (55, 55, 55), font, (225, 225, 225))
         self.win_text.interactive = False
-        self.win_btn = Button(self.screen, (.5, .6), 'Shop', (224, 184, 52), font)
+        self.win_btn = Button(self.screen, (.5, .6), 'Shop', self.shop_clr, font)
+        
+        # set coins and shop screen
+        self.coins = 0
+        img_rect = pg.Rect(0, 0, self.getXmargin() / 4, self.getXmargin() / 4)
+        img_rect.center = (self.getXmargin() / 4, self.screen.get_height() / 3)
+        self.fb_img = Image(self.screen, img_rect, pg.image.load('./images/fireball.jpg'))
+        self.fb_buy = Button(self.screen, (img_rect.centerx / self.screen.get_width(), 4 / 6), f'Buy: {self.fb_cls.cost}', self.shop_clr, font)
+        self.fb_ug = Button(self.screen, (img_rect.centerx / self.screen.get_width(), 5 / 6), f'Upgrade: {self.fb_cls.get_upgrade_cost()}', self.shop_clr, font)
+
     # class method that is ran before game to load sprites                
     @classmethod
     def load_images(cls):
@@ -113,13 +131,13 @@ class GUI:
         for st in range(16): # change to spritetype
             cls.sprites[st] = load_image(st) 
 
-    def tile_at(self, pos):
+    def tile_at(self, pos: Tuple[int, int]) -> Tuple[int, int]:
         # returns minesweeper grid pos for a mouse click
         grid_x = (pos[0] - self.getXmargin()) // self.IMAGE_SIZE()
         grid_y = (pos[1] - self.getYmargin()) // self.IMAGE_SIZE()
         return grid_x, grid_y
     
-    def reveal_tiles(self, x: int, y: int):
+    def reveal_tiles(self, x: int, y: int) -> None:
         # recursive function to reveal empty spaces
         if (x < 0 or x >= self.size()) or (y < 0 or y >= self.size()):
             return
@@ -159,5 +177,16 @@ class GUI:
                 self.screen.blit(scaled_sprite, (x * self.IMAGE_SIZE() + self.getXmargin(), y * self.IMAGE_SIZE() + self.getYmargin()))
 
     def __draw_layout__(self):
-        pg.draw.line(self.screen, (0, 0, 0), (self.getXmargin() - self.IMAGE_SIZE(), self.getYmargin() - self.IMAGE_SIZE()), (self.screen.get_width(), self.getYmargin() - self.IMAGE_SIZE()), 3)
-        pg.draw.line(self.screen, (0, 0, 0), (self.getXmargin() - self.IMAGE_SIZE(), 0), (self.getXmargin() - self.IMAGE_SIZE(), self.screen.get_height()), 3)
+        barrier = self.getXmargin() - self.IMAGE_SIZE()
+        pg.draw.line(self.screen, (0, 0, 0), (barrier, self.getYmargin() - self.IMAGE_SIZE()), (self.screen.get_width(), self.getYmargin() - self.IMAGE_SIZE()), 3)
+        pg.draw.line(self.screen, (0, 0, 0), (barrier, 0), (self.getXmargin() - self.IMAGE_SIZE(), self.screen.get_height()), 3)
+        self.coin_text = Button(self.screen, (barrier / 2 / self.screen.get_width(), .1), f"Coins: {self.coins}", self.shop_clr, self.font)
+        self.coin_text.update()
+        
+    def __draw_shop__(self):
+        self.fb_img.update()
+        self.fb_buy.update()
+        self.fb_ug.change_text_color(f'Upgrade: {self.fb_cls.get_upgrade_cost()}')
+        if self.fb_cls.get_upgrade_cost() == 'Max':
+            self.fb_ug.interactive = False
+        self.fb_ug.update()
