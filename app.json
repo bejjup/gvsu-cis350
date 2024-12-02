@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "GVSU-CIS350-COMPSCIFRENCHFRIES",
+    "slug": "gvsu-cis350-compscifrenchfries",
+    "version": "1.0.0",
+    "sdkversion": "49.0.0",
+    "platforms": ["ios", "android"], 
+    "entryPoint": "./node_modules/expo/AppEntry.js"
+  }
+}
