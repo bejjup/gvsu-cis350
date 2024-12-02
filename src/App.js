@@ -1,53 +1,43 @@
-import React, { useEffect } from 'react';
-import { View, Text } from 'react-native'; 
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
-import Home from './src/home'
-import Settings from '.src/settings'; 
-import Questionnaire from '.src/questionnaire';
-import { initializeDatabase, getItems } from './src/db'; 
+import React, { useEffect, useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Home from './src/home';
+import Settings from './src/settings';
+import Questionnaire from './src/questionnaire';
+import { initializeDatabase, getItems } from './src/db';
 import { scheduleNotification } from './notification';
 
+const Stack = createStackNavigator();
+
 const App = () => {
-  const [items, setItems] = useState([]); 
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
-  // Initialize the database when the app starts
-  const initialize = async () => {
-    await initializeDatabase(); 
-    fetchItems(); 
-  } ;
-  initialize();   
-}, []);
+    const initialize = async () => {
+      await initializeDatabase();
+      fetchItems();
+    };
+    initialize();
+  }, []);
 
-  // Fetch items from the database
   const fetchItems = async () => {
-    const fetchedItems = getItems(); 
-    setItems(fetchedItems); 
-    const userSettings = fetchedItems.find(item => item.id === 8); 
+    const fetchedItems = await getItems();
+    setItems(fetchedItems);
+    const userSettings = fetchedItems.find(item => item.id === 8);
     if (userSettings) {
-      scheduleNotification(new Date(userSettings.promptTime)); 
+      scheduleNotification(new Date(userSettings.promptTime));
     }
-  };  
+  };
 
   return (
-    <Router>
-      <div>
-        <h1>Workout Prompter</h1>
-        <nav>
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/settings">AccountSettings</Link></li>
-            <li><Link to="/questionnaire">Questionnaire</Link></li>
-          </ul>
-        </nav>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/settings" component={Settings} />
-          <Route path="/questionnaire" component={Questionnaire} /> 
-        </Switch>
-      </div>
-    </Router>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Settings" component={Settings} />
+        <Stack.Screen name="Questionnaire" component={Questionnaire} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
-export default App; 
+export default App;
