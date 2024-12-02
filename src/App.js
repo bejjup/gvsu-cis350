@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { View, Text } from 'react-native'; 
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import Home from './src/home'
 import Settings from '.src/settings'; 
