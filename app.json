@@ -1,10 +1,12 @@
 {
   "expo": {
     "name": "GVSU-CIS350-COMPSCIFRENCHFRIES",
+    "description": "This app provides a specialized workout reccomendation each day.",
     "slug": "gvsu-cis350-compscifrenchfries",
     "version": "1.0.0",
-    "sdkversion": "49.0.0",
-    "platforms": ["ios", "android"], 
-    "entryPoint": "./node_modules/expo/AppEntry.js"
+    "platforms": ["ios", "android"],
+    "orientation": "default",
+    "userInterfaceStyle": "automatic",
+    "backgroundColor": "#FFFFFF"
   }
 }
