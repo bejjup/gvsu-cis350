@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Home from './src/home';
-import Settings from './src/settings';
-import Questionnaire from './src/questionnaire';
-import { initializeDatabase, getItems } from './src/db';
-import { scheduleNotification } from './notification';
+import Home from './home.js';
+import Settings from './settings.js';
+import Questionnaire from './questionnaire.js';
+import { initializeDatabase, getItems } from './db.js';
+import { scheduleNotification } from './Notification.js';
 
 const Stack = createStackNavigator();
 
