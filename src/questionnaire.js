@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, StatusBar } from 'react-native';
-import { addItem } from './src/db'; // Import the addItem function
+import { addItem } from './db.js'; // Import the addItem function
 
 const questions = [
   "What is your name?",
