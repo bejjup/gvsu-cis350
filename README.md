@@ -6,7 +6,7 @@ Our project is a new take on workout applications. Our goal is to prompt the use
 
 * [Dylan Toomey](https://github.com/DuckySensei/CIS350-HW2-Toomey)  (Project Lead, Database Management, Jira Coordinator)
 * [Rachael Eapen](https://github.com/Rachaeleapen/CIS350-HW2-Eapen)  (Developer, Documenter) 
-* [Colin Nagley](https://github.com/NagleyC30/CIS350-HW2-Nagley) (Timeline Coordinator, Graphic Developement, Research)
+* [Colin Nagley](https://github.com/NagleyC30/CIS350-HW2-Nagley) (Timeline Coordinator, Package Management)
 * [Lauren Applegate](https://github.com/Lauren-Applegate/CIS350-HW2-Applegate) (Questionnaire Developement, Graphical Interface Design)
 
 ## Prerequisites
@@ -31,10 +31,8 @@ Our project is a new take on workout applications. Our goal is to prompt the use
 
 4.	Once you are in the ‘src’ directory run this command: 
 
-    `npx expo start`
+    `npx expo start` 
 
-    * If you get errors in this step it is probably because you haven’t installed npx commands or expo. Follow the instructions on the screen if it prompts you to install something. Try running the ‘npx expo start’ command after you install something to see if it works. 
+5.	After running the start command you will see a QR code pop up in the terminal. 
 
-5.	If you receive no errors running ‘npx expo start’ you will see a QR code pop up in the terminal. 
-
-6. Grab your mobile device and scan the QR code using your phone’s camera. This will take you back to the Expo Go app where you will be able to see the running app. 
+6. On an iPhone scan the QR code using the camera app. This will take you back to the Expo Go app where you will be able to see the running app. 
