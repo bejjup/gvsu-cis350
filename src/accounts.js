@@ -1,7 +1,7 @@
 import { db } from './database';
 
 
-export async functionaddUser(user) {
+export async function addUser(user) {
   db.data.users.push(user);
   await db.write();
 }
