@@ -1,5 +1,6 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Low, AsyncStorage as LowdbAdapter } from 'lowdb';
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
+import { Low } from 'lowdb'; 
+import { AsyncStorage as LowdbAdapter } from 'lowdb/adapters/AsyncStorage';
 
 // Set up the AsyncStorage adapter for lowdb
 const adapter = new LowdbAdapter(AsyncStorage);
