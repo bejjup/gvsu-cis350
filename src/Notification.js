@@ -1,3 +1,4 @@
+// src/Notification.js
 import PushNotification from 'react-native-push-notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
@@ -20,7 +21,7 @@ PushNotification.configure({
   },
 
   // (optional) Called when a notification is received in foreground (local or remote)
-  onRegistrationError: function(err) {
+  onRegistrationError: function (err) {
     console.error(err.message, err);
   },
 
@@ -37,18 +38,16 @@ PushNotification.configure({
 
   /**
    * (optional) default: true
-   * - Specified if permissions (ios) and token (android and ios) will requested or not,
-   * - if not, you must call PushNotificationsHandler.requestPermissions() later
-   * - if you are not using remote notification or do not have Firebase installed, use this:
-   *     requestPermissions: Platform.OS === 'ios'
+   * - Specified if permissions (ios) and token (android and ios) will be requested or not,
+   * - if not, you must call PushNotification.requestPermissions() later
    */
   requestPermissions: true,
 });
 
 export const scheduleNotification = (date) => {
   PushNotification.localNotificationSchedule({
-    //... You can use all the options from localNotifications
     message: 'Time to workout!', // (required)
-    date: date, // in the future
+    date: date, // Schedule the notification for the specified date
+    allowWhileIdle: true, // (optional) set notification to work while device is in Doze, default: false
   });
 };

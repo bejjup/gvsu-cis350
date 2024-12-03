@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@react-navigation/native-stack": "^7.1.14"
+  }
+}

@@ -1,18 +1,19 @@
 // Settings.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, ScrollView } from 'react-native';
-import { getItems, updateItem } from './src/db'; // Import the necessary functions
+import { getUserById, updateUser } from './accounts'; // Use account functions
 
-const Settings = () => {
+const Settings = ({ navigation, route }) => {
+  const { userId } = route.params;
   const [answers, setAnswers] = useState({});
   const [textInputs, setTextInputs] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
-      const items = await getItems();
-      if (items.length > 0) {
-        setAnswers(items[0]); // Assuming you want to edit the first item for simplicity
-        setTextInputs(items[0]); // Initialize text inputs with current answers
+      const userData = await getUserById(userId);
+      if (userData) {
+        setAnswers(userData);
+        setTextInputs(userData);
       }
     };
     fetchData();
@@ -27,9 +28,9 @@ const Settings = () => {
 
   const handleSave = async () => {
     try {
-      await updateItem(answers.id, textInputs); // Update the item in the database
+      await updateUser(userId, textInputs);
       Alert.alert('Success', 'Your settings have been updated!');
-      console.log('Updated answers:', textInputs);
+      console.log('Updated user data:', textInputs);
     } catch (error) {
       console.error('Error updating settings:', error);
       Alert.alert('Error', 'Failed to update your settings. Please try again.');

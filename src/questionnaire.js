@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, StatusBar } from 'react-native';
-import { addItem } from './src/db'; // Import the addItem function
+import { updateUser } from './accounts';
 
 const questions = [
   "What is your name?",
@@ -29,7 +28,8 @@ const fieldNames = [
   "hourlyWaterNotif"
 ];
 
-const Questionnaire = () => {
+const Questionnaire = ({ navigation, route }) => {
+  const { userId } = route.params;
   const [answers, setAnswers] = useState({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [text, setText] = useState('');
@@ -40,7 +40,6 @@ const Questionnaire = () => {
       return;
     }
 
-    // Save the current answer using the field name
     const updatedAnswers = { 
       ...answers, 
       [fieldNames[currentQuestionIndex]]: text 
@@ -51,11 +50,10 @@ const Questionnaire = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      // Final step: save all answers to the database
       try {
-        await addItem({ id: Date.now(), ...updatedAnswers });
+        await updateUser(userId, updatedAnswers);
         Alert.alert('Success', 'Your answers have been saved!');
-        console.log('Answers saved to database:', updatedAnswers);
+        navigation.navigate('Home', { userId });
       } catch (error) {
         console.error('Error saving to database:', error);
         Alert.alert('Error', 'Failed to save your answers. Please try again.');

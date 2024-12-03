@@ -1,19 +1,16 @@
+// src/db.js
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Low, AsyncStorage as LowdbAdapter } from 'lowdb';
 
-// Set up the AsyncStorage adapter for lowdb
 const adapter = new LowdbAdapter(AsyncStorage);
-const db = new Low(adapter);
+export const db = new Low(adapter);
 
-/**
- * Initialize the database. This function must be called once when the app starts.
- * It ensures the database has the correct structure.
- */
 export async function initializeDatabase() {
   await db.read();
-  db.data ||= { items: [] }; // Default structure for your database
+  db.data ||= { users: [], items: [] };
   await db.write();
 }
+
 
 /**
  * Add a new item to the database.
@@ -52,4 +49,18 @@ export async function updateItem(id, newItem) {
 export async function deleteItem(id) {
   db.data.items = db.data.items.filter((item) => item.id !== id);
   await db.write();
+}
+
+export async function getUserById(id) {
+  await db.read();
+  return db.data.users.find((user) => user.id === id);
+}
+
+export async function updateUser(id, newUserData) {
+  await db.read();
+  const userIndex = db.data.users.findIndex((user) => user.id === id);
+  if (userIndex !== -1) {
+    db.data.users[userIndex] = { ...db.data.users[userIndex], ...newUserData };
+    await db.write();
+  }
 }

@@ -1,7 +1,8 @@
-import { db } from './database';
-
+// src/accounts.js
+import { db } from './db';
 
 export async function addUser(user) {
+  await db.read();
   db.data.users.push(user);
   await db.write();
 }
@@ -12,24 +13,17 @@ export async function authenticateUser(username, password) {
   return user || null;
 }
 
-
-export async function getUsers() {
+export async function getUserById(id) {
   await db.read();
-  return db.data.users;
+  const user = db.data.users.find((u) => u.id === id);
+  return user || null;
 }
 
-
 export async function updateUser(id, newUser) {
+  await db.read();
   const userIndex = db.data.users.findIndex((u) => u.id === id);
   if (userIndex !== -1) {
     db.data.users[userIndex] = { ...db.data.users[userIndex], ...newUser };
     await db.write();
   }
 }
-
-
-export async function deleteUser(id) {
-  db.data.users = db.data.users.filter((user) => user.id !== id);
-  await db.write();
-}
-
