@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "main": "App.js",
+  "main": "./src/App",
   "dependencies": {
     "@react-native-community/cli": "^15.1.2",
     "@react-navigation/native": "^7.0.13",
@@ -13,7 +13,7 @@
     "react-router-dom": "^7.0.1"
   },
   "expo": {
-    "doctors": {
+    "doctor": {
       "reactNativeDirectoryCheck": {
         "listUnknownPackages": false
       }
