@@ -1,7 +1,7 @@
 // Settings.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, ScrollView } from 'react-native';
-import { getItems, updateItem } from './src/db'; // Import the necessary functions
+import { getItems, updateItem } from './db.js'; // Import the necessary functions
 
 const Settings = () => {
   const [answers, setAnswers] = useState({});
