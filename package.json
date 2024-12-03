@@ -19,7 +19,11 @@
   "expo": {
     "doctor": {
       "reactNativeDirectoryCheck": {
-        "listUnknownPackages": false
+        "listUnknownPackages": false,
+        "ignorePackages": [
+          "@react-native-community/push-notification-ios",
+          "react-native-push-notification"
+        ]
       }
     }
   }
