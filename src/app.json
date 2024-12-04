@@ -1,12 +1,17 @@
 {
   "expo": {
-    "name": "GVSU-CIS350-COMPSCIFRENCHFRIES",
-    "description": "This app provides a specialized workout reccomendation each day.",
+    "name": "src", 
+    "description": "This app provides a specialized workout recommendation each day.",
     "slug": "gvsu-cis350-compscifrenchfries",
     "version": "1.0.0",
     "platforms": ["ios", "android"],
     "orientation": "default",
     "userInterfaceStyle": "automatic",
-    "backgroundColor": "#FFFFFF"
+    "backgroundColor": "#FFFFFF",
+    "ios": {
+      "infoPlist": {
+        "NSUserNotificationUsageDescription": "This app uses notifications to remind you to workout."
+      }
+    }
   }
 }

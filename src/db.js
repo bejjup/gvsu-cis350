@@ -1,32 +1,42 @@
 // src/db.js
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Low, AsyncStorage as LowdbAdapter } from 'lowdb';
 
-const adapter = new LowdbAdapter(AsyncStorage);
-export const db = new Low(adapter);
+const DATABASE_KEY = 'database'; // Key to store the JSON database in AsyncStorage
 
 export async function initializeDatabase() {
-  await db.read();
-  db.data ||= { users: [], items: [] };
-  await db.write();
+  const existingData = await AsyncStorage.getItem(DATABASE_KEY);
+  if (!existingData) {
+    const initialData = { users: [], items: [] };
+    await AsyncStorage.setItem(DATABASE_KEY, JSON.stringify(initialData));
+  }
 }
 
+async function readDatabase() {
+  const data = await AsyncStorage.getItem(DATABASE_KEY);
+  return data ? JSON.parse(data) : { users: [], items: [] };
+}
+
+async function writeDatabase(data) {
+  await AsyncStorage.setItem(DATABASE_KEY, JSON.stringify(data));
+}
 
 /**
  * Add a new item to the database.
- * @param {Object} item - The item to add (e.g., { id: 1, name: 'Item 1' }).
+ * @param {Object} item - The item to add.
  */
 export async function addItem(item) {
-  db.data.items.push(item);
-  await db.write();
+  const db = await readDatabase();
+  db.items.push(item);
+  await writeDatabase(db);
 }
 
 /**
  * Get all items from the database.
  * @returns {Array} - The array of items.
  */
-export function getItems() {
-  return db.data.items;
+export async function getItems() {
+  const db = await readDatabase();
+  return db.items;
 }
 
 /**
@@ -35,10 +45,11 @@ export function getItems() {
  * @param {Object} newItem - The updated item object.
  */
 export async function updateItem(id, newItem) {
-  const itemIndex = db.data.items.findIndex((item) => item.id === id);
+  const db = await readDatabase();
+  const itemIndex = db.items.findIndex((item) => item.id === id);
   if (itemIndex !== -1) {
-    db.data.items[itemIndex] = { ...db.data.items[itemIndex], ...newItem };
-    await db.write();
+    db.items[itemIndex] = { ...db.items[itemIndex], ...newItem };
+    await writeDatabase(db);
   }
 }
 
@@ -47,20 +58,31 @@ export async function updateItem(id, newItem) {
  * @param {number} id - The ID of the item to delete.
  */
 export async function deleteItem(id) {
-  db.data.items = db.data.items.filter((item) => item.id !== id);
-  await db.write();
+  const db = await readDatabase();
+  db.items = db.items.filter((item) => item.id !== id);
+  await writeDatabase(db);
 }
 
+/**
+ * Get a user by ID.
+ * @param {number} id - The ID of the user to retrieve.
+ * @returns {Object|null} - The user object or null if not found.
+ */
 export async function getUserById(id) {
-  await db.read();
-  return db.data.users.find((user) => user.id === id);
+  const db = await readDatabase();
+  return db.users.find((user) => user.id === id) || null;
 }
 
+/**
+ * Update a user in the database.
+ * @param {number} id - The ID of the user to update.
+ * @param {Object} newUserData - The updated user data.
+ */
 export async function updateUser(id, newUserData) {
-  await db.read();
-  const userIndex = db.data.users.findIndex((user) => user.id === id);
+  const db = await readDatabase();
+  const userIndex = db.users.findIndex((user) => user.id === id);
   if (userIndex !== -1) {
-    db.data.users[userIndex] = { ...db.data.users[userIndex], ...newUserData };
-    await db.write();
+    db.users[userIndex] = { ...db.users[userIndex], ...newUserData };
+    await writeDatabase(db);
   }
 }
