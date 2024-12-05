@@ -161,12 +161,9 @@ class Lazer(Item):
         The amount of coins remaining
 
         """
-        if self.count == 0:
-            return coins
-        elif self.get_upgrade_cost() < coins:
+        if self.get_upgrade_cost() < coins and len(self.upgrades) > self.level:
                 coins -= self.get_upgrade_cost()
                 self.level +=1
-                return coins
         return coins
         
     def use_item(self, model, x: int, y: int):

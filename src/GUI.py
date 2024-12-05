@@ -25,14 +25,20 @@ class tiles(Enum):
 class Image:
     def __init__(self, screen: pg.Surface, rect: pg.Rect, image: pg.Surface):
         self.screen = screen
-        self.rect = rect
         self.image = image
-    
-    def update(self):
-        self.rect
-        self.image = pg.transform.scale(self.image, self.rect.size)
-        self.screen.blit(self.image, self.rect) 
-
+        self.rect = rect
+        self.pos_ratio = (self.rect.centerx / self.screen.get_width(), self.rect.centery / self.screen.get_height())
+        self.size_ratio = (self.rect.width / self.screen.get_width(), self.rect.height / self.screen.get_height())
+        print(self.pos_ratio, self.size_ratio)
+    def update(self, gui=False, shop_x = False):
+        self.rect.center = (self.pos_ratio[0] * self.screen.get_width(), self.pos_ratio[1] * self.screen.get_height())
+        self.rect.size = (self.size_ratio[0] * self.screen.get_width(), self.size_ratio[1] * self.screen.get_height())
+        if shop_x and gui:
+            shop_width = gui.getXmargin() - gui.IMAGE_SIZE()
+            self.rect.centerx = shop_width * shop_x
+        ratio = self.rect.width / self.image.get_width()
+        self.cpy_image = pg.transform.scale(self.image, (ratio * self.image.width, ratio * self.image.height)) 
+        self.screen.blit(self.cpy_image, self.rect.topleft)
 class Button:
     def __init__(self, screen: pg.Surface, pos: Tuple[float, float], text: str, color: Tuple, font: pg.font.Font, text_color: Tuple=(0, 0, 0)):
         self.screen = screen
@@ -44,11 +50,14 @@ class Button:
         self.__text_color__ = text_color
         self.__font__ = font
         
-    def update(self):
+    def update(self, gui=None, shop_x=None):
         center = self.button[1]
         self.bg = center.copy()
         self.bg.width = self.bg.width + 10
         center.center = self.bg.center = (self.screen.get_width() * self.pos[0], self.screen.get_height() * self.pos[1])
+        if shop_x and gui:
+            shop_width = gui.getXmargin() - gui.IMAGE_SIZE()
+            center.centerx = shop_width * shop_x
         if center.collidepoint(pg.mouse.get_pos()) and self.interactive:
             self.bg = self.bg.scale_by(1.05, 1.05)
             tmp_clr = tuple(map(lambda i, j: i + j, self.color, (10, 10, 25)))
@@ -72,10 +81,10 @@ class GUI:
         pg.init()
         self.btn_clr = (170, 155, 187)
         self.shop_clr = (224, 184, 52)
-        self.screen = pg.display.set_mode((960, 630), pg.RESIZABLE)
+        self.screen = pg.display.set_mode((1200, 800), pg.RESIZABLE)
         pg.display.set_caption("RogueSweeper")
         self.fb_cls = shop.Fireball(0)
-        self.lazer_cls = shop.Lazer(0)
+        self.lz_cls = shop.Lazer(0)
         # Create The Background
         self.background = pg.Surface(self.screen.get_size())
         self.background = self.background.convert()
@@ -109,12 +118,21 @@ class GUI:
         
         # set coins and shop screen
         self.coins = 0
-        img_rect = pg.Rect(0, 0, self.getXmargin() / 4, self.getXmargin() / 4)
-        img_rect.center = (self.getXmargin() / 4, self.screen.get_height() / 3)
+        img_rect = pg.Rect(0, self.getYmargin(), (self.getXmargin() - self.IMAGE_SIZE()) / 4, (self.getXmargin() - self.IMAGE_SIZE()) / 4)  
+        img_rect.centerx = (self.getXmargin() - self.IMAGE_SIZE()) / 4
         self.fb_img = Image(self.screen, img_rect, pg.image.load('./images/fireball.jpg'))
         self.fb_buy = Button(self.screen, (img_rect.centerx / self.screen.get_width(), 4 / 6), f'Buy: {self.fb_cls.cost}', self.shop_clr, font)
         self.fb_ug = Button(self.screen, (img_rect.centerx / self.screen.get_width(), 5 / 6), f'Upgrade: {self.fb_cls.get_upgrade_cost()}', self.shop_clr, font)
-
+        lz_rect = img_rect.copy()
+        lz_rect.centerx *= 3
+        self.lz_img = Image(self.screen, lz_rect, pg.image.load('./images/lazer.jpg'))
+        self.lz_buy = Button(self.screen, (lz_rect.centerx / self.screen.get_width(), 4 / 6), f'Buy: {self.lz_cls.cost}', self.shop_clr, font)
+        self.lz_ug = Button(self.screen, (lz_rect.centerx / self.screen.get_width(), 5 / 6), f'Upgrade: {self.lz_cls.get_upgrade_cost()}', self.shop_clr, font)
+        self.ctrl_txt = Button(self.screen, (1 - (self.IMAGE_SIZE() * self.size() / 2) / self.screen.get_width(), self.IMAGE_SIZE() / self.screen.get_height() / 2), f'Use Fireball: Q     Use Lazer: E', (64, 110, 153), font, (255, 255, 255))
+        self.cnt_txt = Button(self.screen, (1 - (self.IMAGE_SIZE() * self.size() / 2) / self.screen.get_width(), self.IMAGE_SIZE() / self.screen.get_height() * 1.5), f'Count: {self.fb_cls.count}          Count: {self.lz_cls.count}', (64, 110, 153), font, (255, 255, 255))
+        self.ctrl_txt.interactive = False
+        self.cnt_txt.interactive = False
+        
     # class method that is ran before game to load sprites                
     @classmethod
     def load_images(cls):
@@ -184,9 +202,18 @@ class GUI:
         self.coin_text.update()
         
     def __draw_shop__(self):
-        self.fb_img.update()
-        self.fb_buy.update()
+        self.fb_img.update(self, 1/3)
+        self.fb_buy.update(self, 1/3)
         self.fb_ug.change_text_color(f'Upgrade: {self.fb_cls.get_upgrade_cost()}')
         if self.fb_cls.get_upgrade_cost() == 'Max':
             self.fb_ug.interactive = False
-        self.fb_ug.update()
+        self.fb_ug.update(self, 1/3)
+        self.lz_img.update(self, 2/3)
+        self.lz_buy.update(self, 2/3)
+        self.lz_ug.change_text_color(f'Upgrade: {self.lz_cls.get_upgrade_cost()}')
+        if self.lz_cls.get_upgrade_cost() == 'Max':
+            self.lz_ug.interactive = False
+        self.lz_ug.update(self, 2/3)
+        self.ctrl_txt.update()
+        self.cnt_txt.change_text_color(f'Count: {self.fb_cls.count}          Count: {self.lz_cls.count}')
+        self.cnt_txt.update()

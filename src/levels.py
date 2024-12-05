@@ -59,7 +59,7 @@ class Levels(GUI):
 
         going = True
         while going:
-
+            # TODO: add item selection
             # Handle Input Events
             for event in pg.event.get():
                 pos = pg.mouse.get_pos()
@@ -73,6 +73,10 @@ class Levels(GUI):
                     if self.fb_cls.count > 0:
                         print('used fireball')
                         self.fb_cls.use_item(self.model, y, x)
+                if event.type == pg.KEYDOWN and event.key == pg.K_e:
+                    if self.lz_cls.count > 0:
+                        print('used lazer')
+                        self.lz_cls.use_item(self.model, y, x)
                     
                 # regular commands
                 if event.type == pg.QUIT:
@@ -85,6 +89,10 @@ class Levels(GUI):
                         self.coins = self.fb_cls.buy_item(self.coins)
                     elif self.fb_ug.button[1].collidepoint(pos) and self.fb_ug.interactive:
                         self.coins = self.fb_cls.upgrade_item(self.coins)
+                    if self.lz_buy.button[1].collidepoint(pos):
+                        self.coins = self.lz_cls.buy_item(self.coins)
+                    elif self.lz_ug.button[1].collidepoint(pos) and self.lz_ug.interactive:
+                        self.coins = self.lz_cls.upgrade_item(self.coins)
                         
                     if 0 <= x < self.size() and 0 <= y < self.size():
                         selected = self.model.board[y][x]
