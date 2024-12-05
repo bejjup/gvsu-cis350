@@ -21,4 +21,4 @@ Our concept is creating a fully functional minesweeper roguelike game. This will
 2. Once you open Visual Studio Code, click Clone Git Repository and copy/paste this url `https://github.com/BRich823/PythonicPioneers.git`
 3. Open the src/levels.py
 4. Open the terminal and `pip install pygame-ce`
-5. Click the run python file on the top right and a new window will open to play Roguesweeper
+5. Run `levels.py` and a new window will open to play Roguesweeper
