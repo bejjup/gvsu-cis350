@@ -1,17 +1,41 @@
 {
   "expo": {
-    "name": "src", 
-    "description": "This app provides a specialized workout recommendation each day.",
-    "slug": "gvsu-cis350-compscifrenchfries",
+    "name": "source",
+    "slug": "source",
     "version": "1.0.0",
-    "platforms": ["ios", "android"],
-    "orientation": "default",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-    "backgroundColor": "#FFFFFF",
+    "newArchEnabled": true,
     "ios": {
-      "infoPlist": {
-        "NSUserNotificationUsageDescription": "This app uses notifications to remind you to workout."
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
       }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
     }
   }
 }
