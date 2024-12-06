@@ -187,7 +187,6 @@ export default function QuestionnaireScreen() {
 }
 
 const styles = StyleSheet.create({
-  // ... update styles to use theme colors and new styles
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,

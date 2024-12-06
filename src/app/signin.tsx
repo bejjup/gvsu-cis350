@@ -17,33 +17,35 @@ export default function SignInScreen() {
   const handleSignIn = () => {
     let hasError = false;
     const newErrors: { email?: boolean; password?: boolean } = {};
-
+  
     if (!email) {
       newErrors.email = true;
       hasError = true;
     }
-
+  
     if (!password) {
       newErrors.password = true;
       hasError = true;
     }
-
+  
+    console.log({ email, password, hasError, newErrors }); // <-- Debugging log
+  
     if (hasError) {
       setErrors(newErrors);
       Alert.alert('Error', 'Please fill out the highlighted fields.');
       return;
     }
-
-    // Replace this with your authentication logic
+  
     const user = {
       email,
       username: 'ExistingUser',
       password,
-      questionnaireAnswers: [], // Fetch existing answers if available
+      questionnaireAnswers: [],
     };
     setUserInfo(user);
     router.replace('/(tabs)/home');
   };
+  
 
   return (
     <View style={styles.container}>
@@ -75,7 +77,7 @@ export default function SignInScreen() {
         style={[styles.input, errors.password && styles.errorInput]}
         secureTextEntry
       />
-      <TouchableOpacity style={styles.button} onPress={handleSignIn}>
+      <TouchableOpacity style={styles.button} onPress={handleSignIn} testID="signin-button">
         <Text style={styles.buttonText}>Sign In</Text>
       </TouchableOpacity>
     </View>

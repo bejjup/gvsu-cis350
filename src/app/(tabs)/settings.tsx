@@ -52,14 +52,6 @@ export default function SettingsScreen() {
     });
   };
 
-  if (!userInfo) {
-    return (
-      <View style={styles.container}>
-        <Text>No user data available.</Text>
-      </View>
-    );
-  }
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Settings</Text>

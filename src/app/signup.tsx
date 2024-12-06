@@ -14,40 +14,36 @@ export default function SignUpScreen() {
 
   const handleSignUp = () => {
     let hasError = false;
-    const newErrors: { email?: boolean; username?: boolean; password?: boolean } = {};
-
+    const newErrors = {};
+  
     if (!email) {
       newErrors.email = true;
       hasError = true;
     }
-
+  
     if (!username) {
       newErrors.username = true;
       hasError = true;
     }
-
+  
     if (!password) {
       newErrors.password = true;
       hasError = true;
     }
-
+  
     if (hasError) {
       setErrors(newErrors);
       Alert.alert('Error', 'Please fill out the highlighted fields.');
       return;
     }
-
-    // Navigate to the questionnaire screen
+  
+    // Navigate only if there are no errors
     router.push({
       pathname: '/questionnaire',
-      params: {
-        email,
-        username,
-        password,
-      },
+      params: { email, username, password },
     });
   };
-
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sign Up</Text>
@@ -91,7 +87,11 @@ export default function SignUpScreen() {
         style={[styles.input, errors.password && styles.errorInput]}
         secureTextEntry
       />
-      <Button title="Sign Up" onPress={handleSignUp} />
+      <Button 
+        title="Sign Up" 
+        onPress={handleSignUp}
+        testID="signup-button"
+      />
     </View>
   );
 }

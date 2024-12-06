@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
 
 // Define the functions for water intake and exercise routine
 
-function calculateDailyWaterIntake(userInfo) {
+export function calculateDailyWaterIntake(userInfo) {
   // Extract necessary data
   const weight = parseFloat(userInfo.questionnaireAnswers[1]); // Assuming weight is at index 1
   const age = parseInt(userInfo.questionnaireAnswers[2]); // Assuming age is at index 2
