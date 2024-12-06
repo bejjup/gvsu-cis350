@@ -3,12 +3,12 @@
 
  ## src/app/__tests__is where the test reside
 
-### To run the tests, simply navigate to the 'src' file. 
+### 1. To run the tests, simply navigate to the 'src' file. 
 
-## # `cd /path/to/src`
+## # ```cd /path/to/src```
 
-### then use:
+### 2. then use:
 
-## # `npm test`
+## # ```npm test```
 
 ### and that will run the tests!
