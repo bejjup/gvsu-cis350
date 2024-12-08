@@ -1,3 +1,25 @@
+# links to all artifacts
+Project outline doc
+- https://docs.google.com/document/d/1IqNo1HjRlXIJaM8Mz5DnfVrnXrsURo7Gh6XOOTD51f0/edit?tab=t.0
+
+Figma
+- https://www.figma.com/slides/ArV59Nz3VrSJ4CkvqCIHgq/Untitled?node-id=1-9&node-type=slide&t=yGo6aZOcB1YXDifk-0
+
+Use Case- UML 
+- https://lucid.app/lucidchart/128deea1-ac1e-439b-9e2d-a9f0a69d7c6b/edit?viewport_loc=341%2C303%2C1685%2C899%2C0_0&invitationId=inv_4154dd64-27e3-426e-9c9b-fdc2b8bbddb5
+
+Class diagram
+- https://lucid.app/lucidchart/08285b94-5355-43cc-bc7a-0c1e1b75bf66/edit?beaconFlowId=A98029D0667E8C72&invitationId=inv_273a02e1-b19e-4567-9f66-ead589a4b70e&page=0_0# 
+
+Communication diagram
+- https://lucid.app/lucidchart/c756719e-99ad-45bd-8e1e-78ab6d57c552/edit?page=0_0&invitationId=inv_fb243101-3298-4f87-ad06-65638c5c51ee# 
+
+Jira
+- https://mail-team-gpj.atlassian.net/jira/software/projects/SCRUM/boards/1 
+
+Gantt chart
+- https://mail526346.monday.com/boards/7770845767
+  
 # Functional Requirements
 <ol type="1">
   <li>User Authentication</li>
