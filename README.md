@@ -1,4 +1,4 @@
-# GPJ
+# GPJ - Spend Right!
 
 Our project is going to be a money budgeting app where users can put in their monthly income, monthy subscriptions, bills, and extra known money they plan on spending to calculate how much money they will have left over to spend or save for that month. 
 
