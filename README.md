@@ -4,9 +4,9 @@ Our project is a new take on workout applications. Our goal is to prompt the use
 
 ## Team Members and Roles
 
-* [Dylan Toomey](https://github.com/DuckySensei/CIS350-HW2-Toomey)  (Project Lead, Database Management, Jira Coordinator)
+* [Dylan Toomey](https://github.com/DuckySensei/CIS350-HW2-Toomey)  (Project Lead, Database Management, Jira Coordinator, Jest Code Creator)
 * [Rachael Eapen](https://github.com/Rachaeleapen/CIS350-HW2-Eapen)  (Developer, Documenter) 
-* [Colin Nagley](https://github.com/NagleyC30/CIS350-HW2-Nagley) (Timeline Coordinator, Graphic Developement, Research)
+* [Colin Nagley](https://github.com/NagleyC30/CIS350-HW2-Nagley) (Timeline Coordinator, Package Management, QA)
 * [Lauren Applegate](https://github.com/Lauren-Applegate/CIS350-HW2-Applegate) (Questionnaire Developement, Graphical Interface Design)
 
 ## Prerequisites
@@ -31,10 +31,34 @@ Our project is a new take on workout applications. Our goal is to prompt the use
 
 4.	Once you are in the ‘src’ directory run this command: 
 
-    `npx expo start`
+    `npx expo start` 
 
-    * If you get errors in this step it is probably because you haven’t installed npx commands or expo. Follow the instructions on the screen if it prompts you to install something. Try running the ‘npx expo start’ command after you install something to see if it works. 
+5.	After running the start command you will see a QR code pop up in the terminal. 
 
-5.	If you receive no errors running ‘npx expo start’ you will see a QR code pop up in the terminal. 
+6. On an iPhone scan the QR code using the camera app. This will take you back to the Expo Go app where you will be able to see the running app. 
 
-6. Grab your mobile device and scan the QR code using your phone’s camera. This will take you back to the Expo Go app where you will be able to see the running app. 
+## Trouble Shooting
+
+If expo won't start, please try these:
+
+1. Check to make sure "npm" librarys are downloaded:
+
+        npm install
+
+2.  Check to make sure "Expo" is downloaded:
+
+        npm install expo
+
+3.  Dependencies used in this project: 
+
+        npm install expo-router
+        npm install expo-notification
+        npm install react react-native
+
+4. Run with a clean cache
+
+        npx expo start -c
+        or
+        npx expo start reset-project
+
+5. If all else fails, please contact one of our members!
