@@ -54,7 +54,9 @@ In this document there are 30 requirements. 15 Functional requirements and 15 no
 | NFR15 | Notifications shall be integrated through iOS. |
 # Software Artifacts
 This section contains all of the documentation and other artifacts that we have compiled while designing our app. 
-* [Gantt Chart](WorkoutPrompter.pdf)
+* [Gantt Chart](../artifacts/Gantt%20Chart.pdf)
+* [Class Diagram](../artifacts/Class%20Diagram.pdf)
+* [Use Case Diagram](../artifacts/Use%20case%20diagram.pdf)
 * [Questionnaire Code](../src/app/questionnaire.tsx)
 * [Indexing Code](../src/app/index.tsx)
 * [Sign-In Code](../src/app/signin.tsx)
